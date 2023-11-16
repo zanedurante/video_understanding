@@ -10,6 +10,10 @@ if len(sys.argv) != 2:
     exit(1)
 
 dataset_dir = sys.argv[1]
+# save to dataset_dir.txt
+with open("dataset_dir.txt", "w") as f:
+    f.write(dataset_dir)
+
 split_dir = "ucfTrainTestlist"
 
 class2idx = {}

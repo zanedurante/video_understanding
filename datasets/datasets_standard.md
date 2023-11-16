@@ -2,13 +2,13 @@
 All datasets used in this repo use the same format:
 
 ```
-video_path,caption/label,(optional)start_frame,(optional)end_frame,(optional)num_skip_frames
+video_path,(optional)caption,(optional)label,(optional)start_frame,(optional)end_frame,(optional)num_skip_frames
 ```
 
-We assume each dataset is stored in `DATASET_DIR/dataset_name`, where `dataset_name` is the name of the dataset directory. 
-`DATASET_DIR` is a constant defined in constants.py.  Feel free to use symlinks to make this easier.  Thus, the path to each video is: `DATASET_DIR/dataset_name/video_path`.
+We assume each dataset is stored in a directory called `DATASET_DIR`, where `DATASET_DIR` is stored in `datasets/<dataset_name>/dataset_dir.txt` is the name of the dataset directory. Feel free to use symlinks to make this easier.  
 
 ### Contents of csv file
+`video_path` is the 
 If `caption` is used, we assume it is a video-text pair dataset.  If `label` is used, we assume it is a classification dataset.  
 These are the only types of datasets supported so far.
 
