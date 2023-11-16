@@ -6,7 +6,11 @@ A deep learning library built for video understanding tasks.  Primarily relies u
 In the current state, absolutely not.  You can see all the TODOs at the bottom of this README.
 
 ## TODOs
-- [ ] Add UCF101 dataset to start
+- [x] Add UCF101 dataset to start
 - [ ] Create video frame loader
-- [ ] Create video data visualizer (ensure works from remote on localhost)
+- [ ] Create video data visualizer (from dataset name)
+- [ ] Add config system (with base config)
+- [ ] Add CLIP implementation (ViFi-CLIP)
+- [ ] Add general trainer code
+- [ ] Make as a package (pip install -e .)
 - [ ] Create next TODOs
