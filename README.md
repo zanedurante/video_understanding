@@ -1,8 +1,13 @@
 # video_understanding
 A deep learning library built for video understanding tasks.  Primarily relies upon PyTorch Lightning and wandb.  Takes inspiration from fast.ai 
 
-## Should you use this repo?
+## Installation:
+Clone the repository, then do: `cd video_understanding` and `pip install -e .`.
 
+## Style guides:
+Use black to format the code: run `black .` in the main directory.  If you do not have `black` installed, install it with `pip install black`.
+
+## Should you use this repo?
 In the current state, absolutely not.  You can see all the TODOs at the bottom of this README.
 
 ## TODOs

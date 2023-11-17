@@ -20,8 +20,16 @@ Base backbone args
 
 """
 
+
 class BaseBackbone(nn.Module):
-    def __init__(self, pretrained_path=None, frozen=False, lora=False, device='cuda', num_frames=16):
+    def __init__(
+        self,
+        pretrained_path=None,
+        frozen=False,
+        lora=False,
+        device="cuda",
+        num_frames=16,
+    ):
         super().__init__()
         self.pretrained_path = pretrained_path
         self.frozen = frozen
@@ -36,22 +44,24 @@ class BaseBackbone(nn.Module):
         if self.pretrained_path is not None:
             print("Loading pretrained model from {}".format(self.pretrained_path))
             # Load to cpu first
-            ckpt_dict = self.load_state_dict(torch.load(self.pretrained_path, map_location=torch.device('cpu')))
+            ckpt_dict = self.load_state_dict(
+                torch.load(self.pretrained_path, map_location=torch.device("cpu"))
+            )
             print("ckpt_dict:", ckpt_dict)
         if self.frozen:
             print("Freezing backbone model")
             for param in self.parameters():
                 param.requires_grad = False
-    
+
     def get_spatio_temporal_embeds(self, video_batch):
         raise NotImplementedError
 
     def get_spatio_temporal_embed_dims(self):
         raise NotImplementedError
-    
+
     def convert_spatio_temporal_embeds_to_video(self, spatio_temporal_embeds):
         raise NotImplementedError
-    
+
     def get_video_level_embeds(self, video_batch):
         spatio_temporal_embeds = self.get_spatio_temporal_embeds(video_batch)
         return self.convert_spatio_temporal_embeds_to_video(spatio_temporal_embeds)
