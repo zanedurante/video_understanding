@@ -4,7 +4,12 @@ import cv2
 from tqdm import tqdm
 
 from video.datasets.dataset import VideoDataset
-from video.datasets.dataset import CLIP_PIXEL_MEAN, CLIP_PIXEL_STD, IMAGENET_PIXEL_MEAN, IMAGENET_PIXEL_STD
+from video.datasets.dataset import (
+    CLIP_PIXEL_MEAN,
+    CLIP_PIXEL_STD,
+    IMAGENET_PIXEL_MEAN,
+    IMAGENET_PIXEL_STD,
+)
 
 
 def _make_grid(video, ncol=4):
@@ -50,15 +55,12 @@ def visualize_sample(sample, use_clip_norm=True):
         norm_mean = IMAGENET_PIXEL_MEAN
         norm_std = IMAGENET_PIXEL_STD
 
-    # reverse original normalization for visualization    
+    # reverse original normalization for visualization
     video = video * torch.tensor(norm_std).view(3, 1, 1)
     video = video + torch.tensor(norm_mean).view(3, 1, 1)
 
     grid = _make_grid(video)
     grid = cv2.cvtColor(grid, cv2.COLOR_RGB2BGR)
-
-
-    
 
     if label is not None:
         label = label.item()

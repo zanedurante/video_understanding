@@ -11,10 +11,12 @@ CLIP_PIXEL_STD = (0.26862954, 0.26130258, 0.27577711)
 IMAGENET_PIXEL_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_PIXEL_STD = (0.229, 0.224, 0.225)
 
+
 def has_val_split(dataset_name):
     with open(dataset_name + "/dataset_dir.txt", "r") as f:
         dataset_dir = f.read().strip()
     return dataset_dir + "/val.csv" in os.listdir(dataset_dir)
+
 
 def get_dataset_dir(dataset_name):
     # Load the dataset dir from <dataset_name>/dataset_dir.txt
@@ -23,6 +25,7 @@ def get_dataset_dir(dataset_name):
     with open(os.path.join(file_dir, dataset_name, "dataset_dir.txt"), "r") as f:
         dataset_dir = f.read().strip()
     return dataset_dir
+
 
 def get_dataset_csv(dataset_name, dataset_split):
     # Load the dataset dir from <dataset_name>/dataset_dir.txt
@@ -47,46 +50,59 @@ def get_dataset_csv(dataset_name, dataset_split):
     return df
 
 
-def init_transform_dict(input_res=224,
-                        center_crop=256,
-                        randcrop_scale=(0.5, 1.0),
-                        color_jitter=(0, 0, 0),
-                        norm_mean=IMAGENET_PIXEL_MEAN,
-                        norm_std=IMAGENET_PIXEL_STD,
-                        use_clip_norm=True):
+def init_transform_dict(
+    input_res=224,
+    center_crop=256,
+    randcrop_scale=(0.5, 1.0),
+    color_jitter=(0, 0, 0),
+    norm_mean=IMAGENET_PIXEL_MEAN,
+    norm_std=IMAGENET_PIXEL_STD,
+    use_clip_norm=True,
+):
     # Use normalization from: https://github.com/openai/CLIP/blob/a1d071733d7111c9c014f024669f959182114e33/clip/clip.py#L83
     if use_clip_norm:
         norm_mean = CLIP_PIXEL_MEAN
         norm_std = CLIP_PIXEL_STD
     normalize = transforms.Normalize(mean=norm_mean, std=norm_std)
     tsfm_dict = {
-        'train': transforms.Compose([
-            transforms.RandomResizedCrop(input_res, scale=randcrop_scale),
-            #transforms.RandomHorizontalFlip(), # Disable horizontal flip so that left/right can be used for training.
-            transforms.ColorJitter(brightness=color_jitter[0], saturation=color_jitter[1], hue=color_jitter[2]),
-            normalize,
-        ]),
-        'val': transforms.Compose([
-            transforms.Resize(center_crop),
-            transforms.CenterCrop(center_crop),
-            transforms.Resize(input_res),
-            normalize,
-        ]),
-        'test': transforms.Compose([
-            transforms.Resize(center_crop),
-            transforms.CenterCrop(center_crop),
-            transforms.Resize(input_res),
-            normalize,
-        ])
+        "train": transforms.Compose(
+            [
+                transforms.RandomResizedCrop(input_res, scale=randcrop_scale),
+                # transforms.RandomHorizontalFlip(), # Disable horizontal flip so that left/right can be used for training.
+                transforms.ColorJitter(
+                    brightness=color_jitter[0],
+                    saturation=color_jitter[1],
+                    hue=color_jitter[2],
+                ),
+                normalize,
+            ]
+        ),
+        "val": transforms.Compose(
+            [
+                transforms.Resize(center_crop),
+                transforms.CenterCrop(center_crop),
+                transforms.Resize(input_res),
+                normalize,
+            ]
+        ),
+        "test": transforms.Compose(
+            [
+                transforms.Resize(center_crop),
+                transforms.CenterCrop(center_crop),
+                transforms.Resize(input_res),
+                normalize,
+            ]
+        ),
     }
     return tsfm_dict
 
 
 def get_transforms(split):
-    if split in ['train', 'val', 'test']:
+    if split in ["train", "val", "test"]:
         return init_transform_dict()[split]
     else:
-        raise ValueError('Split {} not supported.'.format(split))
+        raise ValueError("Split {} not supported.".format(split))
+
 
 class VideoDataset(Dataset):
     def __init__(self, dataset_name, dataset_split, num_frames=4):
@@ -123,7 +139,7 @@ class VideoDataset(Dataset):
         if not loaded_correctly:
             print("WARNING: Video {} failed to load correctly.".format(full_video_path))
             caption = "A black screen."
-        
+
         label = torch.tensor(label).long()
 
         sample = {"video": video_tensor, "label": label, "caption": caption}

@@ -9,7 +9,12 @@ decord.bridge.set_bridge("torch")
 
 
 def load_video(
-    video_path, total_num_frames=4, start_frame=0, end_frame=-1, num_skip_frames=-1, split="train",
+    video_path,
+    total_num_frames=4,
+    start_frame=0,
+    end_frame=-1,
+    num_skip_frames=-1,
+    split="train",
 ):
     """
     Loads a video from a given path and returns a tensor of shape (T, C, H, W).
@@ -17,7 +22,9 @@ def load_video(
     """
     # special loading for gif files
     if video_path.endswith(".gif"):  # currently not supported for num_skip_frames < 0
-        return _load_video_gif(video_path, start_frame, end_frame, num_skip_frames, split)
+        return _load_video_gif(
+            video_path, start_frame, end_frame, num_skip_frames, split
+        )
 
     frame_indices = None
     try:
@@ -33,10 +40,14 @@ def load_video(
         return imgs, False
     video_length = len(video_reader)
 
-    if num_skip_frames < 0 and split == "train":  # Use random frame sampling for training
+    if (
+        num_skip_frames < 0 and split == "train"
+    ):  # Use random frame sampling for training
         frame_indices = np.random.randint(0, video_length, total_num_frames)
         frame_indices = np.sort(frame_indices)
-    elif num_skip_frames < 0 and split != "train":  # Use evenly spread frames for val and testing
+    elif (
+        num_skip_frames < 0 and split != "train"
+    ):  # Use evenly spread frames for val and testing
         frame_indices = np.linspace(0, video_length - 1, total_num_frames, dtype=int)
     else:
         # TODO: Implement variable/random offsets for fixed FPS sampling
@@ -51,17 +62,28 @@ def load_video(
 
 
 def _load_video_gif(
-    video_path, total_num_frames=4, start_frame=0, end_frame=-1, num_skip_frames=-1, split="train",
+    video_path,
+    total_num_frames=4,
+    start_frame=0,
+    end_frame=-1,
+    num_skip_frames=-1,
+    split="train",
 ):
     to_tensor = transforms.ToTensor()
     try:
         with Image.open(video_path) as img:
             video_length = img.n_frames
-            if num_skip_frames < 0 and split == "train":  # Use random frame sampling for training
+            if (
+                num_skip_frames < 0 and split == "train"
+            ):  # Use random frame sampling for training
                 frame_indices = np.random.randint(0, video_length, total_num_frames)
                 frame_indices = np.sort(frame_indices)
-            elif num_skip_frames < 0 and split != "train":  # Use evenly spread frames for val and testing
-                frame_indices = np.linspace(0, video_length - 1, total_num_frames, dtype=int)
+            elif (
+                num_skip_frames < 0 and split != "train"
+            ):  # Use evenly spread frames for val and testing
+                frame_indices = np.linspace(
+                    0, video_length - 1, total_num_frames, dtype=int
+                )
             else:
                 frame_indices = np.arange(start_frame, end_frame, num_skip_frames + 1)[
                     :total_num_frames

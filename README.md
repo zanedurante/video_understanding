@@ -12,8 +12,8 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 
 ## TODOs
 - [x] Add UCF101 dataset to start
-- [ ] Create video frame loader
-- [ ] Create video data visualizer (from dataset name)
+- [x] Create video frame loader
+- [x] Create video data visualizer (from dataset name)
 - [ ] Add config system (with base config)
 - [ ] Add CLIP implementation (ViFi-CLIP)
 - [ ] Add general trainer code
