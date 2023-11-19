@@ -14,8 +14,13 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 - [x] Add UCF101 dataset to start
 - [x] Create video frame loader
 - [x] Create video data visualizer (from dataset name)
+- [ ] Add CLIP implementation (ViFi-CLIP)?
+- [ ] Add initial version of trainer with wandb support in train.py
+- [ ] Add debug mode and lr_find flag for running train.py
+
+- [ ] Get good performance on UCF101
+- [ ] Add VideoMAEv2 model to codebase
 - [ ] Add config system (with base config)
-- [ ] Add CLIP implementation (ViFi-CLIP)
 - [ ] Add general trainer code
 - [ ] Make as a package (pip install -e .)
 - [ ] Create next TODOs
