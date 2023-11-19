@@ -44,7 +44,7 @@ def get_dataset_csv(dataset_name, dataset_split):
             )
 
     # Load the dataset csv from <dataset_dir>/<dataset_split>.csv
-    csv_path = dataset_dir + "/" + dataset_split + ".csv"
+    csv_path = os.path.join(dataset_dir, dataset_split + ".csv")
     print("Loading dataset csv from {}".format(csv_path))
     df = pd.read_csv(csv_path)
     return df
