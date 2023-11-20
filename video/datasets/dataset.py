@@ -127,7 +127,7 @@ class VideoDataset(Dataset):
         num_skip_frames = row.get("num_skip_frames", -1)
         video_tensor, loaded_correctly = load_video(
             full_video_path,
-            total_num_frames=self.num_frames,
+            num_frames=self.num_frames,
             start_frame=start_frame,
             end_frame=end_frame,
             num_skip_frames=num_skip_frames,

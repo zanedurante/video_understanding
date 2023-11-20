@@ -1,0 +1,8 @@
+file 'cat0.jpg'
+duration 0.333
+file 'cat1.jpg'
+duration 0.333
+file 'cat2.jpg'
+duration 0.333
+file 'cat3.jpg'
+duration 0.333

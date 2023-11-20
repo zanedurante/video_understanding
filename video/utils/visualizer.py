@@ -77,7 +77,9 @@ def visualize_sample(sample, use_clip_norm=True):
     return combined_image
 
 
-def visualize_dataset(dataset_name, output_dir="visualizations", num_samples=16, use_clip_norm=True):
+def visualize_dataset(
+    dataset_name, output_dir="visualizations", num_samples=16, use_clip_norm=True
+):
     """
     Visualizes a dataset by loading samples from it and visualizing it.
     """
