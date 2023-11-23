@@ -1,0 +1,9 @@
+trainer: # pytorch lightning flags
+  seed: 42
+  is_deterministic: False
+  precision: 32
+  num_workers: cpus-2 # os.cpu_count() - 2
+
+logger:
+  visualization_dir: visualizations
+  log_every_n_steps: 10

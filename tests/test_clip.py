@@ -61,7 +61,6 @@ def test_clip_simple_video_example():
     transforms = get_transforms("test")
 
     video = transforms(video)
-    print(video.shape)
 
     # encode video and text
     with torch.no_grad():

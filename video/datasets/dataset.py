@@ -13,7 +13,8 @@ IMAGENET_PIXEL_STD = (0.229, 0.224, 0.225)
 
 
 def has_val_split(dataset_name):
-    with open(dataset_name + "/dataset_dir.txt", "r") as f:
+    curr_dir = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(curr_dir, dataset_name, "dataset_dir.txt"), "r") as f:
         dataset_dir = f.read().strip()
     return dataset_dir + "/val.csv" in os.listdir(dataset_dir)
 

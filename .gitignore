@@ -8,3 +8,10 @@ __pycache__/
 video.egg-info
 
 visualizations/
+
+# Ignore wandb key and logs
+*.key 
+wandb/*
+logs/*
+lightning_logs/*
+video_understanding/*

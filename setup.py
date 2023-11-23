@@ -17,6 +17,8 @@ setup(
         "decord",
         "pandas",
         "black",
+        "wandb",
+        "matplotlib",
     ],
     dependency_links=["https://download.pytorch.org/whl/cu113"],
 )

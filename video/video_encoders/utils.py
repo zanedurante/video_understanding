@@ -1,4 +1,5 @@
 import torch
+from video.video_encoders.clip.encoders import load_clip_backbone
 
 
 """
@@ -6,17 +7,13 @@ Utils for loading video encoders.
 """
 
 
-def load_video_encoder(model_name, **kwargs):
+def get_backbone(backbone_name, **kwargs):
     """
-    Loads a video encoder by name.  See video_encoders.md for more information.
+    Backbone name is defined by <model-type>_<model-name-id>
     """
-    if model_name == "clip":
-        raise NotImplementedError(
-            "CLIP is not yet implemented in video_encoders.utils.load_video_encoder"
-        )
+    model_type = backbone_name.split("_")[0]
+    model_name = "_".join(backbone_name.split("_")[1:])
+    if model_type == "clip":
+        return load_clip_backbone(model_name, **kwargs)
     else:
-        raise NotImplementedError(
-            "Model {} not implemented in video_encoders.utils.load_video_encoder".format(
-                model_name
-            )
-        )
+        raise NotImplementedError("Backbone {} not implemented".format(backbone_name))
