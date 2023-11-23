@@ -15,6 +15,7 @@ def load_video(
     end_frame=-1,
     num_skip_frames=-1,
     split="train",
+    save_error_videos=False,
 ):
     """
     Loads a video from a given path and returns a tensor of shape (T, C, H, W).
@@ -31,9 +32,11 @@ def load_video(
         video_reader = decord.VideoReader(video_path, num_threads=1)
     except:
         print("Error loading video: {}".format(video_path))
-        print("Saving path to error file...")
-        with open("/mnt/datasets_mnt/output/error_videos.txt", "a") as f:
-            f.write(video_path + "\n")
+        if save_error_videos:
+            print("Saving path to error file...")
+            with open("/mnt/datasets_mnt/output/error_videos.txt", "a") as f:
+                f.write(video_path + "\n")
+                
         imgs = Image.new("RGB", (224, 224), (0, 0, 0))
         imgs = transforms.ToTensor()(imgs).unsqueeze(0)
         imgs = imgs.repeat(num_frames, 1, 1, 1)

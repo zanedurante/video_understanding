@@ -23,11 +23,12 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 - [x] Add debug mode and lr_find flag for running train.py
 - [x] Get good classification performance on UCF101
 - [x] Make as a package (pip install -e .)
-- [ ] Delete temp ckpt file created
-- [ ] Figure out why the learning rate and momentum is not logged to wandb
-- [ ] Create good nested config system
-- [ ] Detect the number of classes for the dataset(s) automatically
+- [x] Delete temp ckpt file created
+- [x] Figure out why the learning rate and momentum is not logged to wandb
+- [x] Create good nested config system
 - [ ] Add hyperparameter sweeps with wandb
+- [ ] Allow for multiple datasets for training (how to weight?)
+- [ ] Detect the number of classes for the dataset(s) automatically
 - [ ] Extend codebase to support video-text matching as a task.
 - [ ] Add multiple dataset support + Kinetics-400
 - [ ] Add NTP part to the codebase

@@ -8,13 +8,13 @@ import torchmetrics
         
 
 class Classifier(pl.LightningModule):
-    def __init__(self, backbone_name, num_frames, num_classes, classifier_head="linear", lr=1e-6, 
-                 num_frozen_epochs=1, backbone_lr_multiplier=0.01, classifier_head_weight_decay=0.0, 
+    def __init__(self, backbone_name, num_frames, num_classes, head="linear", lr=1e-6, 
+                 num_frozen_epochs=1, backbone_lr_multiplier=0.01, head_weight_decay=0.0, 
                  backbone_weight_decay=0.0, head_dropout=0.0,
         ):
         super().__init__()
         self.video_backbone = get_backbone(backbone_name, num_frames=num_frames).float() # TODO: Make configurable somehow
-        self.classifier_head_type = classifier_head
+        self.head_type = head
         self.num_frames = num_frames
         self.num_classes = num_classes 
         self.num_frozen_epochs = num_frozen_epochs
@@ -22,19 +22,19 @@ class Classifier(pl.LightningModule):
         self.lr = lr
         self.train_acc = torchmetrics.classification.Accuracy(task="multiclass", num_classes=num_classes)
         self.val_acc = torchmetrics.classification.Accuracy(task="multiclass", num_classes=num_classes)
-        self.classifier_head_weight_decay = classifier_head_weight_decay
+        self.head_weight_decay = head_weight_decay
         self.backbone_weight_decay = backbone_weight_decay
         self.backbone_is_frozen = False
         self.head_dropout = head_dropout
 
         # Build the classifier head
-        if classifier_head == "linear":
-            self.classifier_head = nn.Sequential(
+        if head == "linear":
+            self.head = nn.Sequential(
                 nn.Dropout(head_dropout),
                 nn.Linear(self.video_backbone.get_video_level_embed_dim(), num_classes)
             )
-        elif classifier_head == "mlp":
-            self.classifier_head = nn.Sequential(
+        elif head == "mlp":
+            self.head = nn.Sequential(
                 nn.Linear(self.video_backbone.get_video_level_embed_dim(), self.video_backbone.get_video_level_embed_dim()),
                 nn.GELU(),
                 nn.Dropout(head_dropout), # TODO: Too high?
@@ -42,21 +42,21 @@ class Classifier(pl.LightningModule):
             )
         else:
             raise NotImplementedError(
-                "Classifier head {} not implemented".format(classifier_head)
+                "Classifier head {} not implemented".format(head)
             )
         
     def on_train_epoch_start(self):
-        if self.current_epoch < self.num_frozen_epochs:
+        if self.current_epoch  == 0 and self.num_frozen_epochs > 0:
             if not self.backbone_is_frozen:
                 self.freeze_backbone()
-        else:
+        elif self.current_epoch == self.num_frozen_epochs:
             if self.backbone_is_frozen:
                 self.unfreeze_backbone()
 
     def forward(self, batch):
         video = batch["video"]
         video_features = self.video_backbone.get_video_level_embeds(video)
-        logits = self.classifier_head(video_features)
+        logits = self.head(video_features)
         return logits
 
     def freeze_backbone(self):
@@ -101,10 +101,10 @@ class Classifier(pl.LightningModule):
 
     def configure_optimizers(self):
         backbone_params = [p for p in self.video_backbone.parameters() if p.requires_grad]
-        classifier_params = [p for p in self.classifier_head.parameters() if p.requires_grad]
+        classifier_params = [p for p in self.head.parameters() if p.requires_grad]
         # us self.lr for classifier params and self.lr * self.backbone_lr_multiplier for backbone params
         optimizable_params = [
             {'params': backbone_params, 'lr': self.lr * self.backbone_lr_multiplier, 'weight_decay': self.backbone_weight_decay, 'name': 'backbone'},
-            {'params': classifier_params, 'lr': self.lr, 'weight_decay': self.classifier_head_weight_decay, 'name': 'classifier'}
+            {'params': classifier_params, 'lr': self.lr, 'weight_decay': self.head_weight_decay, 'name': 'head'}
         ]
         return torch.optim.Adam(optimizable_params)

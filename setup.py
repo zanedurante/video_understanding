@@ -19,6 +19,7 @@ setup(
         "black",
         "wandb",
         "matplotlib",
+        "omegaconf"
     ],
     dependency_links=["https://download.pytorch.org/whl/cu113"],
 )
