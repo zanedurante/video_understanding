@@ -19,7 +19,7 @@ def test_load_base_config():
 def test_edit_config():
     config = get_config("tests/test_config.yaml")
     assert config.logger.log_every_n_steps == 20
-    assert config.trainer.model_name == "test_model"
+    assert config.model.type == "test_model"
 
 
 if __name__ == "__main__":

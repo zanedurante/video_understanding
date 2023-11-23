@@ -1,5 +1,5 @@
 logger:
   log_every_n_steps: 20
 
-trainer:
-  model: "test_model"
+model:
+  type: "test_model"
