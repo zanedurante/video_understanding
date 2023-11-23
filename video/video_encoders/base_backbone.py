@@ -20,7 +20,6 @@ Base backbone args (to be used for all backbones in the load_<backbone-name>_bac
 
 """
 
-    
 
 class BaseBackbone(nn.Module):
     def __init__(

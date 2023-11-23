@@ -22,11 +22,13 @@ def main(args):
     fast_run = args.fast_run
     config_path = args.config
     config = get_config(config_path)
-    is_deterministic = args.deterministic or config.trainer.is_deterministic # False by default
+    is_deterministic = (
+        args.deterministic or config.trainer.is_deterministic
+    )  # False by default
 
-    module_type = config.model.type # TODO: Use this to load the correct module
-    num_classes = 101 # Can we infer from the dataset(s)?
-    dataset_name = "ucf101" # Load from datasets in configs
+    module_type = config.model.type  # TODO: Use this to load the correct module
+    num_classes = 101  # Can we infer from the dataset(s)?
+    dataset_name = "ucf101"  # Load from datasets in configs
 
     if is_deterministic:
         torch.backends.cudnn.deterministic = True
@@ -39,25 +41,27 @@ def main(args):
 
     if fast_run:
         print("Setting float32 matmul precision to high for fast run")
-        torch.set_float32_matmul_precision('high')
+        torch.set_float32_matmul_precision("high")
 
     # set logger
     logger = pl.loggers.CSVLogger("logs", name=config.logger.run_name)
-        
+
     if not disable_wandb:
         with open("wandb.key", "r") as file:
             wandb.login(key=file.read().strip())
         logger = WandbLogger(name=config.logger.run_name, project="video_understanding")
-        
+
     trainer = pl.Trainer(
         devices=1,
-        accelerator='gpu',
+        accelerator="gpu",
         precision=config.trainer.precision,
         max_epochs=config.trainer.max_epochs,
         logger=logger,
-        callbacks = [
-            LearningRateMonitor(logging_interval='step', log_momentum=True), # TODO: Find why this is not appearing in wandb logs
-            ],
+        callbacks=[
+            LearningRateMonitor(
+                logging_interval="step", log_momentum=True
+            ),  # TODO: Find why this is not appearing in wandb logs
+        ],
         log_every_n_steps=config.logger.log_every_n_steps,
         deterministic=is_deterministic,
     )
@@ -81,16 +85,22 @@ def main(args):
         num_frames=config.data.num_frames,
     )
 
-    if use_lr_finder: # TODO: Remove temp .ckpt created from lr finder
+    if use_lr_finder:  # TODO: Remove temp .ckpt created from lr finder
         print("Running lr finder...")
         trainer = pl.Trainer()
         tuner = Tuner(trainer)
-        lr_finder = tuner.lr_find(module, data_module, min_lr=1e-12, max_lr=1e-0, num_training=200)
+        lr_finder = tuner.lr_find(
+            module, data_module, min_lr=1e-12, max_lr=1e-0, num_training=200
+        )
         print("LR Finder finished")
         print("Suggested learning rate:", lr_finder.suggestion())
-        #lr_finder = trainer.lr_find(module, data_module)
-        print("If you are using N GPUs on M nodes, multiply lr by N*M (linear scaling rule)")
-        print(f"Plot saved to {config.logger.visualization_dir}/lr_finder/lr_finder.png")
+        # lr_finder = trainer.lr_find(module, data_module)
+        print(
+            "If you are using N GPUs on M nodes, multiply lr by N*M (linear scaling rule)"
+        )
+        print(
+            f"Plot saved to {config.logger.visualization_dir}/lr_finder/lr_finder.png"
+        )
         fig = lr_finder.plot(suggest=True)
         os.makedirs(f"{config.logger.visualization_dir}/lr_finder", exist_ok=True)
         fig.savefig(f"{config.logger.visualization_dir}/lr_finder/lr_finder.png")
@@ -102,11 +112,11 @@ def main(args):
                 os.remove(file)
         exit()
 
-
     trainer.fit(module, data_module)
 
     if not disable_wandb:
         wandb.finish()
+
 
 if __name__ == "__main__":
     args = argparse.ArgumentParser()

@@ -36,7 +36,7 @@ def load_video(
             print("Saving path to error file...")
             with open("/mnt/datasets_mnt/output/error_videos.txt", "a") as f:
                 f.write(video_path + "\n")
-                
+
         imgs = Image.new("RGB", (224, 224), (0, 0, 0))
         imgs = transforms.ToTensor()(imgs).unsqueeze(0)
         imgs = imgs.repeat(num_frames, 1, 1, 1)
