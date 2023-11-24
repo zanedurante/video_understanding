@@ -136,12 +136,12 @@ class VideoDataset(Dataset):
         )
 
         video_tensor = self.transforms(video_tensor)
+        label = torch.tensor(label).long()
 
         if not loaded_correctly:
             print("WARNING: Video {} failed to load correctly.".format(full_video_path))
             caption = "A black screen."
-
-        label = torch.tensor(label).long()
+            label = torch.tensor(0).long()  # have 0 be the label for black screen
 
         sample = {"video": video_tensor, "label": label, "caption": caption}
         return sample

@@ -1,0 +1,39 @@
+program: train.py
+method: random  # or grid, random, bayes
+metric:
+  name: validation_loss
+  goal: minimize
+parameters:
+  fast_run:
+    values: [True] # use special a100 setting for torch.set_float32_matmul_precision("high")
+  use_sweep:
+    values: [True]
+  config: 
+    values: [configs/classification/default.yaml] # This is the config file to use
+  lr:
+    min: 0.00001
+    max: 0.001
+  num_frames:
+    values: [8, 16, 32]
+  #batch_size:
+  #backbone_name:
+  #  values: [clip_ViT-B/16, clip_ViT-B/32]
+  head:
+    values: [linear, mlp]
+  head_dropout:
+    min: 0.0
+    max: 0.7
+  head_weight_decay:
+    min: 0.0
+    max: 0.1
+  backbone_weight_decay:
+    min: 0.0
+    max: 0.05
+  num_frozen_epochs:
+    values: [0, 1, 2, 3, 4, 5]
+  max_epochs:
+    values: [16] # Do longer run next
+  backbone_lr_multiplier:
+    min: 0.00001
+    max: 0.0005
+  # Add other parameters you want to tune

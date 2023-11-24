@@ -4,3 +4,6 @@ data:
 
 trainer:
   lr: 1e-2
+
+logger:
+  log_every_n_steps: 10

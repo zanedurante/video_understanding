@@ -9,6 +9,7 @@ model:
   type: classifier # which module to use
   backbone_name: clip_ViT-B/16
   head: linear
+  head_dropout: 0.0
   head_weight_decay: 0.0
   backbone_weight_decay: 0.0
 

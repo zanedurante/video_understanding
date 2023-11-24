@@ -6,12 +6,40 @@ import torch
 import argparse
 import wandb
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import LearningRateMonitor
+from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
 from pytorch_lightning.tuner import Tuner
 import os
 from glob import glob
 from omegaconf import OmegaConf
 from video.utils.config_manager import get_config, get_num_workers
+
+
+def get_args():
+    args = argparse.ArgumentParser()
+    args.add_argument("--disable_wandb", action="store_true")
+    args.add_argument("--find_lr", action="store_true")
+    args.add_argument("--deterministic", "-d", action="store_true")
+    args.add_argument("--fast_run", type=bool, default=False)
+    args.add_argument("--config", "-c", type=str, default="configs/default.yaml")
+
+    # Add wandb sweep args, add to get_wandb_args and merge_wandb_args in config_manager.py to add more
+    args.add_argument(
+        "--use_sweep", type=bool, default=False
+    )  # Whether using wandb sweep
+    args.add_argument("--lr", type=float, default=None)
+    args.add_argument("--num_frames", type=int, default=None)
+    args.add_argument("--backbone_name", type=str, default=None)
+    args.add_argument("--batch_size", type=int, default=None)
+    args.add_argument("--head", type=str, default=None)
+    args.add_argument("--head_dropout", type=float, default=None)
+    args.add_argument("--head_weight_decay", type=float, default=None)
+    args.add_argument("--backbone_weight_decay", type=float, default=None)
+    args.add_argument("--backbone_lr_multiplier", type=float, default=None)
+    args.add_argument("--num_frozen_epochs", type=int, default=None)
+    args.add_argument("--max_epochs", type=int, default=None)
+
+    args = args.parse_args()
+    return args
 
 
 def main(args):
@@ -21,7 +49,7 @@ def main(args):
     disable_wandb = args.disable_wandb
     fast_run = args.fast_run
     config_path = args.config
-    config = get_config(config_path)
+    config = get_config(config_path, args)
     is_deterministic = (
         args.deterministic or config.trainer.is_deterministic
     )  # False by default
@@ -44,12 +72,22 @@ def main(args):
         torch.set_float32_matmul_precision("high")
 
     # set logger
-    logger = pl.loggers.CSVLogger("logs", name=config.logger.run_name)
+    logger = pl.loggers.CSVLogger(
+        "logs", name=config.logger.short_run_name
+    )  # use short run name for csv logger
 
     if not disable_wandb:
         with open("wandb.key", "r") as file:
             wandb.login(key=file.read().strip())
-        logger = WandbLogger(name=config.logger.run_name, project="video_understanding")
+        wandb.init(
+            project="video_understanding",
+            config=OmegaConf.to_container(config),
+            name=config.logger.run_name,
+        )
+        # I think this is unnecessary now
+        logger = WandbLogger(
+            name=config.logger.run_name, project="video_understanding", config=config
+        )
 
     trainer = pl.Trainer(
         devices=1,
@@ -58,12 +96,25 @@ def main(args):
         max_epochs=config.trainer.max_epochs,
         logger=logger,
         callbacks=[
-            LearningRateMonitor(
-                logging_interval="step", log_momentum=True
-            ),  # TODO: Find why this is not appearing in wandb logs
+            LearningRateMonitor(logging_interval="step"),
+            EarlyStopping(monitor="val_loss", patience=3, mode="min"),
         ],
         log_every_n_steps=config.logger.log_every_n_steps,
         deterministic=is_deterministic,
+    )
+
+    data_module = VideoDataModule(
+        dataset_name=dataset_name,
+        batch_size=config.trainer.batch_size,
+        num_workers=config.trainer.num_workers,
+        num_frames=config.data.num_frames,
+    )
+
+    # total steps = steps per epoch * num epochs
+    total_num_steps = (
+        data_module.get_stats()["num_train_videos"]
+        // config.trainer.batch_size
+        * config.trainer.max_epochs
     )
 
     module = Classifier(
@@ -72,17 +123,13 @@ def main(args):
         num_classes=num_classes,
         head=config.model.head,
         lr=config.trainer.lr,
+        total_num_epochs=config.trainer.max_epochs,
+        total_num_steps=total_num_steps,
         num_frozen_epochs=config.trainer.num_frozen_epochs,
         backbone_lr_multiplier=config.trainer.backbone_lr_multiplier,
         head_weight_decay=config.model.head_weight_decay,
         backbone_weight_decay=config.model.backbone_weight_decay,
-    )
-
-    data_module = VideoDataModule(
-        dataset_name=dataset_name,
-        batch_size=config.trainer.batch_size,
-        num_workers=config.trainer.num_workers,
-        num_frames=config.data.num_frames,
+        head_dropout=config.model.head_dropout,
     )
 
     if use_lr_finder:  # TODO: Remove temp .ckpt created from lr finder
@@ -119,11 +166,5 @@ def main(args):
 
 
 if __name__ == "__main__":
-    args = argparse.ArgumentParser()
-    args.add_argument("--disable_wandb", action="store_true")
-    args.add_argument("--find_lr", action="store_true")
-    args.add_argument("--deterministic", "-d", action="store_true")
-    args.add_argument("--fast_run", action="store_true")
-    args.add_argument("--config", "-c", type=str, default="configs/default.yaml")
-    args = args.parse_args()
+    args = get_args()
     main(args)

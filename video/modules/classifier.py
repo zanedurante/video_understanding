@@ -1,11 +1,9 @@
 import torch
 import torch.nn as nn
 import pytorch_lightning as pl
-
-# TODO: Change to be this import instead:
-# from video.video_encoders import get_backbone
 from video.video_encoders import get_backbone
 import torchmetrics
+from torch.optim.lr_scheduler import CosineAnnealingLR
 
 
 class Classifier(pl.LightningModule):
@@ -17,6 +15,8 @@ class Classifier(pl.LightningModule):
         head="linear",
         lr=1e-6,
         num_frozen_epochs=1,
+        total_num_epochs=10,
+        total_num_steps=1e6,
         backbone_lr_multiplier=0.01,
         head_weight_decay=0.0,
         backbone_weight_decay=0.0,
@@ -30,6 +30,7 @@ class Classifier(pl.LightningModule):
         self.num_frames = num_frames
         self.num_classes = num_classes
         self.num_frozen_epochs = num_frozen_epochs
+        self.total_num_epochs = total_num_epochs
         self.backbone_lr_multiplier = backbone_lr_multiplier
         self.lr = lr
         self.train_acc = torchmetrics.classification.Accuracy(
@@ -42,6 +43,7 @@ class Classifier(pl.LightningModule):
         self.backbone_weight_decay = backbone_weight_decay
         self.backbone_is_frozen = False
         self.head_dropout = head_dropout
+        self.total_num_steps = total_num_steps
 
         # Build the classifier head
         if head == "linear":
@@ -142,4 +144,16 @@ class Classifier(pl.LightningModule):
                 "name": "head",
             },
         ]
-        return torch.optim.Adam(optimizable_params)
+        # TODO: Make these more configurable
+        optimizer = torch.optim.Adam(optimizable_params)
+        scheduler = CosineAnnealingLR(
+            optimizer, T_max=self.total_num_steps, eta_min=0.0
+        )
+        return {
+            "optimizer": optimizer,
+            "lr_scheduler": {
+                "scheduler": scheduler,
+                "interval": "step",  # "epoch" or "step" for per-step updates
+                "frequency": 1,  # Update every epoch/step; adjust as needed
+            },
+        }

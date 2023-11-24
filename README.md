@@ -26,7 +26,8 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 - [x] Delete temp ckpt file created
 - [x] Figure out why the learning rate and momentum is not logged to wandb
 - [x] Create good nested config system
-- [ ] Fix config test
+- [x] Fix config test
+- [ ] Make test for large csvs
 - [ ] Add hyperparameter sweeps with wandb
 - [ ] Allow for multiple datasets for training (how to weight?)
 - [ ] Detect the number of classes for the dataset(s) automatically
@@ -36,4 +37,5 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 - [ ] Add the webvid rewritten dataset to the codebase.
 - [ ] Add VideoMAEv2 model to codebase? Maybe we just do a frame-level MAE model instead?
 - [ ] Add LoRA fine-tuning capabilities (especially important for LLaMA models and maybe for video encoders too)
+- [ ] Explore other optimizers?
 - [ ] Create next TODOs

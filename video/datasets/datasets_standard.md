@@ -1,5 +1,5 @@
 ## General information
-All datasets used in this repo use the same format:
+All datasets used in this repo use csvs in the same format:
 
 ```
 video_path,(optional)caption,(optional)label,(optional)start_frame,(optional)end_frame,(optional)num_skip_frames

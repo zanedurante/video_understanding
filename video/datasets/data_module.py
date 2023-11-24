@@ -4,6 +4,13 @@ from video.datasets.dataset import VideoDataset
 
 IMPLEMENTED_DATASETS = ["ucf101"]
 
+DATASETS_TO_STATS = {
+    "ucf101": {
+        "num_classes": 101,
+        "num_train_videos": 9537,
+    }
+}
+
 
 class VideoDataModule(pl.LightningDataModule):
     def __init__(
@@ -29,6 +36,10 @@ class VideoDataModule(pl.LightningDataModule):
         self.test_dataset = VideoDataset(
             self.dataset_name, dataset_split="test", **self.kwargs
         )
+        # print("IN SETUP:", len(self.train_dataset))
+
+    def get_stats(self):
+        return DATASETS_TO_STATS[self.dataset_name]
 
     def train_dataloader(self):
         return DataLoader(
