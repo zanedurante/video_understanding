@@ -1,4 +1,4 @@
-from video.utils.config_manager import get_config, get_num_workers
+from video.utils.config_manager import get_config, get_num_workers, get_val_from_config
 import os
 
 
@@ -22,7 +22,17 @@ def test_edit_config():
     assert config.model.type == "test_model"
 
 
+def test_get_val_from_config():
+    config = get_config("tests/test_config.yaml")
+    val = get_val_from_config(config, "model.type")
+    assert val == "test_model"
+    val = get_val_from_config(config, "model.backbone_name", "hello world")
+    assert val == "hello world"
+
+
 if __name__ == "__main__":
     test_get_num_workers()
     test_load_base_config()
     test_edit_config()
+    test_get_val_from_config()
+    print("All tests passed!")

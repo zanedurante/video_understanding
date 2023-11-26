@@ -137,3 +137,15 @@ def get_run_name(config):
     run_name = "_".join(priority_parts + remaining_parts)
     short_run_name = run_name[: min(len(run_name), 100)]
     return run_name, short_run_name
+
+
+def get_val_from_config(config, key, default=None):
+    keys = key.split(".")
+    val = config
+    for key in keys:
+        if key in val:
+            val = val[key]
+        else:
+            return default
+
+    return val

@@ -11,6 +11,7 @@ import torch
 def test_load_clip_backbone():
     model = load_clip_backbone("ViT-B/32")
     assert model is not None
+    assert hasattr(model, "logit_scale")
 
 
 # use cat and dog test images
@@ -115,5 +116,5 @@ def test_text_embeds():
 
 
 if __name__ == "__main__":
-    test_text_embeds()  # test_clip_simple_video_example()
+    test_load_clip_backbone()  # test_clip_simple_video_example()
     print("All tests passed!")

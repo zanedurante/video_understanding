@@ -62,7 +62,9 @@ class CLIPVideoBackbone(BaseBackbone):
             device=device,
             num_frames=num_frames,
         )
-        self.clip_model = load_clip(clip_model_name)[0].visual
+        clip_model = load_clip(clip_model_name)[0]
+        self.logit_scale = clip_model.logit_scale
+        self.clip_model = clip_model.visual
         self.video_level_embed_dim = self.clip_model.output_dim
         self.spatio_temporal_embed_dims = (self.num_frames,)
 

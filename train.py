@@ -12,6 +12,7 @@ import os
 from glob import glob
 from omegaconf import OmegaConf
 from video.utils.config_manager import get_config, get_num_workers
+from video.utils.module_loader import get_module
 
 
 def get_args():
@@ -117,20 +118,19 @@ def main(args):
         * config.trainer.max_epochs
     )
 
-    module = Classifier(
-        backbone_name=config.model.backbone_name,
-        num_frames=config.data.num_frames,
-        num_classes=num_classes,
-        head=config.model.head,
-        lr=config.trainer.lr,
-        total_num_epochs=config.trainer.max_epochs,
-        total_num_steps=total_num_steps,
-        num_frozen_epochs=config.trainer.num_frozen_epochs,
-        backbone_lr_multiplier=config.trainer.backbone_lr_multiplier,
-        head_weight_decay=config.model.head_weight_decay,
-        backbone_weight_decay=config.model.backbone_weight_decay,
-        head_dropout=config.model.head_dropout,
-    )
+    model_module = get_module(config.model.type)
+
+    if type(model_module) == Classifier:
+        module = model_module(
+            config,
+            num_classes=num_classes,
+            total_num_steps=total_num_steps,
+        )
+    else:
+        module = model_module(
+            config,
+            total_num_steps=total_num_steps,
+        )
 
     if use_lr_finder:  # TODO: Remove temp .ckpt created from lr finder
         print("Running lr finder...")

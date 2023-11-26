@@ -4,67 +4,72 @@ import pytorch_lightning as pl
 from video.video_encoders import get_backbone
 import torchmetrics
 from torch.optim.lr_scheduler import CosineAnnealingLR
+from video.utils.config_manager import get_val_from_config
 
 
 class Classifier(pl.LightningModule):
     def __init__(
         self,
-        backbone_name,
-        num_frames,
-        num_classes,
-        head="linear",
-        lr=1e-6,
-        num_frozen_epochs=1,
-        total_num_epochs=10,
+        config,
+        num_classes=101,
         total_num_steps=1e6,
-        backbone_lr_multiplier=0.01,
-        head_weight_decay=0.0,
-        backbone_weight_decay=0.0,
-        head_dropout=0.0,
     ):
         super().__init__()
+        self.config = config
+        backbone_name = get_val_from_config(config, "model.backbone_name")
+        num_frames = get_val_from_config(config, "data.num_frames")
         self.video_backbone = get_backbone(
             backbone_name, num_frames=num_frames
         ).float()  # TODO: Make configurable somehow
-        self.head_type = head
+        self.head_type = get_val_from_config(config, "model.head", "linear")
         self.num_frames = num_frames
         self.num_classes = num_classes
-        self.num_frozen_epochs = num_frozen_epochs
-        self.total_num_epochs = total_num_epochs
-        self.backbone_lr_multiplier = backbone_lr_multiplier
-        self.lr = lr
+        self.num_frozen_epochs = get_val_from_config(
+            config, "trainer.num_frozen_epochs", 1
+        )
+        self.total_num_epochs = get_val_from_config(config, "trainer.max_epochs", 10)
+        self.backbone_lr_multiplier = get_val_from_config(
+            config, "trainer.backbone_lr_multiplier", 0.01
+        )
+        self.lr = get_val_from_config(config, "trainer.lr", 1e-4)
         self.train_acc = torchmetrics.classification.Accuracy(
             task="multiclass", num_classes=num_classes
         )
         self.val_acc = torchmetrics.classification.Accuracy(
             task="multiclass", num_classes=num_classes
         )
-        self.head_weight_decay = head_weight_decay
-        self.backbone_weight_decay = backbone_weight_decay
+        self.head_weight_decay = get_val_from_config(
+            config, "model.head_weight_decay", 0.0
+        )
+        self.backbone_weight_decay = get_val_from_config(
+            config, "model.backbone_weight_decay", 0.0
+        )
         self.backbone_is_frozen = False
-        self.head_dropout = head_dropout
+        self.head_dropout = get_val_from_config(config, "model.head_dropout", 0.0)
         self.total_num_steps = total_num_steps
 
         # Build the classifier head
-        if head == "linear":
+        if self.head_type == "linear":
             self.head = nn.Sequential(
-                nn.Dropout(head_dropout),
+                nn.Dropout(self.head_dropout),
                 nn.Linear(self.video_backbone.get_video_level_embed_dim(), num_classes),
             )
-        elif head == "mlp":
+        elif self.head_type == "mlp":
             self.head = nn.Sequential(
                 nn.Linear(
                     self.video_backbone.get_video_level_embed_dim(),
                     self.video_backbone.get_video_level_embed_dim(),
                 ),
                 nn.GELU(),
-                nn.Dropout(head_dropout),  # TODO: Too high?
+                nn.Dropout(self.head_dropout),
                 nn.Linear(
                     self.video_backbone.get_video_level_embed_dim(), num_classes
                 ),  # By default just repeat the video_level_embed_dim
             )
         else:
-            raise NotImplementedError("Classifier head {} not implemented".format(head))
+            raise NotImplementedError(
+                "Classifier head {} not implemented".format(self.head_type)
+            )
 
     def on_train_epoch_start(self):
         if self.current_epoch == 0 and self.num_frozen_epochs > 0:
