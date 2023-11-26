@@ -122,12 +122,16 @@ def get_run_name(config):
     priority_keys = ["data", "model"]
     ignored_keys = ["logger"]
 
-    priority_parts = [normalize_key_value(key, config[key]) for key in priority_keys]
+    priority_parts = [
+        normalize_key_value(key, config[key])
+        for key in priority_keys
+        if key in config.keys()
+    ]
 
     remaining_parts = [
         normalize_key_value(key, config[key])
         for key in config.keys()
-        if key not in priority_keys and key not in ignored_keys
+        if key not in priority_keys and key not in ignored_keys and key in config.keys()
     ]
 
     run_name = "_".join(priority_parts + remaining_parts)

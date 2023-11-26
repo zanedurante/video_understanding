@@ -1,4 +1,5 @@
 from video.video_encoders.clip import load_clip_backbone
+from video.text_encoders.utils import get_text_encoder
 from video.video_encoders.clip.clip import load as load_clip
 from video.video_encoders.clip.clip import tokenize
 from PIL import Image
@@ -79,6 +80,40 @@ def test_clip_simple_video_example():
     ), f"Probability of cat for cat video was only: {probs[0][0]}"
 
 
+def text_load_clip_text_encoder():
+    model = get_text_encoder("clip_ViT-B/32")
+    assert model is not None
+
+
+def test_text_embeds():
+    model = get_text_encoder("clip_ViT-B/32")
+    with torch.no_grad():
+        text_embeds = model.get_text_embeds(
+            [
+                "a photo of a cat",
+                "a photo of a cat",
+                "a photo of two kittens",
+                "a photo of a dog",
+                "a photo of a bike",
+            ]
+        )
+    embed_dim = model.get_text_embed_dim()
+    assert text_embeds.shape == (5, embed_dim)
+
+    # normalize
+    text_embeds = text_embeds / text_embeds.norm(dim=-1, keepdim=True)
+
+    # cosine similarity between embeds
+    similarity = text_embeds @ text_embeds.t()
+
+    # get the first row (first text embed) and make sure similarities are correct
+    first_row = similarity[0]
+    assert first_row[0] == first_row[1]
+    assert first_row[1] > first_row[2]
+    assert first_row[2] > first_row[4]
+    assert first_row[3] > first_row[4]
+
+
 if __name__ == "__main__":
-    test_clip_simple_video_example()  # test_clip_simple_video_example()
+    test_text_embeds()  # test_clip_simple_video_example()
     print("All tests passed!")

@@ -6,7 +6,7 @@ Each backbone has the following functionality:
 - `self.get_video_level_embeds(video_batch)` gets an embedding of size `(b, d)`, representing the batch size and the video-level embedding dimension.  This calls `self.get_spatio_temporal_embeds` and then `self.convert_spatio_temporal_embeds_to_video`.
 - `self.get_video_level_embed_dim()` returns `d`.
 
-All backbones should be loaded with `video.video_encoders.<backbone-name>.load_<backbone-name>_backbone`.  The arguments are `(model_name, num_frames)`
+All backbones should be loaded with `video.video_encoders.utils.get_backgone`.  The arguments are `(model_name, **kwargs)`
 
 For each backbone that does not inherently support this API, we add spatial/temporal pooling layers or use the embeddings from an earlier layer in the backbone as needed.  
 
