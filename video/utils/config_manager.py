@@ -61,7 +61,7 @@ def merge_wandb_args(config, wandb_args):
                 config.model.backbone_lr_multiplier = value
         elif key == "num_frozen_epochs":
             if value is not None:
-                config.model.num_frozen_epochs = value
+                config.trainer.num_frozen_epochs = value
         elif key == "max_epochs":
             if value is not None:
                 config.trainer.max_epochs = value
@@ -121,12 +121,8 @@ def get_run_name(config):
     # Set the arguments that are not used in the run name
     priority_keys = ["data", "model"]
     ignored_keys = ["logger"]
-    priority_parts = [config[key] for key in priority_keys if key in config.keys()]
-    priority_parts = [
-        normalize_key_value(key, value)
-        for priority_part in priority_parts
-        for key, value in priority_part.items()
-    ]
+
+    priority_parts = [normalize_key_value(key, config[key]) for key in priority_keys]
 
     remaining_parts = [
         normalize_key_value(key, config[key])

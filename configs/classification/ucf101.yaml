@@ -1,9 +1,17 @@
+# Extremely stable training
 data:
   datasets: 
     - ucf101 # TODO: Detect number of classes
+  num_frames: 8
 
 trainer:
-  lr: 1e-2
+  lr: 0.0004
+  max_epochs: 100
+  num_frozen_epochs: 2
+  head_weight_decay: 0.035
+  backbone_weight_decay: 0.04
+  head_dropout: 0.25
+  backbone_lr_multiplier: 1.7e-5
 
 logger:
   log_every_n_steps: 10

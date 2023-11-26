@@ -27,11 +27,12 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 - [x] Figure out why the learning rate and momentum is not logged to wandb
 - [x] Create good nested config system
 - [x] Fix config test
-- [ ] Make test for large csvs
-- [ ] Add hyperparameter sweeps with wandb
-- [ ] Allow for multiple datasets for training (how to weight?)
-- [ ] Detect the number of classes for the dataset(s) automatically
+- [x] Add hyperparameter sweeps with wandb
+- [x] Detect the number of classes for the dataset(s) automatically (requires setup)
+- [ ] Finishing touches on wandb sweeps
 - [ ] Extend codebase to support video-text matching as a task.
+- [ ] Allow for multiple datasets for training (how to weight?)
+- [ ] Make test for large csvs
 - [ ] Add multiple dataset support + Kinetics-400
 - [ ] Add NTP part to the codebase
 - [ ] Add the webvid rewritten dataset to the codebase.
