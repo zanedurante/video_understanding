@@ -1,7 +1,7 @@
 # Extremely stable training
 data:
   datasets: 
-    - ucf101 # TODO: Detect number of classes
+    - ucf101 
   num_frames: 8
 
 trainer:

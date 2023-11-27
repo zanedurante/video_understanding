@@ -12,7 +12,7 @@ import os
 from glob import glob
 from omegaconf import OmegaConf
 from video.utils.config_manager import get_config, get_num_workers
-from video.utils.module_loader import get_module
+from video.utils.module_loader import get_model_module, get_data_module_from_config
 
 
 def get_args():
@@ -104,12 +104,8 @@ def main(args):
         deterministic=is_deterministic,
     )
 
-    data_module = VideoDataModule(
-        dataset_name=dataset_name,
-        batch_size=config.trainer.batch_size,
-        num_workers=config.trainer.num_workers,
-        num_frames=config.data.num_frames,
-    )
+    data_module = get_data_module_from_config(config)
+
 
     # total steps = steps per epoch * num epochs
     total_num_steps = (
@@ -118,12 +114,12 @@ def main(args):
         * config.trainer.max_epochs
     )
 
-    model_module = get_module(config.model.type)
+    model_module = get_model_module(config.model.type)
 
     if type(model_module) == Classifier:
         module = model_module(
             config,
-            num_classes=num_classes,
+            num_classes=data_module.get_stats()["num_classes"],
             total_num_steps=total_num_steps,
         )
     else:

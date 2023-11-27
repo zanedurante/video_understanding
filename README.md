@@ -29,10 +29,11 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 - [x] Fix config test
 - [x] Add hyperparameter sweeps with wandb
 - [x] Detect the number of classes for the dataset(s) automatically (requires setup)
-- [ ] Finishing touches on wandb sweeps
+- [x] Finishing touches on wandb sweeps
 - [ ] Extend codebase to support video-text matching as a task.
+- [ ] Add hmdb to test on another dataset
 - [ ] Allow for multiple datasets for training (how to weight?)
-- [ ] Make test for large csvs
+- [ ] Modify code to allow for large csv loading
 - [ ] Add multiple dataset support + Kinetics-400
 - [ ] Add NTP part to the codebase
 - [ ] Add the webvid rewritten dataset to the codebase.

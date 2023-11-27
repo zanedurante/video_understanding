@@ -5,85 +5,76 @@ from video.video_encoders import get_backbone
 from video.text_encoders import get_text_encoder
 import torchmetrics
 from torch.optim.lr_scheduler import CosineAnnealingLR
+from video.utils.config_manager import get_val_from_config
+import numpy as np
 
 
 class DualEncoder(pl.LightningModule):
     def __init__(
         self,
-        backbone_name,
-        text_encoder_name,
-        num_frames,
-        head=None,  # By default, just use the heads on the encoders, no additional
-        lr=1e-6,
-        num_frozen_epochs=0,  # For training the head only
-        total_num_epochs=10,
+        config,
         total_num_steps=1e6,
-        backbone_lr_multiplier=0.01,
-        backbone_weight_decay=0.0,
-        text_encoder_lr_multiplier=0.01,
-        text_encoder_weight_decay=0.0,
-        head_weight_decay=0.0,
-        head_dropout=0.0,
-        drop_repeat_text=False,
-        shared_embed_dim=None,  # If None, use the default embed dim of the video encoder
     ):
         super().__init__()
-        # TODO: Make precision configurable somehow
-        self.video_backbone = get_backbone(backbone_name, num_frames=num_frames).float()
-
+        self.config = config
+        backbone_name = get_val_from_config(config, "model.backbone_name")
+        self.num_frames = get_val_from_config(config, "data.num_frames")
+        text_encoder_name = get_val_from_config(config, "model.text_encoder_name")
+        self.video_backbone = get_backbone(backbone_name, num_frames=self.num_frames).float()
         self.text_encoder = get_text_encoder(text_encoder_name).float()
-        self.head_type = head
-        self.num_frames = num_frames
-        self.num_frozen_epochs = num_frozen_epochs
-        self.total_num_epochs = total_num_epochs
-        self.backbone_lr_multiplier = backbone_lr_multiplier
-        self.text_encoder_lr_multiplier = text_encoder_lr_multiplier
-        self.lr = lr
-        self.val_acc = torchmetrics.classification.Accuracy(task="multiclass")
-        self.train_acc = torchmetrics.classification.Accuracy(task="multiclass")
-        self.head_weight_decay = head_weight_decay
-        self.backbone_weight_decay = backbone_weight_decay
-        self.text_encoder_weight_decay = text_encoder_weight_decay
+        self.head_type = get_val_from_config(config, "model.head", None)
+        self.head_dropout = get_val_from_config(config, "model.head_dropout", 0.0)
+        self.num_frozen_epochs = get_val_from_config(config, "trainer.num_frozen_epochs", 0)
+        self.total_num_epochs = get_val_from_config(config, "trainer.max_epochs", 10)
+        self.backbone_lr_multiplier = get_val_from_config(config, "trainer.backbone_lr_multiplier", 1.0)
+        self.text_encoder_lr_multiplier = get_val_from_config(config, "trainer.text_encoder_lr_multiplier", 1.0)
+        self.lr = get_val_from_config(config, "trainer.lr", 1e-4)
+        self.batch_size = get_val_from_config(config, "trainer.batch_size", 16)
+        self.val_batch_size = get_val_from_config(config, "trainer.val_batch_size", self.batch_size)
+        self.val_acc = contrastive_acc
+        self.train_acc = contrastive_acc
+        self.head_weight_decay = get_val_from_config(config, "trainer.head_weight_decay", 0.0)
+        self.backbone_weight_decay = get_val_from_config(config, "trainer.backbone_weight_decay", 0.0)
+        self.text_encoder_weight_decay = get_val_from_config(config, "trainer.text_encoder_weight_decay", 0.0)
         self.backbone_is_frozen = False
         self.text_encoder_is_frozen = False
-        self.head_dropout = head_dropout
         self.total_num_steps = total_num_steps
-        self.shared_embed_dim = shared_embed_dim
-        self.drop_repeat_text = drop_repeat_text
-        self.logit_scale = nn.Parameter(torch.tensor([np.log(1 / 0.07)]))
+        self.shared_embed_dim = get_val_from_config(config, "model.shared_embed_dim", None)
+        self.drop_repeat_text = get_val_from_config(config, "trainer.drop_repeat_text", False)
+        self.logit_scale = nn.Parameter(torch.tensor([np.log(1 / 0.07)], dtype=torch.float32))
         # init from visual encoder if it has logit_scale
-        if hasattr(self.video_backbone, "logit_scale"):
-            print("Initializing logit scale from visual encoder")
-            self.logit_scale.data = self.video_backbone.logit_scale.data
+        #if hasattr(self.video_backbone, "logit_scale"):
+        #    print("Initializing logit scale from visual encoder")
+        #    self.logit_scale.data = self.video_backbone.logit_scale.data
 
         if self.shared_embed_dim is None:
             self.shared_embed_dim = self.video_backbone.get_video_level_embed_dim()
 
-        if head is None:
+        if self.head_type is None:
             self.visual_head = nn.Identity()
             self.text_head = nn.Identity()
-        elif head == "linear":
+        elif self.head_type == "linear":
             self.visual_head = nn.Sequential(
-                nn.Dropout(head_dropout),
+                nn.Dropout(self.head_dropout),
                 nn.Linear(
                     self.video_backbone.get_video_level_embed_dim(),
                     self.shared_embed_dim,
                 ),
             )
             self.text_head = nn.Sequential(
-                nn.Dropout(head_dropout),
+                nn.Dropout(self.head_dropout),
                 nn.Linear(
                     self.text_encoder.get_text_embed_dim(), self.shared_embed_dim
                 ),
             )
-        elif head == "mlp":
+        elif self.head_type == "mlp":
             self.visual_head = nn.Sequential(
                 nn.Linear(
                     self.video_backbone.get_video_level_embed_dim(),
                     self.video_backbone.get_video_level_embed_dim(),
                 ),
                 nn.GELU(),
-                nn.Dropout(head_dropout),
+                nn.Dropout(self.head_dropout),
                 nn.Linear(
                     self.video_backbone.get_video_level_embed_dim(),
                     self.shared_embed_dim,
@@ -95,7 +86,7 @@ class DualEncoder(pl.LightningModule):
                     self.text_encoder.get_text_embed_dim(),
                 ),
                 nn.GELU(),
-                nn.Dropout(head_dropout),
+                nn.Dropout(self.head_dropout),
                 nn.Linear(
                     self.text_encoder.get_text_embed_dim(), self.shared_embed_dim
                 ),  # By default just repeat the video_level_embed_dim
@@ -143,9 +134,15 @@ class DualEncoder(pl.LightningModule):
         self.text_encoder.train()
         return
 
+    def get_prompt(self, text):
+        prompt = "a photo of a person {}.".format(text)
+        return prompt
+
     def forward(self, batch):
+        video = batch["video"]
+        text = batch["caption"]
         video_features = self.video_backbone.get_video_level_embeds(video)
-        text_features = self.text_encoder.encode_text(text)
+        text_features = self.text_encoder.get_text_embeds(text)
 
         video_features = self.visual_head(video_features)
         text_features = self.text_head(text_features)
@@ -163,9 +160,9 @@ class DualEncoder(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         video = batch["video"]
-        text = batch["caption"]
+        text = [self.get_prompt(text) for text in batch["caption"]]
         if self.drop_repeat_text:  # TODO: Move to training step
-            good_indices = self.get_text_indices(text)
+            good_indices = get_text_indices(text)
             video = video[good_indices]
             text = [text[i] for i in good_indices]
         batch_size = len(text)
@@ -177,10 +174,19 @@ class DualEncoder(pl.LightningModule):
         self.log(
             "train_acc", train_acc, batch_size=batch_size, on_step=False, on_epoch=True
         )
+        self.log("logit_scale_exp", self.logit_scale.exp(), on_step=True, on_epoch=False)
         return loss
 
     def validation_step(self, batch, batch_idx):
-        logits_per_video, logits_per_text = self(batch)
+        video = batch["video"]
+        text = [self.get_prompt(text) for text in batch["caption"]]
+        logits_per_video, logits_per_text = self(
+            {
+                "video": video,
+                "caption": text,
+            }
+        )
+        batch_size = len(batch["caption"])
 
         labels = torch.arange(batch_size).to(logits_per_video.device)
 
@@ -226,6 +232,12 @@ class DualEncoder(pl.LightningModule):
                 "weight_decay": self.text_encoder_weight_decay,
                 "name": "text_encoder",
             },
+            {
+                "params": self.logit_scale,
+                "lr": self.lr,
+                "weight_decay": 0.0,
+                "name": "logit_scale",
+            }
         ]
 
         # TODO: Make these more configurable
@@ -243,6 +255,11 @@ class DualEncoder(pl.LightningModule):
             },
         }
 
+def contrastive_acc(logits, labels):
+    # logits.shape = [batch_size, batch_size]
+    # labels.shape = [batch_size]
+    preds = logits.argmax(dim=-1)
+    return (preds == labels).float().mean()
 
 # TODO: Currently only drops exact repeats, maybe we should drop similar text?
 def get_text_indices(text):
@@ -255,4 +272,5 @@ def get_text_indices(text):
         else:
             texts_seen.add(t)
             good_indices.append(idx)
+
     return torch.tensor(good_indices)  # torch.tensor(good_indices)

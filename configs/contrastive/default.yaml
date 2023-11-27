@@ -1,0 +1,29 @@
+# This is not currently used, but it is how I will configure the codebase
+# TODO: Load with OmegaConf from default.yaml
+data:
+  datasets: 
+    - ucf101 # TODO: Detect number of classes
+  num_frames: 16
+
+model:
+  type: dual_encoder # which module to use
+  backbone_name: clip_ViT-B/16
+  text_encoder_name: clip_ViT-B/16
+  head: null
+  shared_embed_dim: null # Detect from backbone
+  head_dropout: 0.0
+  head_weight_decay: 0.0
+  backbone_weight_decay: 0.0
+
+trainer:
+  lr: 1e-5
+  batch_size: 16
+  max_epochs: 10
+  num_frozen_epochs: 0
+  backbone_lr_multiplier: 1.0
+  text_encoder_lr_multiplier: 1.0
+  precision: 32
+  drop_repeat_text: True
+
+logger:
+  log_every_n_steps: 10

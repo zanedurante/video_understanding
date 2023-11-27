@@ -25,7 +25,7 @@ class CLIPTextEncoder(BaseTextEncoder):
             lora=lora,
             device=device,
         )
-        clip_model = load_clip(clip_model_name, device=device)[0]
+        clip_model = load_clip(clip_model_name, device=device)[0].float() # TODO: Make precision configurable
         self.token_embedding = clip_model.token_embedding
         self.positional_embedding = clip_model.positional_embedding
         self.transformer = clip_model.transformer
