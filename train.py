@@ -108,7 +108,6 @@ def main(args):
 
     data_module = get_data_module_from_config(config)
 
-
     # total steps = steps per epoch * num epochs
     total_num_steps = (
         data_module.get_stats()["num_train_videos"]

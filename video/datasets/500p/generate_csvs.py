@@ -3,7 +3,7 @@ import os
 from tqdm import tqdm
 
 # use metadata.csv to generate initial splits
-df = pd.read_csv('new.csv')
+df = pd.read_csv("new.csv")
 
 DATASET_DIR = "/data/video_narration/"
 
@@ -12,11 +12,11 @@ print(df.columns)
 
 # do initial split of train/val+test by narration folder
 # use 67/33 split
-start_times = df['start_frame']
-end_times = df['end_frame']
-captions = df['caption']
-global_captions = df['global_caption']
-video_paths = [path.replace(DATASET_DIR, "") for path in df['video_path']]
+start_times = df["start_frame"]
+end_times = df["end_frame"]
+captions = df["caption"]
+global_captions = df["global_caption"]
+video_paths = [path.replace(DATASET_DIR, "") for path in df["video_path"]]
 
 # first level of path
 narration_folders = [path.split("/")[0] for path in video_paths]
@@ -38,7 +38,9 @@ for i in range(3):
         else:
             train_idxs.append(j)
     train_narration_folders = set([unique_narration_folders[idx] for idx in train_idxs])
-    val_test_narration_folders = set([unique_narration_folders[idx] for idx in val_test_idxs])
+    val_test_narration_folders = set(
+        [unique_narration_folders[idx] for idx in val_test_idxs]
+    )
 
     # get video_paths, start_times, end_times, captions for train/val+test
     train_video_paths = []
@@ -50,7 +52,9 @@ for i in range(3):
     val_test_end_times = []
     val_test_captions = []
 
-    for idx, narration_folder in tqdm(enumerate(narration_folders), total=len(narration_folders)):
+    for idx, narration_folder in tqdm(
+        enumerate(narration_folders), total=len(narration_folders)
+    ):
         video_path = video_paths[idx]
         start_time = start_times[idx]
         end_time = end_times[idx]
@@ -67,37 +71,40 @@ for i in range(3):
             val_test_captions.append(caption)
 
     # create train/val+test dataframes
-    train_df = pd.DataFrame({
-        'video_path': train_video_paths,
-        'start_frame': train_start_times,
-        'end_frame': train_end_times,
-        'caption': train_captions,
-        'num_skip_frames': skip_frames,
-    })
+    train_df = pd.DataFrame(
+        {
+            "video_path": train_video_paths,
+            "start_frame": train_start_times,
+            "end_frame": train_end_times,
+            "caption": train_captions,
+            "num_skip_frames": skip_frames,
+        }
+    )
 
-    val_df = pd.DataFrame({
-        'video_path': val_test_video_paths,
-        'start_frame': val_test_start_times,
-        'end_frame': val_test_end_times,
-        'caption': val_test_captions,
-        'num_skip_frames': skip_frames,
-    })
+    val_df = pd.DataFrame(
+        {
+            "video_path": val_test_video_paths,
+            "start_frame": val_test_start_times,
+            "end_frame": val_test_end_times,
+            "caption": val_test_captions,
+            "num_skip_frames": skip_frames,
+        }
+    )
 
     # save train/val+test dataframes
     train_df.to_csv(os.path.join("train_new{}.csv".format(i)), index=False)
     val_df.to_csv(os.path.join("test_new{}.csv".format(i)), index=False)
 
 # Create train.csv with all data
-df = pd.DataFrame({
-    'video_path': video_paths,
-    'start_frame': start_times,
-    'end_frame': end_times,
-    'caption': captions,
-    'num_skip_frames': skip_frames,
-    'global_caption': global_captions,
-})
+df = pd.DataFrame(
+    {
+        "video_path": video_paths,
+        "start_frame": start_times,
+        "end_frame": end_times,
+        "caption": captions,
+        "num_skip_frames": skip_frames,
+        "global_caption": global_captions,
+    }
+)
 
 df.to_csv("train_new.csv", index=False)
-
-
-

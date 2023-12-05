@@ -89,7 +89,7 @@ def get_wandb_args(args):
         "max_epochs",
         "fast_run",
         "text_encoder_lr_multiplier",
-        "text_encoder_weight_decay"
+        "text_encoder_weight_decay",
     ]
     wandb_args = {}
     if args is None:

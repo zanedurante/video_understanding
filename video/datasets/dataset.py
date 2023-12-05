@@ -99,7 +99,7 @@ def init_transform_dict(
 
 
 def get_transforms(split):
-    if "train" in split: 
+    if "train" in split:
         return init_transform_dict()["train"]
     elif "val" in split:
         return init_transform_dict()["val"]
@@ -125,8 +125,10 @@ class VideoDataset(Dataset):
         row = self.data.iloc[idx]
         rel_video_path = row["video_path"]
         full_video_path = os.path.join(self.dataset_dir_path, rel_video_path)
-        label = row.get("label", 0) # default to class 0 if label is not present
-        caption = row.get("caption", "") # default to empty string if caption is not present
+        label = row.get("label", 0)  # default to class 0 if label is not present
+        caption = row.get(
+            "caption", ""
+        )  # default to empty string if caption is not present
         start_frame = row.get("start_frame", 0)
         end_frame = row.get("end_frame", -1)
         num_skip_frames = row.get("num_skip_frames", -1)

@@ -81,7 +81,12 @@ def visualize_sample(sample, use_clip_norm=True, overlay=True):
 
 
 def visualize_dataset(
-    dataset_name, output_dir="visualizations", num_samples=16, use_clip_norm=True, num_frames=4, overlay=True
+    dataset_name,
+    output_dir="visualizations",
+    num_samples=16,
+    use_clip_norm=True,
+    num_frames=4,
+    overlay=True,
 ):
     """
     Visualizes a dataset by loading samples from it and visualizing it.
@@ -93,12 +98,16 @@ def visualize_dataset(
     else:
         modifier = ""
 
-    dataset = VideoDataset(dataset_name, dataset_split="train"+modifier, num_frames=num_frames)
+    dataset = VideoDataset(
+        dataset_name, dataset_split="train" + modifier, num_frames=num_frames
+    )
     if num_samples == -1:
         num_samples = len(dataset)
     for i in tqdm(range(num_samples)):
         sample = dataset[i]
 
-        combined_image = visualize_sample(sample, use_clip_norm=use_clip_norm, overlay=overlay)
+        combined_image = visualize_sample(
+            sample, use_clip_norm=use_clip_norm, overlay=overlay
+        )
         # save image to visualizations/{i}.png
         cv2.imwrite("{}/{}.png".format(output_dir, i), combined_image)

@@ -20,30 +20,52 @@ class DualEncoder(pl.LightningModule):
         backbone_name = get_val_from_config(config, "model.backbone_name")
         self.num_frames = get_val_from_config(config, "data.num_frames")
         text_encoder_name = get_val_from_config(config, "model.text_encoder_name")
-        self.video_backbone = get_backbone(backbone_name, num_frames=self.num_frames).float()
+        self.video_backbone = get_backbone(
+            backbone_name, num_frames=self.num_frames
+        ).float()
         self.text_encoder = get_text_encoder(text_encoder_name).float()
         self.head_type = get_val_from_config(config, "model.head", None)
         self.head_dropout = get_val_from_config(config, "model.head_dropout", 0.0)
-        self.num_frozen_epochs = get_val_from_config(config, "trainer.num_frozen_epochs", 0)
+        self.num_frozen_epochs = get_val_from_config(
+            config, "trainer.num_frozen_epochs", 0
+        )
         self.total_num_epochs = get_val_from_config(config, "trainer.max_epochs", 10)
-        self.backbone_lr_multiplier = get_val_from_config(config, "trainer.backbone_lr_multiplier", 1.0)
-        self.text_encoder_lr_multiplier = get_val_from_config(config, "trainer.text_encoder_lr_multiplier", 1.0)
+        self.backbone_lr_multiplier = get_val_from_config(
+            config, "trainer.backbone_lr_multiplier", 1.0
+        )
+        self.text_encoder_lr_multiplier = get_val_from_config(
+            config, "trainer.text_encoder_lr_multiplier", 1.0
+        )
         self.lr = get_val_from_config(config, "trainer.lr", 1e-4)
         self.batch_size = get_val_from_config(config, "trainer.batch_size", 16)
-        self.val_batch_size = get_val_from_config(config, "trainer.val_batch_size", self.batch_size)
+        self.val_batch_size = get_val_from_config(
+            config, "trainer.val_batch_size", self.batch_size
+        )
         self.val_acc = contrastive_acc
         self.train_acc = contrastive_acc
-        self.head_weight_decay = get_val_from_config(config, "trainer.head_weight_decay", 0.0)
-        self.backbone_weight_decay = get_val_from_config(config, "trainer.backbone_weight_decay", 0.0)
-        self.text_encoder_weight_decay = get_val_from_config(config, "trainer.text_encoder_weight_decay", 0.0)
+        self.head_weight_decay = get_val_from_config(
+            config, "trainer.head_weight_decay", 0.0
+        )
+        self.backbone_weight_decay = get_val_from_config(
+            config, "trainer.backbone_weight_decay", 0.0
+        )
+        self.text_encoder_weight_decay = get_val_from_config(
+            config, "trainer.text_encoder_weight_decay", 0.0
+        )
         self.backbone_is_frozen = False
         self.text_encoder_is_frozen = False
         self.total_num_steps = total_num_steps
-        self.shared_embed_dim = get_val_from_config(config, "model.shared_embed_dim", None)
-        self.drop_repeat_text = get_val_from_config(config, "trainer.drop_repeat_text", False)
-        self.logit_scale = nn.Parameter(torch.tensor([np.log(1 / 0.07)], dtype=torch.float32))
+        self.shared_embed_dim = get_val_from_config(
+            config, "model.shared_embed_dim", None
+        )
+        self.drop_repeat_text = get_val_from_config(
+            config, "trainer.drop_repeat_text", False
+        )
+        self.logit_scale = nn.Parameter(
+            torch.tensor([np.log(1 / 0.07)], dtype=torch.float32)
+        )
         # init from visual encoder if it has logit_scale
-        #if hasattr(self.video_backbone, "logit_scale"):
+        # if hasattr(self.video_backbone, "logit_scale"):
         #    print("Initializing logit scale from visual encoder")
         #    self.logit_scale.data = self.video_backbone.logit_scale.data
 
@@ -174,7 +196,9 @@ class DualEncoder(pl.LightningModule):
         self.log(
             "train_acc", train_acc, batch_size=batch_size, on_step=False, on_epoch=True
         )
-        self.log("logit_scale_exp", self.logit_scale.exp(), on_step=True, on_epoch=False)
+        self.log(
+            "logit_scale_exp", self.logit_scale.exp(), on_step=True, on_epoch=False
+        )
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -237,7 +261,7 @@ class DualEncoder(pl.LightningModule):
                 "lr": self.lr,
                 "weight_decay": 0.0,
                 "name": "logit_scale",
-            }
+            },
         ]
 
         # TODO: Make these more configurable
@@ -255,11 +279,13 @@ class DualEncoder(pl.LightningModule):
             },
         }
 
+
 def contrastive_acc(logits, labels):
     # logits.shape = [batch_size, batch_size]
     # labels.shape = [batch_size]
     preds = logits.argmax(dim=-1)
     return (preds == labels).float().mean()
+
 
 # TODO: Currently only drops exact repeats, maybe we should drop similar text?
 def get_text_indices(text):

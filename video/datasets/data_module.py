@@ -55,15 +55,17 @@ class VideoDataModule(pl.LightningDataModule):
         self.num_workers = num_workers
         self.kwargs = kwargs
 
-    def setup(self, stage=None):        
+    def setup(self, stage=None):
         self.train_dataset = VideoDataset(
-            self.dataset_name, dataset_split="train" + self.variant_suffix, **self.kwargs
+            self.dataset_name,
+            dataset_split="train" + self.variant_suffix,
+            **self.kwargs
         )
         self.val_dataset = VideoDataset(
-            self.dataset_name, dataset_split="val"+ self.variant_suffix, **self.kwargs
+            self.dataset_name, dataset_split="val" + self.variant_suffix, **self.kwargs
         )
         self.test_dataset = VideoDataset(
-            self.dataset_name, dataset_split="test"+ self.variant_suffix, **self.kwargs
+            self.dataset_name, dataset_split="test" + self.variant_suffix, **self.kwargs
         )
         # print("IN SETUP:", len(self.train_dataset))
 
