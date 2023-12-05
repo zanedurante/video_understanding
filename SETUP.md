@@ -1,3 +1,11 @@
+## Instructions for easy setup (not working right now for some reason, not using --extra-index-url correctly)
+`conda create --name video python=3.8`
+`conda activate video`
+`git clone https://github.com/zanedurante/video_understanding.git`
+`cd video_understanding` 
+`pip install -e .`
+
+
 ## Instructions for manual setup
 Assumes cuda version 11.3  For different cuda versions, we will need to update the pytorch version as well.
 
@@ -16,7 +24,7 @@ Assumes cuda version 11.3  For different cuda versions, we will need to update t
 `pip install lightning`
 
 ### install remaining dependencies in setup.py 
-`pip install ftfy, regex, decord, pandas, black, wandb, matplotlib, omegaconf`
+`pip install ftfy, regex, decord, pandas, black, wandb, matplotlib, omegaconf, opencv-python`
 
-### final step: run pytest in the video_understanding directory.  This will run all tests to make sure you are setup correctly
+### final step: run pytest in the video_understanding directory.  This will run all tests to make sure you are setup correctly. Warnings are ok
 `pytest`

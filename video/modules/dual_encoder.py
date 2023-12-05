@@ -50,7 +50,7 @@ class DualEncoder(pl.LightningModule):
         if self.shared_embed_dim is None:
             self.shared_embed_dim = self.video_backbone.get_video_level_embed_dim()
 
-        if self.head_type is None:
+        if self.head_type is None or self.head_type.lower() == "none":
             self.visual_head = nn.Identity()
             self.text_head = nn.Identity()
         elif self.head_type == "linear":
@@ -92,7 +92,7 @@ class DualEncoder(pl.LightningModule):
                 ),  # By default just repeat the video_level_embed_dim
             )
         else:
-            raise ValueError(f"Invalid head type: {head}")
+            raise ValueError(f"Invalid head type: {self.head_type}")
 
     def on_train_epoch_start(self):
         if self.current_epoch == 0 and self.num_frozen_epochs > 0:

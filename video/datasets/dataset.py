@@ -35,9 +35,9 @@ def get_dataset_csv(dataset_name, dataset_split):
     with open(os.path.join(file_dir, dataset_name, "dataset_dir.txt"), "r") as f:
         dataset_dir = f.read().strip()
 
-    if dataset_split == "val":
+    if "val" in dataset_split:
         if not has_val_split(dataset_name):
-            dataset_split = "test"
+            dataset_split = dataset_split.replace("val", "test")
             print(
                 "WARNING: No val split found for dataset {}. Using test split instead.".format(
                     dataset_name
@@ -99,8 +99,12 @@ def init_transform_dict(
 
 
 def get_transforms(split):
-    if split in ["train", "val", "test"]:
-        return init_transform_dict()[split]
+    if "train" in split: 
+        return init_transform_dict()["train"]
+    elif "val" in split:
+        return init_transform_dict()["val"]
+    elif "test" in split:
+        return init_transform_dict()["test"]
     else:
         raise ValueError("Split {} not supported.".format(split))
 
@@ -121,8 +125,8 @@ class VideoDataset(Dataset):
         row = self.data.iloc[idx]
         rel_video_path = row["video_path"]
         full_video_path = os.path.join(self.dataset_dir_path, rel_video_path)
-        label = row.get("label", None)
-        caption = row.get("caption", None)
+        label = row.get("label", 0) # default to class 0 if label is not present
+        caption = row.get("caption", "") # default to empty string if caption is not present
         start_frame = row.get("start_frame", 0)
         end_frame = row.get("end_frame", -1)
         num_skip_frames = row.get("num_skip_frames", -1)

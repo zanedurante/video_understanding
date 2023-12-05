@@ -2,13 +2,13 @@
 # TODO: Load with OmegaConf from default.yaml
 data:
   datasets: 
-    - ucf101
+    - 500p_new0 # contains the re-annotated videos in training split
   num_frames: 16
 
 model:
   type: dual_encoder # which module to use
-  backbone_name: clip_ViT-B/16
-  text_encoder_name: clip_ViT-B/16
+  backbone_name: clip_ViT-B/32
+  text_encoder_name: clip_ViT-B/32
   head: null
   shared_embed_dim: null # Detect from backbone
   head_dropout: 0.0
@@ -24,6 +24,7 @@ trainer:
   text_encoder_lr_multiplier: 1.0
   precision: 32
   drop_repeat_text: True
+  num_workers: cpus-4
 
 logger:
   log_every_n_steps: 10

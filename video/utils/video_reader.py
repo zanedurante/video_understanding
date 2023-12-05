@@ -58,6 +58,12 @@ def load_video(
             :num_frames
         ]
 
+        # Repeat the last frame if we don't have enough frames
+        if len(frame_indices) < num_frames:
+            frame_indices = np.append(
+                frame_indices, np.repeat(frame_indices[-1], num_frames - len(frame_indices))
+            )
+
     frames = video_reader.get_batch(frame_indices)
     frames = frames.float() / 255
     frames = frames.permute(0, 3, 1, 2)

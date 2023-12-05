@@ -65,6 +65,12 @@ def merge_wandb_args(config, wandb_args):
         elif key == "max_epochs":
             if value is not None:
                 config.trainer.max_epochs = value
+        elif key == "text_encoder_weight_decay":
+            if value is not None:
+                config.trainer.text_encoder_weight_decay = value
+        elif key == "text_encoder_lr_multiplier":
+            if value is not None:
+                config.trainer.text_encoder_lr_multiplier = value
     return config
 
 
@@ -82,6 +88,8 @@ def get_wandb_args(args):
         "num_frozen_epochs",
         "max_epochs",
         "fast_run",
+        "text_encoder_lr_multiplier",
+        "text_encoder_weight_decay"
     ]
     wandb_args = {}
     if args is None:

@@ -1,0 +1,679 @@
+video_path,start_frame,end_frame,caption,num_skip_frames
+2023_05_09_julie/clip_01/rt.mp4,0,193, The patient appears to be post procedure of procedure.,4
+2023_05_09_julie/clip_02/rt.mp4,0,49, Nothing to add to the clinical summary.,4
+2023_05_09_julie/clip_03/rt.mp4,0,50, Nothing notable.,4
+2023_05_09_julie/clip_04/rt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_05/rt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_06/rt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_07/rt.mp4,0,95, The patient is alert and calm and has been weaned off the non-rear mask.,4
+2023_05_09_julie/clip_07/rt.mp4,95,175," Labs have been sent, pending results.",4
+2023_05_09_julie/clip_07/rt.mp4,175,455, The patient remains alert and calm.,4
+2023_05_09_julie/clip_08/rt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_09/rt.mp4,0,30, Nothing to add.,4
+2023_05_09_julie/clip_19/rt.mp4,0,90, It does appear in this video slightly difficult to tell what the nurse was trying to accomplish,4
+2023_05_09_julie/clip_19/rt.mp4,90,465, or what the nurse was trying to change in the bed setting.,4
+2023_05_12_rachel/clip_01_01/rt.mp4,0,105, This is a new patient admission that just arrived to the ICU.,4
+2023_05_12_rachel/clip_01_01/rt.mp4,105,225," The patient was calm, did not appear to be in any distress, is on high flow nasal cannula.",4
+2023_05_12_rachel/clip_01_01/rt.mp4,225,300, The patient was moved from a floor bed to an ICU bed.,4
+2023_05_12_rachel/clip_01_01/rt.mp4,300,345, There were multiple staff in the room.,4
+2023_05_12_rachel/clip_01_01/rt.mp4,345,450, IVs have been checked and vital signs have been obtained and provider in the room.,4
+2023_05_12_rachel/clip_01_02/rt.mp4,0,265," The heart rate and rhythm has been, nope, oh, stop that over.",4
+2023_05_12_rachel/clip_01_02/rt.mp4,265,371," A 12-Lady EKG has been performed, assessment of lung sounds and heart sounds as well as",4
+2023_05_12_rachel/clip_01_02/rt.mp4,403,483, The providers are in the room.,4
+2023_05_12_rachel/clip_01_02/rt.mp4,483,860, Patient is awake on high-flow nasal cannula.,4
+2023_05_12_rachel/clip_02_01/rt.mp4,0,150, The providers are doing a bedside echo and setting up to perform an arterial line insertion.,4
+2023_05_12_rachel/clip_02_01/rt.mp4,150,215," Patient is calm, awake, and communicative.",4
+2023_05_12_rachel/clip_02_01/rt.mp4,215,285, The patient is on high flow nasal cannula.,4
+2023_05_12_rachel/clip_02_01/rt.mp4,285,465, The patient is on high flow nasal cannula.,4
+2023_05_12_rachel/clip_02_02/rt.mp4,0,136," The patient has become more restless, constantly moving and changing position.",4
+2023_05_12_rachel/clip_02_02/rt.mp4,136,257, The providers are setting up to do a art line on the right wrist.,4
+2023_05_12_rachel/clip_02_02/rt.mp4,257,457, The patient is calm and awake.,4
+2023_05_12_rachel/clip_02_03/rt.mp4,0,70, There are multiple providers in this patient's room.,4
+2023_05_12_rachel/clip_02_03/rt.mp4,70,133, The patient appears to be in respiratory distress.,4
+2023_05_12_rachel/clip_02_03/rt.mp4,133,297, He is on high flow nasal cannula and his breathing is labored with very fast and shallow breaths.,4
+2023_05_12_rachel/clip_02_03/rt.mp4,297,404," The patient seems to be unstable as multiple providers, both nurses and physicians are",4
+2023_05_12_rachel/clip_02_03/rt.mp4,404,463, going in and out of the room setting up for multiple drips.,4
+2023_05_12_rachel/clip_02_03/rt.mp4,463,589," There are two providers attempting to get arterial line access, but were not able to",4
+2023_05_12_rachel/clip_02_03/rt.mp4,589,685, with a failed first attempt and the second attempt being tried with the second provider,4
+2023_05_12_rachel/clip_02_03/rt.mp4,685,859, in blue who had broke sterility on multiple occasions.,4
+2023_05_12_rachel/clip_03_01/rt.mp4,0,113, There were multiple providers in and out of the patient room as the providers were attempting,4
+2023_05_12_rachel/clip_03_01/rt.mp4,113,168, a second time to insert an arterial line.,4
+2023_05_12_rachel/clip_03_01/rt.mp4,168,293," The patient remains restless with some labored breathing, with fast shallow breaths.",4
+2023_05_12_rachel/clip_03_01/rt.mp4,293,390, Patient was more restless during this clip and the providers were able to insert a arterial,4
+2023_05_12_rachel/clip_03_02/rt.mp4,0,105, The art line has been successfully inserted into the right wrist.,4
+2023_05_12_rachel/clip_03_02/rt.mp4,105,229, The patient is still on high flow and has multiple IV infusions running.,4
+2023_05_12_rachel/clip_03_02/rt.mp4,229,463, The patient is restless with intermediate periods of calm.,4
+2023_05_12_rachel/clip_03_03/rt.mp4,0,124," The Artline is set up and has positive blood return, was able to draw labs.",4
+2023_05_12_rachel/clip_03_03/rt.mp4,124,199, The phlebotomist is there setting up to do blood cultures.,4
+2023_05_12_rachel/clip_03_03/rt.mp4,199,254, Provider has been in and out of the room.,4
+2023_05_12_rachel/clip_03_03/rt.mp4,254,454, Provider change in patient condition.,4
+2023_05_25_julie/clip_02_01/rt.mp4,0,45, Nothing to add.,4
+2023_05_25_julie/clip_02_02/rt.mp4,0,30, Nothing to add.,4
+2023_05_25_julie/clip_04/rt.mp4,0,108, The only thing to report here would be to follow up on the chest x-ray results and high,4
+2023_05_25_julie/clip_04/rt.mp4,108,453, flow oxygen settings given the patient appears to have a neck.,4
+2023_05_25_julie/clip_05/rt.mp4,0,30, I think to add.,4
+2023_05_25_julie/clip_06/rt.mp4,0,48, Nothing to add.,4
+2023_05_25_julie/clip_08/rt.mp4,0,30, Nothing to add.,4
+2023_05_25_julie/clip_10/rt.mp4,0,56, It's unclear why the nurse grabbed the non-rebreather mask.,4
+2023_05_25_julie/clip_10/rt.mp4,56,461, I'm unsure if this patient has had desaturations as I cannot see the monitor.,4
+2023_05_25_julie/clip_11/rt.mp4,0,18, Nothing to add.,4
+2023_05_25_julie/clip_12/rt.mp4,0,84," It is difficult to discern, however, I assume the patient is either going to get a scan",4
+2023_05_25_julie/clip_12/rt.mp4,84,121, or is transferring to the floor and being downgraded.,4
+2023_05_25_julie/clip_12/rt.mp4,121,466, So I would be curious to know which of those applies.,4
+2023_05_25_trish/clip_01/rt.mp4,0,110, The patient appears cooperative.,4
+2023_05_25_trish/clip_01/rt.mp4,110,238," While the nurse is administering medication, orally, the patient is independent in.",4
+2023_05_25_trish/clip_01/rt.mp4,238,463, Taking in oral fluids and oral medications.,4
+2023_05_25_trish/clip_02/rt.mp4,0,136, The patient is repositioning himself in the bed.,4
+2023_05_25_trish/clip_02/rt.mp4,136,220," He also lowered the head of the bed, which required the nurse or other qualified staff",4
+2023_05_25_trish/clip_02/rt.mp4,220,402, member to appropriately level the transducer to his new position in order to give an accurate,4
+2023_05_25_trish/clip_02/rt.mp4,402,452, chemodynamic reading.,4
+2023_05_25_trish/clip_04/rt.mp4,0,75, Thank you.,4
+2023_05_25_trish/clip_06/rt.mp4,0,172," The nurse was taking the, or getting an EKG on the patient.",4
+2023_05_25_trish/clip_06/rt.mp4,172,321, He appeared to be turning off or adjusting the patient's pacemaker settings in order,4
+2023_05_25_trish/clip_06/rt.mp4,321,398, to see what the patient's underlying rhythm was on the EKG.,4
+2023_05_25_trish/clip_06/rt.mp4,398,589, He then appeared to reset the patient's pacemaker settings to what they were before.,4
+2023_05_25_trish/clip_06/rt.mp4,589,685," The nurse also removed the patient's Foley catheter, which is typical to do after a procedure",4
+2023_05_25_trish/clip_06/rt.mp4,685,746, that requires a Foley catheter.,4
+2023_05_25_trish/clip_06/rt.mp4,746,848, The patient appeared to be cooperative throughout both interventions.,4
+2023_05_25_trish/clip_08/rt.mp4,0,172, I assisted the patient in getting up to the chair.,4
+2023_05_25_trish/clip_08/rt.mp4,172,355, The patient required moderate assistance overall in standing and pivoting towards the chair.,4
+2023_05_25_trish/clip_08/rt.mp4,355,525," However, was requiring minimal assistance in sitting at the edge of the bed from a laying position.",4
+2023_05_25_trish/clip_08/rt.mp4,525,834, The patient appeared to tolerate the activity well and was able to participate with minimal oxygen needs.,4
+2023_05_25_trish/clip_09/rt.mp4,0,178, The physician is examining the patient.,4
+2023_05_25_trish/clip_09/rt.mp4,178,312," The physician also performed a troubleshoot of the patient's arterial line, which may",4
+2023_05_25_trish/clip_09/rt.mp4,312,384, not have been working correctly because he asked the nurse to come in and take a manual,4
+2023_05_25_trish/clip_09/rt.mp4,384,436, blood pressure.,4
+2023_05_25_trish/clip_09/rt.mp4,436,533, The physician also adjusted the pacemaker settings on the pacemaker box to see what,4
+2023_05_25_trish/clip_09/rt.mp4,533,894, the patient's underlying rhythm was on the monitor.,4
+2023_05_25_trish/clip_12/rt.mp4,0,17, Thank you.,4
+2023_06_23_rachel/clip_01/rt.mp4,0,75, Patient arrived back from some procedure.,4
+2023_06_23_rachel/clip_01/rt.mp4,75,150," All four side rails are up. Patient is drowsy,",4
+2023_06_23_rachel/clip_01/rt.mp4,150,240," not on any oxygen, on a few IV medications,",4
+2023_06_23_rachel/clip_01/rt.mp4,240,465," connected to the monitor, no overt signs of distress.",4
+2023_06_23_rachel/clip_02/rt.mp4,0,45, Chest X-ray has been done.,4
+2023_06_23_rachel/clip_02/rt.mp4,45,84, Patient is on room air.,4
+2023_06_23_rachel/clip_02/rt.mp4,84,459, No signs of distress or clinical deterioration.,4
+2023_06_23_rachel/clip_03/rt.mp4,0,95, The patient has a temporary ventronic pacemaker.,4
+2023_06_23_rachel/clip_03/rt.mp4,95,200, Their patient is awake and calm and following commands.,4
+2023_06_23_rachel/clip_03/rt.mp4,200,455, The patient is talking to the nurses.,4
+2023_06_23_rachel/clip_04_01/rt.mp4,0,84, 12 lead ECG EKG was done.,4
+2023_06_23_rachel/clip_04_01/rt.mp4,84,459, No new updates.,4
+2023_06_23_rachel/clip_04_02/rt.mp4,21,72, The 12-lead EKG is complete.,4
+2023_06_23_rachel/clip_04_02/rt.mp4,72,153,The patient is calm and cooperative and able to follow instructions.,4
+2023_06_23_rachel/clip_05/rt.mp4,23,43, No signs of distress.,4
+2023_06_23_rachel/clip_05/rt.mp4,43,127,Patient is awake and alert and able to follow instructions and make requests known.,4
+2023_06_23_rachel/clip_06/rt.mp4,43,90, The patient is able to drink.,4
+2023_06_23_rachel/clip_06/rt.mp4,90,112,He's awake and calm.,4
+2023_06_23_rachel/clip_06/rt.mp4,112,149,All four side rails are up on the bed.,4
+2023_06_23_rachel/clip_06/rt.mp4,149,196,Had a bed 30 degrees approximately.,4
+2023_06_23_rachel/clip_07/rt.mp4,19,78, Patient is currently eating his meal with head of bed greater than 45 degrees.,4
+2023_06_23_rachel/clip_07/rt.mp4,78,95,No signs of distress.,4
+2023_06_23_rachel/clip_08/rt.mp4,32,159, A patient did appear to be in some distress with open mouth breathing and potential coughing.,4
+2023_06_23_rachel/clip_08/rt.mp4,159,202,Settled down and is now calm.,4
+2023_06_23_rachel/clip_08/rt.mp4,202,228,No signs of distress.,4
+2023_06_23_rachel/clip_08/rt.mp4,228,256,Has finished approximately 100% of his meal.,4
+2023_06_23_rachel/clip_09/rt.mp4,24,68," Patient has completed his meal, appeared to eat about 100%.",4
+2023_06_23_rachel/clip_09/rt.mp4,68,167,All four side rails up and head of bed greater than 45 degrees to prevent aspiration.,4
+2023_06_23_rachel/clip_09/rt.mp4,167,203,No signs of distress.,4
+2023_06_23_rachel/clip_10/rt.mp4,18,76," Patient is sleeping comfortably, no signs of distress.",4
+2023_06_23_rachel/clip_10/rt.mp4,76,166,"Safety measures are in place with our side rails up, head of bed in low position and head of bed 30 degrees.",4
+2023_06_23_rachel/clip_11/rt.mp4,18,66, The nurse gave the patient something to take by mouth and a small medicine cup.,4
+2023_06_23_rachel/clip_12/rt.mp4,15,160," Nurse helping to turn and adjust the patient in the bed, make the patient more comfortable.",4
+2023_06_23_rachel/clip_12/rt.mp4,160,185,Safety measures in place.,4
+2023_06_23_rachel/clip_12/rt.mp4,185,258,"Head of bed was 30 degrees, lowered flat for repositioning.",4
+2023_06_23_rachel/clip_12/rt.mp4,258,274,All four side rails are up.,4
+2023_06_23_rachel/clip_14/rt.mp4,17,49, Patient is awake and calm.,4
+2023_06_23_rachel/clip_14/rt.mp4,49,157,"The nurse just went in to do her eyes and nose and empty out the drainage, the urinary catheter bag.",4
+2023_06_23_rachel/clip_15/rt.mp4,10,52, Nothing of clinical significance happened in this class.,4
+2023_06_23_rachel/clip_16/rt.mp4,18,121, All four side rails up and the patient appears as if he's going to be moved.,4
+2023_06_23_rachel/clip_16/rt.mp4,121,159,The nurses are moving stuff around in the bed.,4
+2023_06_23_rachel/clip_17/rt.mp4,12,145," Patient appears awake and calm, not in any distress, and the patient was moved out of his room onto the bed.",4
+2023_07_21_trish/clip_01_02/rt.mp4,49,86, Admitting this patient to the room.,4
+2023_07_21_trish/clip_01_02/rt.mp4,86,201,Are connecting the patient to.,4
+2023_07_21_trish/clip_01_02/rt.mp4,201,325,The vital signs monitor inside the room and disconnecting the patient from the travel monitor.,4
+2023_07_21_trish/clip_01_02/rt.mp4,325,412,That the patient arrived with the patient is on some type of.,4
+2023_07_21_trish/clip_01_02/rt.mp4,431,561, Isolation hence the staff members wearing isolation gowns caps.,4
+2023_07_21_trish/clip_01_02/rt.mp4,561,667,Face shields and masks the patient is on.,4
+2023_07_21_trish/clip_01_02/rt.mp4,667,785,Oxygen is alert.,4
+2023_07_21_trish/clip_01_02/rt.mp4,785,849,Cooperative and is following commands.,4
+2023_07_21_trish/clip_01_02/rt.mp4,887,904, The patient appears stable.,4
+2023_07_21_trish/clip_01_03/rt.mp4,22,88, The patient appears alert and cooperative.,4
+2023_07_21_trish/clip_01_03/rt.mp4,88,179,"The patient is calm, is verbally interactive with staff.",4
+2023_07_21_trish/clip_01_03/rt.mp4,179,280,The patient's upper extremities are spontaneous and purposeful.,4
+2023_07_21_trish/clip_01_03/rt.mp4,280,395,"Staff member is performing a physical exam, a limited physical exam on the patient.",4
+2023_07_21_trish/clip_01_03/rt.mp4,420,514, They are listening to the patient's lung sounds and palpating the patient's abdomen.,4
+2023_07_21_trish/clip_01_03/rt.mp4,514,568,The patient does not appear to be in distress and appears stable.,4
+2023_07_21_trish/clip_02_01/rt.mp4,35,116, Is alert and the patient is appropriate.,4
+2023_07_21_trish/clip_02_01/rt.mp4,116,313,The nurses are assisting the patient with a. That nurses are performing.,4
+2023_07_21_trish/clip_02_01/rt.mp4,313,422,A bed bath on the patient.,4
+2023_07_21_trish/clip_02_01/rt.mp4,422,440,Using bath wipes.,4
+2023_07_21_trish/clip_02_01/rt.mp4,484,604, The nurse assists the patient with peri care.,4
+2023_07_21_trish/clip_02_01/rt.mp4,604,680,The patient is spontaneous and purposeful and it's moving.,4
+2023_07_21_trish/clip_02_02/rt.mp4,18,86, The nurses are finishing up the patient's bed bath.,4
+2023_07_21_trish/clip_02_02/rt.mp4,86,214,The patient is able to turn independently and reposition themselves in bed independently without assistance.,4
+2023_07_21_trish/clip_02_02/rt.mp4,214,344,The nurses have changed the patient's chucks.,4
+2023_07_21_trish/clip_02_02/rt.mp4,344,438,The physician is preparing a sterile field for a sterile procedure.,4
+2023_07_21_trish/clip_02_02/rt.mp4,491,607, The respiratory therapist has brought in a ventilator and a mask.,4
+2023_07_21_trish/clip_02_02/rt.mp4,607,676,For the patient and is preparing to.,4
+2023_07_21_trish/clip_02_02/rt.mp4,676,724,Place it on the patient and put the patient on.,4
+2023_07_21_trish/clip_02_03/rt.mp4,40,182, The respiratory therapist has placed a CPAP mask on the patient and is programming the ventilator to appropriate settings.,4
+2023_07_21_trish/clip_02_03/rt.mp4,182,288,The patient is not in respiratory distress and appears stable.,4
+2023_07_21_trish/clip_02_03/rt.mp4,288,386,The patient is not resistant to the CPAP.,4
+2023_07_21_trish/clip_02_03/rt.mp4,386,456,The physician has brought an ultrasound machine closer to the patient.,4
+2023_07_21_trish/clip_02_03/rt.mp4,468,548," The physician is examining the patient's right wrist, presumably to place an arterial line.",4
+2023_07_21_trish/clip_02_04/rt.mp4,19,67, The patient is laying still and is cooperative.,4
+2023_07_21_trish/clip_02_04/rt.mp4,67,107,The patient is calm and alert.,4
+2023_07_21_trish/clip_02_04/rt.mp4,107,162,The patient is wearing a CPAP mask.,4
+2023_07_21_trish/clip_02_04/rt.mp4,162,293,The respiratory therapist is adjusting the ventilator settings to the patient's CPAP.,4
+2023_07_21_trish/clip_02_04/rt.mp4,293,420,The physician is using ultrasound to assess the patient's right radial artery.,4
+2023_07_21_trish/clip_03_01/rt.mp4,16,156," The physician is using ultrasound to assess the patient's vessels in her right in her wrist, right in her forearm and right upper arm.",4
+2023_07_21_trish/clip_03_01/rt.mp4,156,268,The respiratory therapist is adjusting the settings to the patient's CPAP or BIPAP.,4
+2023_07_21_trish/clip_03_01/rt.mp4,268,324,The nurse is setting up a pure wick suction system.,4
+2023_07_21_trish/clip_03_02/rt.mp4,17,182, The physician is using ultrasound to place a peripheral intravenous catheter in the patient's right inner forearm.,4
+2023_07_21_trish/clip_03_02/rt.mp4,182,266,The respiratory therapist is managing the patient's BIPAP settings on the ventilator.,4
+2023_07_21_trish/clip_03_02/rt.mp4,266,323,"The patient is alert, calm, and cooperative.",4
+2023_07_21_trish/clip_03_03/rt.mp4,56,134, The patient is a RAS0 and is calm and cooperative.,4
+2023_07_21_trish/clip_03_03/rt.mp4,134,317,The physician has finished placing an ultrasound guided IV in the patient's right inner forearm and is placing a Tegaderm dressing on top of it.,4
+2023_07_21_trish/clip_03_03/rt.mp4,317,426,The nurse flushes the IV and administers medications through the patient's right upper extremity.,4
+2023_07_21_trish/clip_03_03/rt.mp4,507,567, right inner forearm IV.,4
+2023_07_21_trish/clip_03_03/rt.mp4,567,643,The respiratory therapist continues to manage the patient's BiPAP settings on the BiPAP machine.,4
+2023_07_21_trish/clip_03_04/rt.mp4,24,126, The patient is a RAS negative one and is drowsy but arousable.,4
+2023_07_21_trish/clip_03_04/rt.mp4,126,353,The nurse is trying to make the patient's new IV tubing with normal saline.,4
+2023_07_21_trish/clip_03_04/rt.mp4,353,397,Nurse attaches this new tubing to,4
+2023_07_21_trish/clip_03_04/rt.mp4,431,476," The ultrasound guided any patients, right?",4
+2023_07_21_trish/clip_03_04/rt.mp4,722,810,Has a stop machine is checking the results.,4
+2023_07_21_trish/clip_03_04/rt.mp4,810,838,The patient continues to wear her.,4
+2023_07_21_trish/clip_03_05/rt.mp4,27,101, This attaches IV tubing to the patient's new IV.,4
+2023_07_21_trish/clip_03_05/rt.mp4,101,219,The respiratory therapist continues to manage the patient's BIPAP settings.,4
+2023_07_21_trish/clip_03_05/rt.mp4,219,402,The nurse removes the blood pressure cuff from the patient's right arm and begins to take the patient's blood pressure on the patient's right leg with a larger blood pressure cuff.,4
+2023_07_21_trish/clip_03_05/rt.mp4,402,460,The patient remains calm and cooperative,4
+2023_07_21_trish/clip_03_05/rt.mp4,480,499, and has the biped vascular.,4
+2023_07_21_trish/clip_03_06/rt.mp4,43,263, The nurse switched back to taking the blood pressure in the patient's right arm.,4
+2023_07_21_trish/clip_03_06/rt.mp4,263,314,The patient is calm and cooperative.,4
+2023_07_21_trish/clip_03_06/rt.mp4,314,373,The patient is verbal and interactive.,4
+2023_07_21_trish/clip_03_06/rt.mp4,373,453,The respiratory therapist is continuing to monitor by popstix.,4
+2023_07_21_trish/clip_03_06/rt.mp4,491,543, The nurse cleans the ice fat machine with sandy wipes and is moving her.,4
+2023_07_21_trish/clip_04_01/rt.mp4,31,146, Respiratory therapist is continuing to monitor the patient's settings and response.,4
+2023_07_21_trish/clip_04_01/rt.mp4,146,204,She pauses to adjust the patient's bypass.,4
+2023_07_21_trish/clip_04_01/rt.mp4,204,255,The patient is calm and cooperative.,4
+2023_07_21_trish/clip_05_01/rt.mp4,29,188, The respiratory therapist is switching the patient over to a different machine and setting this machine up for use.,4
+2023_07_24_julie/clip_01_01/rt.mp4,4,252," This patient is immediate post-missed reacher, so important things to know would be monitoring of hemodynamic vitals and checking different pressors that the patient may be on.",4
+2023_07_24_julie/clip_01_02/rt.mp4,41,126, The patient appears to be slightly confused by pulling at medical equipment.,4
+2023_07_24_julie/clip_01_02/rt.mp4,126,213,"But if it's post-procedure, this wouldn't be uncommon as the patient might still be recovering from anesthesia.",4
+2023_07_24_julie/clip_01_02/rt.mp4,213,333,But it would be important to watch the patient's neural status and make sure that the patient doesn't pull out any important lines.,4
+2023_07_24_julie/clip_11/rt.mp4,7,80," Given that a chest x-ray was taken here, I would want to know the results of the chest x-ray.",4
+2023_07_27_julie/clip_01_01/rt.mp4,7,196," The patient is immediately post-operative, so it would be important to monitor vital signs, pressors, and whatever other parameters the physician has set post the specific procedure that this patient had performed.",4
+2023_07_27_julie/clip_01_04/rt.mp4,24,87," In this clip, there is an ISTAT result that is given to the physician.",4
+2023_07_27_julie/clip_01_04/rt.mp4,87,246,"It would be important to check the ventilator settings and see how the patient is tolerating the ventilator, as well as the medication, pressors, and hemodynamics.",4
+2023_07_27_julie/clip_04_02/rt.mp4,16,124, The important thing for change of shift report would be the results of the chest x-ray.,4
+2023_07_27_julie/clip_05_02/rt.mp4,16,227," I would want to know the results of the EKG machine and how responsive the patient is, as if the patient is responsive and taking appropriate tidal volumes in a respiratory rate, the patient could potentially be extubated.",4
+2023_07_30_trish/clip_01_01/rt.mp4,24,133, The patient is not moving or responding to indirect stimuli.,4
+2023_07_30_trish/clip_01_01/rt.mp4,133,219,The patient is intubated and is on nitrous oxide.,4
+2023_07_30_trish/clip_01_02/rt.mp4,49,252, The patient is a RAS negative 5 as he is being settled into his new ICU room and Foley care and pericare are being performed on him.,4
+2023_07_30_trish/clip_01_03/rt.mp4,19,79, The patient is a RAS negative five.,4
+2023_07_30_trish/clip_01_03/rt.mp4,79,258,"The patient is not responsive as the nurses are repositioning him, changing his linens and cleaning a bowel movement that he had.",4
+2023_07_30_trish/clip_01_03/rt.mp4,258,302,The patient is incontinent of stool.,4
+2023_07_30_trish/clip_01_03/rt.mp4,302,342,The patient has a Foley catheter.,4
+2023_07_30_trish/clip_01_03/rt.mp4,342,363,The patient is intubated.,4
+2023_07_30_trish/clip_02_02/rt.mp4,14,31, Nothing to report.,4
+2023_07_30_trish/clip_03/rt.mp4,22,298," The patient spontaneously, the patient wiggled his bilateral toes in response to some kind of stimulation from the physician.",4
+2023_07_30_trish/clip_03/rt.mp4,298,342,No other physical responses noted.,4
+2023_07_30_trish/clip_05/rt.mp4,15,70, The patient is being repositioned and turned to his left side.,4
+2023_07_30_trish/clip_05/rt.mp4,70,174,The nurses use the repo sheet and two wedges to turn the patient adequately to his left side.,4
+2023_07_30_trish/clip_05/rt.mp4,174,239,The patient remains unresponsive throughout the repositioning.,4
+2023_07_30_trish/clip_05/rt.mp4,239,391,The nurses tie the patient's bilateral wrist restraints and elevate his bilateral upper extremities.,4
+2023_07_30_trish/clip_07/rt.mp4,20,119, Patient's breath is negative four in response to the nurse cleaning his face with a washcloth.,4
+2023_07_30_trish/clip_16_01/rt.mp4,24,201, The nurse is preparing to place an ultrasound guided intravenous access on the patient.,4
+2023_07_30_trish/clip_16_02/rt.mp4,35,303," Nurse is using ultrasound to assess the patient's right upper extremity vessels to find a location to place a PICC line, a peripherally inserted central catheter line.",4
+2023_07_31_julie/clip_03_01/rt.mp4,5,156," This patient appears to be vomiting, so I would notify the next shift of patient's need for nausea medication.",4
+2023_07_31_julie/clip_03_01/rt.mp4,156,228,"And an EKG was done, and it would be important to know the results of the EKG.",4
+2023_07_31_julie/clip_03_03/rt.mp4,18,181," Patient is hooked up to a defibrillator and it's unclear to my eye on the monitor why this was done, but it would be important to know why the patient is hooked up to the monitor.",4
+2023_08_03_trish/clip_01_01/rt.mp4,23,98, The patient is being brought into the room post procedure.,4
+2023_08_03_trish/clip_01_01/rt.mp4,98,146,There are anesthesiologists in the room.,4
+2023_08_03_trish/clip_01_01/rt.mp4,146,268,One of the anesthesiologists is bagging the patient via the patient's endotracheal tube.,4
+2023_08_03_trish/clip_01_01/rt.mp4,268,343,The patient is a RAS negative five.,4
+2023_08_03_trish/clip_01_01/rt.mp4,343,405,The patient has two chest tubes.,4
+2023_08_03_trish/clip_01_01/rt.mp4,405,430,The patient has a Foley catheter.,4
+2023_08_03_trish/clip_01_01/rt.mp4,474,496, and an arterial line.,4
+2023_08_03_trish/clip_01_02/rt.mp4,31,116, The patient is unresponsive and is a RAS negative five.,4
+2023_08_03_trish/clip_01_02/rt.mp4,116,208,The respiratory therapist is adjusting and monitoring the mechanical ventilator.,4
+2023_08_03_trish/clip_01_02/rt.mp4,208,353,A nurse is preparing to draw blood through the patient's left radial arterial line.,4
+2023_08_03_trish/clip_01_02/rt.mp4,353,468,She also attaches a vamp to the patient's left arterial line tubing.,4
+2023_08_03_trish/clip_01_02/rt.mp4,517,586, and the patient is connected to a cardiac output monitor.,4
+2023_08_03_trish/clip_02/rt.mp4,15,76, The patient is now awake and following commands.,4
+2023_08_03_trish/clip_02/rt.mp4,76,158,The patient is nodding appropriately in response to verbal stimulation.,4
+2023_08_03_trish/clip_02/rt.mp4,158,241,The patient remains intubated and restrained.,4
+2023_08_03_trish/clip_08/rt.mp4,26,270, The nurses have attached the patient's Foley catheter temperature probe to the monitor to continuously monitor the patient's bladder temperature.,4
+2023_08_03_trish/clip_10/rt.mp4,28,88, Nothing to report.,4
+2023_08_03_trish/clip_10/rt.mp4,88,256,The patient is collecting a blood sample from the patient's left radial arterial line for a blood sugar that he is taking with a glucometer at the bedside.,4
+2023_08_03_trish/clip_11/rt.mp4,34,144, The nurse is assessing something under the patient's blanket on his right inner thigh.,4
+2023_08_03_trish/clip_12/rt.mp4,114,264," able to view the task that the nurse is performing due to the camera angle, but it involves drawing blood from the patient's radial arterial line.",4
+2023_08_03_trish/clip_12/rt.mp4,264,438,This is evident by the flushing of the arterial line towards the end of the video.,4
+2023_08_03_trish/clip_14/rt.mp4,16,66, The patient is moving his extremities spontaneously.,4
+2023_08_03_trish/clip_14/rt.mp4,66,124,The patient remains calm while he is intubated.,4
+2023_08_03_trish/clip_15/rt.mp4,19,84, This is collecting and measuring the patient's urine output from the Foley catheter bag.,4
+2023_08_03_trish/clip_17/rt.mp4,22,269, The patient is alert and is able to write notes and messages for the staff and the clinician.,4
+2023_08_03_trish/clip_17/rt.mp4,269,350,The nurse is appropriate and responsive.,4
+2023_08_03_trish/clip_17/rt.mp4,350,454,"The patient is moving all extremities strongly, spontaneously, and purposefully.",4
+2023_08_03_trish/clip_17/rt.mp4,471,511, The patient's breathing is unlabored.,4
+2023_08_03_trish/clip_17/rt.mp4,511,546,The patient is not in distress.,4
+2023_08_03_trish/clip_17/rt.mp4,546,606,The patient is still mechanically ventilated via an endotracheal tube.,4
+2023_08_03_trish/clip_18/rt.mp4,17,105, The nurse is presumably drawing blood from the patient's left radial arterial line.,4
+2023_08_03_trish/clip_18/rt.mp4,105,185,He is using a one milliliter syringe to draw the blood.,4
+2023_08_03_trish/clip_18/rt.mp4,185,268,The patient is calm and cooperative and awake.,4
+2023_08_03_trish/clip_18/rt.mp4,268,281,The patient is a RAS0.,4
+2023_08_03_trish/clip_23_01/rt.mp4,34,111, Nurse is changing the dressing on the patient's left radial art line.,4
+2023_08_03_trish/clip_23_02/rt.mp4,35,72, Patient is calm and cooperative.,4
+2023_08_03_trish/clip_23_02/rt.mp4,72,183,The patient is a RAS0 as the nurse is changing the patient's left radial arterial line dressing.,4
+2023_08_03_trish/clip_26/rt.mp4,16,111, The nurse is changing the dressing on the patient's chest tubes.,4
+2023_08_03_trish/clip_26/rt.mp4,111,195,There is scant serosanguinous drainage.,4
+2023_08_03_trish/clip_26/rt.mp4,195,273,Nurse is using four by four gauze and blue tape for the dressing.,4
+2023_08_03_trish/clip_29_02/rt.mp4,18,69, Nothing to report.,4
+2023_08_03_trish/clip_29_02/rt.mp4,69,197,The patient is able to turn and reposition himself with minimal assist.,4
+2023_08_03_trish/clip_29_02/rt.mp4,197,269,The patient is alert and calm.,4
+2023_08_03_trish/clip_29_02/rt.mp4,269,291,The patient is cooperative.,4
+2023_08_03_trish/clip_29_02/rt.mp4,291,367,The patient is able to write notes on a clipboard.,4
+2023_08_03_trish/clip_29_02/rt.mp4,367,389,The patient remains intubated.,4
+2023_08_03_trish/clip_29_03/rt.mp4,62,156, This is posting the SCD sleeve on the patient's left leg.,4
+2023_08_03_trish/clip_29_03/rt.mp4,156,252,The patient's right leg should not be in an SCD.,4
+2023_08_03_trish/clip_29_03/rt.mp4,252,464,The other nurse is performing oral care for the patient using a genco reception and oral care section swabs with chlorhexidine.,4
+2023_08_03_trish/clip_29_03/rt.mp4,511,641, The nurse suctioned the patient's endotracheal tube using the inline suction and the patient tolerated this well.,4
+2023_08_08_julie/clip_06/rt.mp4,9,269," This appears to be a dialysis patient, so it would be important to know how the patient tolerates dialysis, vital signs during dialysis, and the indication for dialysis, whether it's for metabolic clearance or hemodynamic support.",4
+2023_08_08_julie/clip_22/rt.mp4,16,93, The patient is on continuous renal replacement therapy.,4
+2023_08_08_julie/clip_22/rt.mp4,93,127,The patient is alert and awake.,4
+2023_08_08_julie/clip_22/rt.mp4,127,173,The patient is verbal and cooperative.,4
+2023_08_08_julie/clip_22/rt.mp4,173,254,The physician is at the bedside performing a limited exam on the patient.,4
+2023_08_08_julie/clip_24_01/rt.mp4,24,149," In this particular clip, the patient's family member appears to be rubbing the patient's knee or leg, I assume because the patient's having pain.",4
+2023_08_08_julie/clip_24_01/rt.mp4,149,282,"If that's the case, I would make sure to assess the whole leg and look for any swelling or erythema to make sure this patient doesn't have a DVT.",4
+2023_08_08_julie/clip_24_01/rt.mp4,282,363,"He is wearing STDs, so I'll prevent that, but I'm not sure how mobile he is.",4
+2023_08_08_julie/clip_26/rt.mp4,12,131," In this clip, the nurse is performing a bladder scan on the patient to see how much needle he is making or retaining.",4
+2023_08_08_julie/clip_26/rt.mp4,131,226,"Since this is a dialysis patient, he doesn't make much, but it would be important to know if he is producing anything.",4
+2023_08_09_julie/clip_02_01/rt.mp4,39,222," The provider is placing an arterial line, presumably to monitor hemodynamic SAS closely, so it would be important to know what the patient's vital signs are and what the target parameters are for her blood pressure.",4
+2023_08_09_julie/clip_04_02/rt.mp4,17,84," In this clip, the provider is still working to place an arterial line.",4
+2023_08_09_julie/clip_05_01/rt.mp4,16,269," The arterial line has successfully been placed into the radial artery, so now we would be able to closely monitor hemodynamic status of this patient to determine whatever blood pressure parameters we are setting for the patient and titrate medications appropriately.",4
+2023_08_09_julie/clip_05_03/rt.mp4,17,75, The nurse is adjusting the medication a couple of times in this clip.,4
+2023_08_09_julie/clip_05_03/rt.mp4,75,232,"And now that the patient has an arterial line in place, it would be important to monitor hemodynamic status and adjust the medication according to what the providers have set as the parameters.",4
+2023_08_09_julie/clip_13/rt.mp4,22,153," The nurse is looking at the monitor often in this clip, so it would be important to know the hemodynamics so that you can titrate the patient's medications accordingly.",4
+2023_08_09_julie/clip_13/rt.mp4,153,210,There are angles when it appears too dark to tell what the nurse is doing.,4
+2023_08_09_julie/clip_13/rt.mp4,210,322,"However, I believe the nurse is drawing blood at one point in this video, so it would be important to know the lab values for the patient.",4
+2023_08_09_julie/clip_16/rt.mp4,6,106," In this clip, this patient suddenly has a blue emesis bagged against her face, indicating that she probably is nauseous.",4
+2023_08_09_julie/clip_16/rt.mp4,106,249,So it would be important for the oncoming nurse to know that anti-medics may be needed and to find a reason for her nausea.,4
+2023_08_09_julie/clip_17/rt.mp4,12,255," The nurse in this clip is adjusting the medication on the IV pump, so it'd be important to know what number the patient is receiving of the medication that's being infused and what the parameters are or goal blood pressure for the patient to meet.",4
+2023_08_11_julie/clip_01/rt.mp4,12,28, no reportable events.,4
+2023_08_11_julie/clip_06_01/rt.mp4,9,116," In this clip, the nurse has performed a bladder scan, and the patient is attempting to urinate.",4
+2023_08_11_julie/clip_06_01/rt.mp4,116,211,So it would be important to know how much was in the bladder scan and whether or not the patient is able to void.,4
+2023_08_11_julie/clip_06_01/rt.mp4,211,263,"And if not, then there is some retention there that needs to be addressed.",4
+2023_08_11_julie/clip_09/rt.mp4,13,162," In this clip, the nurses check the patient's blood sugar, so it would be important to know what his bedside glucose has been and what the insulin regimen is to cover for it, if any.",4
+2023_08_18_trish/clip_01_01/rt.mp4,43,111, Nurses are settling the patient into a room.,4
+2023_08_18_trish/clip_01_01/rt.mp4,111,150,The patient remains asleep throughout the process.,4
+2023_08_18_trish/clip_19/rt.mp4,18,81, The patient is agitated and restless.,4
+2023_08_18_trish/clip_19/rt.mp4,81,108,The patient appears uncomfortable.,4
+2023_08_18_trish/clip_19/rt.mp4,108,177,The patient now has bilateral wrist restraints on.,4
+2023_08_18_trish/clip_20/rt.mp4,32,67, The patient continues to be agitated.,4
+2023_08_18_trish/clip_20/rt.mp4,67,129,The nurses are at the bedside.,4
+2023_08_18_trish/clip_20/rt.mp4,129,160,The physician is at the bedside.,4
+2023_08_18_trish/clip_20/rt.mp4,160,240,The patient is verbal and appears uncomfortable.,4
+2023_08_18_trish/clip_20/rt.mp4,240,304,The patient has bilateral soft wrist restraints on.,4
+2023_08_18_trish/clip_21/rt.mp4,22,36, Nothing to report.,4
+2023_08_18_trish/clip_22/rt.mp4,30,60, Patient continues to be agitated.,4
+2023_08_18_trish/clip_25_01/rt.mp4,25,64, The patient is getting a chest x-ray done.,4
+2023_08_18_trish/clip_26/rt.mp4,19,28, To report.,4
+2023_08_23_julie/clip_03/rt.mp4,7,143," In this clip, it seems the nurse is having a difficult time getting a temperature reading on the patient, so it would be important to know what the temperature is to make sure the patient isn't septic.",4
+2023_08_23_julie/clip_05/rt.mp4,14,92," In this clip, the nurse is assessing breath sounds, heart tones, and abdominal sounds.",4
+2023_08_23_julie/clip_05/rt.mp4,92,201,So it would be important to know the findings of those and relay that information to the physician if it's outside of the desired limits.,4
+2023_08_23_julie/clip_06/rt.mp4,22,185," The nurse in this clip is placing a barrier on the patient, which could potentially indicate that the patient is hypothermic and could be having a cold sepsis.",4
+2023_08_23_julie/clip_06/rt.mp4,185,242,So it would be important to monitor the patient's temperature to make sure he's recovering.,4
+2023_08_23_julie/clip_07_01/rt.mp4,5,112," In this clip, the providers are setting up to put in an invasive line, either an arterial line or a central access line.",4
+2023_08_23_julie/clip_07_01/rt.mp4,112,169,So it would be important to assist with the setup of that.,4
+2023_08_23_julie/clip_07_01/rt.mp4,169,226,"And if it's an arterial line, monitor the hemodynamics once the arterial line is placed.",4
+2023_08_23_julie/clip_07_02/rt.mp4,5,143," In this clip, the provider appears to be setting up to insert an arterial line, so it would be important to know how that procedure went, assuming there would be no difficulty.",4
+2023_08_23_julie/clip_07_02/rt.mp4,143,271,"And once the arterial line is in, it would be important to monitor hemodynamics in this patient to assess if the patient needs further intervention.",4
+2023_08_23_julie/clip_08_01/rt.mp4,7,156," The provider here is setting up to insert an arterial line, so it would be important to make sure that the procedure goes well and once the arterial line is inserted to monitor the patient's hemodynamics.",4
+2023_08_23_julie/clip_08_06/rt.mp4,21,73," In this clip, the bedside alarm is alarming and flashing.",4
+2023_08_23_julie/clip_08_06/rt.mp4,73,166,"However, I cannot see what the number shows, but I'm assuming the blood pressure is low.",4
+2023_08_23_julie/clip_08_06/rt.mp4,166,220,"The nurse is hanging a bag of medication, which I presume would be pressors.",4
+2023_08_23_julie/clip_08_06/rt.mp4,220,333,"If this is the case, it would be important to know the patient's hemodynamics and his response to medication.",4
+2023_08_23_julie/clip_08_07/rt.mp4,13,94," Nerves in this clip appears to be starting a medication, presumably pressors, to increase the patient's blood pressure.",4
+2023_08_23_julie/clip_08_07/rt.mp4,94,193,So it would be important to know the needed titration for that to keep the patient within its hemodynamic parameters.,4
+2023_08_23_julie/clip_08_09/rt.mp4,9,189," The arterial line was successfully placed, therefore we can start closely hemodynamic monitoring this patient as directed by the patient's physician orders or parameters.",4
+2023_08_23_julie/clip_13_03/rt.mp4,3,115," In this clip, the chest x-ray was taken, so it would be important for follow-up on the result of the chest x-ray.",4
+2023_08_23_julie/clip_13_03/rt.mp4,115,276,"It also seems that this patient has lost IV access or is bleeding from the IV, so we need to replace the IV so that he has adequate access for medications.",4
+2023_05_09_julie/clip_01/lt.mp4,0,193, The patient appears to be post procedure of procedure.,4
+2023_05_09_julie/clip_02/lt.mp4,0,49, Nothing to add to the clinical summary.,4
+2023_05_09_julie/clip_03/lt.mp4,0,50, Nothing notable.,4
+2023_05_09_julie/clip_04/lt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_05/lt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_06/lt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_07/lt.mp4,0,95, The patient is alert and calm and has been weaned off the non-rear mask.,4
+2023_05_09_julie/clip_07/lt.mp4,95,175," Labs have been sent, pending results.",4
+2023_05_09_julie/clip_07/lt.mp4,175,455, The patient remains alert and calm.,4
+2023_05_09_julie/clip_08/lt.mp4,0,30, Nothing notable.,4
+2023_05_09_julie/clip_09/lt.mp4,0,30, Nothing to add.,4
+2023_05_09_julie/clip_19/lt.mp4,0,90, It does appear in this video slightly difficult to tell what the nurse was trying to accomplish,4
+2023_05_09_julie/clip_19/lt.mp4,90,465, or what the nurse was trying to change in the bed setting.,4
+2023_05_12_rachel/clip_01_01/lt.mp4,0,105, This is a new patient admission that just arrived to the ICU.,4
+2023_05_12_rachel/clip_01_01/lt.mp4,105,225," The patient was calm, did not appear to be in any distress, is on high flow nasal cannula.",4
+2023_05_12_rachel/clip_01_01/lt.mp4,225,300, The patient was moved from a floor bed to an ICU bed.,4
+2023_05_12_rachel/clip_01_01/lt.mp4,300,345, There were multiple staff in the room.,4
+2023_05_12_rachel/clip_01_01/lt.mp4,345,450, IVs have been checked and vital signs have been obtained and provider in the room.,4
+2023_05_12_rachel/clip_01_02/lt.mp4,0,265," The heart rate and rhythm has been, nope, oh, stop that over.",4
+2023_05_12_rachel/clip_01_02/lt.mp4,265,371," A 12-Lady EKG has been performed, assessment of lung sounds and heart sounds as well as",4
+2023_05_12_rachel/clip_01_02/lt.mp4,403,483, The providers are in the room.,4
+2023_05_12_rachel/clip_01_02/lt.mp4,483,860, Patient is awake on high-flow nasal cannula.,4
+2023_05_12_rachel/clip_02_01/lt.mp4,0,150, The providers are doing a bedside echo and setting up to perform an arterial line insertion.,4
+2023_05_12_rachel/clip_02_01/lt.mp4,150,215," Patient is calm, awake, and communicative.",4
+2023_05_12_rachel/clip_02_01/lt.mp4,215,285, The patient is on high flow nasal cannula.,4
+2023_05_12_rachel/clip_02_01/lt.mp4,285,465, The patient is on high flow nasal cannula.,4
+2023_05_12_rachel/clip_02_02/lt.mp4,0,136," The patient has become more restless, constantly moving and changing position.",4
+2023_05_12_rachel/clip_02_02/lt.mp4,136,257, The providers are setting up to do a art line on the right wrist.,4
+2023_05_12_rachel/clip_02_02/lt.mp4,257,457, The patient is calm and awake.,4
+2023_05_12_rachel/clip_02_03/lt.mp4,0,70, There are multiple providers in this patient's room.,4
+2023_05_12_rachel/clip_02_03/lt.mp4,70,133, The patient appears to be in respiratory distress.,4
+2023_05_12_rachel/clip_02_03/lt.mp4,133,297, He is on high flow nasal cannula and his breathing is labored with very fast and shallow breaths.,4
+2023_05_12_rachel/clip_02_03/lt.mp4,297,404," The patient seems to be unstable as multiple providers, both nurses and physicians are",4
+2023_05_12_rachel/clip_02_03/lt.mp4,404,463, going in and out of the room setting up for multiple drips.,4
+2023_05_12_rachel/clip_02_03/lt.mp4,463,589," There are two providers attempting to get arterial line access, but were not able to",4
+2023_05_12_rachel/clip_02_03/lt.mp4,589,685, with a failed first attempt and the second attempt being tried with the second provider,4
+2023_05_12_rachel/clip_02_03/lt.mp4,685,859, in blue who had broke sterility on multiple occasions.,4
+2023_05_12_rachel/clip_03_01/lt.mp4,0,113, There were multiple providers in and out of the patient room as the providers were attempting,4
+2023_05_12_rachel/clip_03_01/lt.mp4,113,168, a second time to insert an arterial line.,4
+2023_05_12_rachel/clip_03_01/lt.mp4,168,293," The patient remains restless with some labored breathing, with fast shallow breaths.",4
+2023_05_12_rachel/clip_03_01/lt.mp4,293,390, Patient was more restless during this clip and the providers were able to insert a arterial,4
+2023_05_12_rachel/clip_03_02/lt.mp4,0,105, The art line has been successfully inserted into the right wrist.,4
+2023_05_12_rachel/clip_03_02/lt.mp4,105,229, The patient is still on high flow and has multiple IV infusions running.,4
+2023_05_12_rachel/clip_03_02/lt.mp4,229,463, The patient is restless with intermediate periods of calm.,4
+2023_05_12_rachel/clip_03_03/lt.mp4,0,124," The Artline is set up and has positive blood return, was able to draw labs.",4
+2023_05_12_rachel/clip_03_03/lt.mp4,124,199, The phlebotomist is there setting up to do blood cultures.,4
+2023_05_12_rachel/clip_03_03/lt.mp4,199,254, Provider has been in and out of the room.,4
+2023_05_12_rachel/clip_03_03/lt.mp4,254,454, Provider change in patient condition.,4
+2023_05_25_julie/clip_02_01/lt.mp4,0,45, Nothing to add.,4
+2023_05_25_julie/clip_02_02/lt.mp4,0,30, Nothing to add.,4
+2023_05_25_julie/clip_04/lt.mp4,0,108, The only thing to report here would be to follow up on the chest x-ray results and high,4
+2023_05_25_julie/clip_04/lt.mp4,108,453, flow oxygen settings given the patient appears to have a neck.,4
+2023_05_25_julie/clip_05/lt.mp4,0,30, I think to add.,4
+2023_05_25_julie/clip_06/lt.mp4,0,48, Nothing to add.,4
+2023_05_25_julie/clip_08/lt.mp4,0,30, Nothing to add.,4
+2023_05_25_julie/clip_10/lt.mp4,0,56, It's unclear why the nurse grabbed the non-rebreather mask.,4
+2023_05_25_julie/clip_10/lt.mp4,56,461, I'm unsure if this patient has had desaturations as I cannot see the monitor.,4
+2023_05_25_julie/clip_11/lt.mp4,0,18, Nothing to add.,4
+2023_05_25_julie/clip_12/lt.mp4,0,84," It is difficult to discern, however, I assume the patient is either going to get a scan",4
+2023_05_25_julie/clip_12/lt.mp4,84,121, or is transferring to the floor and being downgraded.,4
+2023_05_25_julie/clip_12/lt.mp4,121,466, So I would be curious to know which of those applies.,4
+2023_05_25_trish/clip_01/lt.mp4,0,110, The patient appears cooperative.,4
+2023_05_25_trish/clip_01/lt.mp4,110,238," While the nurse is administering medication, orally, the patient is independent in.",4
+2023_05_25_trish/clip_01/lt.mp4,238,463, Taking in oral fluids and oral medications.,4
+2023_05_25_trish/clip_02/lt.mp4,0,136, The patient is repositioning himself in the bed.,4
+2023_05_25_trish/clip_02/lt.mp4,136,220," He also lowered the head of the bed, which required the nurse or other qualified staff",4
+2023_05_25_trish/clip_02/lt.mp4,220,402, member to appropriately level the transducer to his new position in order to give an accurate,4
+2023_05_25_trish/clip_02/lt.mp4,402,452, chemodynamic reading.,4
+2023_05_25_trish/clip_04/lt.mp4,0,75, Thank you.,4
+2023_05_25_trish/clip_06/lt.mp4,0,172," The nurse was taking the, or getting an EKG on the patient.",4
+2023_05_25_trish/clip_06/lt.mp4,172,321, He appeared to be turning off or adjusting the patient's pacemaker settings in order,4
+2023_05_25_trish/clip_06/lt.mp4,321,398, to see what the patient's underlying rhythm was on the EKG.,4
+2023_05_25_trish/clip_06/lt.mp4,398,589, He then appeared to reset the patient's pacemaker settings to what they were before.,4
+2023_05_25_trish/clip_06/lt.mp4,589,685," The nurse also removed the patient's Foley catheter, which is typical to do after a procedure",4
+2023_05_25_trish/clip_06/lt.mp4,685,746, that requires a Foley catheter.,4
+2023_05_25_trish/clip_06/lt.mp4,746,848, The patient appeared to be cooperative throughout both interventions.,4
+2023_05_25_trish/clip_08/lt.mp4,0,172, I assisted the patient in getting up to the chair.,4
+2023_05_25_trish/clip_08/lt.mp4,172,355, The patient required moderate assistance overall in standing and pivoting towards the chair.,4
+2023_05_25_trish/clip_08/lt.mp4,355,525," However, was requiring minimal assistance in sitting at the edge of the bed from a laying position.",4
+2023_05_25_trish/clip_08/lt.mp4,525,834, The patient appeared to tolerate the activity well and was able to participate with minimal oxygen needs.,4
+2023_05_25_trish/clip_09/lt.mp4,0,178, The physician is examining the patient.,4
+2023_05_25_trish/clip_09/lt.mp4,178,312," The physician also performed a troubleshoot of the patient's arterial line, which may",4
+2023_05_25_trish/clip_09/lt.mp4,312,384, not have been working correctly because he asked the nurse to come in and take a manual,4
+2023_05_25_trish/clip_09/lt.mp4,384,436, blood pressure.,4
+2023_05_25_trish/clip_09/lt.mp4,436,533, The physician also adjusted the pacemaker settings on the pacemaker box to see what,4
+2023_05_25_trish/clip_09/lt.mp4,533,894, the patient's underlying rhythm was on the monitor.,4
+2023_05_25_trish/clip_12/lt.mp4,0,17, Thank you.,4
+2023_06_23_rachel/clip_01/lt.mp4,0,75, Patient arrived back from some procedure.,4
+2023_06_23_rachel/clip_01/lt.mp4,75,150," All four side rails are up. Patient is drowsy,",4
+2023_06_23_rachel/clip_01/lt.mp4,150,240," not on any oxygen, on a few IV medications,",4
+2023_06_23_rachel/clip_01/lt.mp4,240,465," connected to the monitor, no overt signs of distress.",4
+2023_06_23_rachel/clip_02/lt.mp4,0,45, Chest X-ray has been done.,4
+2023_06_23_rachel/clip_02/lt.mp4,45,84, Patient is on room air.,4
+2023_06_23_rachel/clip_02/lt.mp4,84,459, No signs of distress or clinical deterioration.,4
+2023_06_23_rachel/clip_03/lt.mp4,0,95, The patient has a temporary ventronic pacemaker.,4
+2023_06_23_rachel/clip_03/lt.mp4,95,200, Their patient is awake and calm and following commands.,4
+2023_06_23_rachel/clip_03/lt.mp4,200,455, The patient is talking to the nurses.,4
+2023_06_23_rachel/clip_04_01/lt.mp4,0,84, 12 lead ECG EKG was done.,4
+2023_06_23_rachel/clip_04_01/lt.mp4,84,459, No new updates.,4
+2023_06_23_rachel/clip_04_02/lt.mp4,21,72, The 12-lead EKG is complete.,4
+2023_06_23_rachel/clip_04_02/lt.mp4,72,153,The patient is calm and cooperative and able to follow instructions.,4
+2023_06_23_rachel/clip_05/lt.mp4,23,43, No signs of distress.,4
+2023_06_23_rachel/clip_05/lt.mp4,43,127,Patient is awake and alert and able to follow instructions and make requests known.,4
+2023_06_23_rachel/clip_06/lt.mp4,43,90, The patient is able to drink.,4
+2023_06_23_rachel/clip_06/lt.mp4,90,112,He's awake and calm.,4
+2023_06_23_rachel/clip_06/lt.mp4,112,149,All four side rails are up on the bed.,4
+2023_06_23_rachel/clip_06/lt.mp4,149,196,Had a bed 30 degrees approximately.,4
+2023_06_23_rachel/clip_07/lt.mp4,19,78, Patient is currently eating his meal with head of bed greater than 45 degrees.,4
+2023_06_23_rachel/clip_07/lt.mp4,78,95,No signs of distress.,4
+2023_06_23_rachel/clip_08/lt.mp4,32,159, A patient did appear to be in some distress with open mouth breathing and potential coughing.,4
+2023_06_23_rachel/clip_08/lt.mp4,159,202,Settled down and is now calm.,4
+2023_06_23_rachel/clip_08/lt.mp4,202,228,No signs of distress.,4
+2023_06_23_rachel/clip_08/lt.mp4,228,256,Has finished approximately 100% of his meal.,4
+2023_06_23_rachel/clip_09/lt.mp4,24,68," Patient has completed his meal, appeared to eat about 100%.",4
+2023_06_23_rachel/clip_09/lt.mp4,68,167,All four side rails up and head of bed greater than 45 degrees to prevent aspiration.,4
+2023_06_23_rachel/clip_09/lt.mp4,167,203,No signs of distress.,4
+2023_06_23_rachel/clip_10/lt.mp4,18,76," Patient is sleeping comfortably, no signs of distress.",4
+2023_06_23_rachel/clip_10/lt.mp4,76,166,"Safety measures are in place with our side rails up, head of bed in low position and head of bed 30 degrees.",4
+2023_06_23_rachel/clip_11/lt.mp4,18,66, The nurse gave the patient something to take by mouth and a small medicine cup.,4
+2023_06_23_rachel/clip_12/lt.mp4,15,160," Nurse helping to turn and adjust the patient in the bed, make the patient more comfortable.",4
+2023_06_23_rachel/clip_12/lt.mp4,160,185,Safety measures in place.,4
+2023_06_23_rachel/clip_12/lt.mp4,185,258,"Head of bed was 30 degrees, lowered flat for repositioning.",4
+2023_06_23_rachel/clip_12/lt.mp4,258,274,All four side rails are up.,4
+2023_06_23_rachel/clip_14/lt.mp4,17,49, Patient is awake and calm.,4
+2023_06_23_rachel/clip_14/lt.mp4,49,157,"The nurse just went in to do her eyes and nose and empty out the drainage, the urinary catheter bag.",4
+2023_06_23_rachel/clip_15/lt.mp4,10,52, Nothing of clinical significance happened in this class.,4
+2023_06_23_rachel/clip_16/lt.mp4,18,121, All four side rails up and the patient appears as if he's going to be moved.,4
+2023_06_23_rachel/clip_16/lt.mp4,121,159,The nurses are moving stuff around in the bed.,4
+2023_06_23_rachel/clip_17/lt.mp4,12,145," Patient appears awake and calm, not in any distress, and the patient was moved out of his room onto the bed.",4
+2023_07_21_trish/clip_01_02/lt.mp4,49,86, Admitting this patient to the room.,4
+2023_07_21_trish/clip_01_02/lt.mp4,86,201,Are connecting the patient to.,4
+2023_07_21_trish/clip_01_02/lt.mp4,201,325,The vital signs monitor inside the room and disconnecting the patient from the travel monitor.,4
+2023_07_21_trish/clip_01_02/lt.mp4,325,412,That the patient arrived with the patient is on some type of.,4
+2023_07_21_trish/clip_01_02/lt.mp4,431,561, Isolation hence the staff members wearing isolation gowns caps.,4
+2023_07_21_trish/clip_01_02/lt.mp4,561,667,Face shields and masks the patient is on.,4
+2023_07_21_trish/clip_01_02/lt.mp4,667,785,Oxygen is alert.,4
+2023_07_21_trish/clip_01_02/lt.mp4,785,849,Cooperative and is following commands.,4
+2023_07_21_trish/clip_01_02/lt.mp4,887,904, The patient appears stable.,4
+2023_07_21_trish/clip_01_03/lt.mp4,22,88, The patient appears alert and cooperative.,4
+2023_07_21_trish/clip_01_03/lt.mp4,88,179,"The patient is calm, is verbally interactive with staff.",4
+2023_07_21_trish/clip_01_03/lt.mp4,179,280,The patient's upper extremities are spontaneous and purposeful.,4
+2023_07_21_trish/clip_01_03/lt.mp4,280,395,"Staff member is performing a physical exam, a limited physical exam on the patient.",4
+2023_07_21_trish/clip_01_03/lt.mp4,420,514, They are listening to the patient's lung sounds and palpating the patient's abdomen.,4
+2023_07_21_trish/clip_01_03/lt.mp4,514,568,The patient does not appear to be in distress and appears stable.,4
+2023_07_21_trish/clip_02_01/lt.mp4,35,116, Is alert and the patient is appropriate.,4
+2023_07_21_trish/clip_02_01/lt.mp4,116,313,The nurses are assisting the patient with a. That nurses are performing.,4
+2023_07_21_trish/clip_02_01/lt.mp4,313,422,A bed bath on the patient.,4
+2023_07_21_trish/clip_02_01/lt.mp4,422,440,Using bath wipes.,4
+2023_07_21_trish/clip_02_01/lt.mp4,484,604, The nurse assists the patient with peri care.,4
+2023_07_21_trish/clip_02_01/lt.mp4,604,680,The patient is spontaneous and purposeful and it's moving.,4
+2023_07_21_trish/clip_02_02/lt.mp4,18,86, The nurses are finishing up the patient's bed bath.,4
+2023_07_21_trish/clip_02_02/lt.mp4,86,214,The patient is able to turn independently and reposition themselves in bed independently without assistance.,4
+2023_07_21_trish/clip_02_02/lt.mp4,214,344,The nurses have changed the patient's chucks.,4
+2023_07_21_trish/clip_02_02/lt.mp4,344,438,The physician is preparing a sterile field for a sterile procedure.,4
+2023_07_21_trish/clip_02_02/lt.mp4,491,607, The respiratory therapist has brought in a ventilator and a mask.,4
+2023_07_21_trish/clip_02_02/lt.mp4,607,676,For the patient and is preparing to.,4
+2023_07_21_trish/clip_02_02/lt.mp4,676,724,Place it on the patient and put the patient on.,4
+2023_07_21_trish/clip_02_03/lt.mp4,40,182, The respiratory therapist has placed a CPAP mask on the patient and is programming the ventilator to appropriate settings.,4
+2023_07_21_trish/clip_02_03/lt.mp4,182,288,The patient is not in respiratory distress and appears stable.,4
+2023_07_21_trish/clip_02_03/lt.mp4,288,386,The patient is not resistant to the CPAP.,4
+2023_07_21_trish/clip_02_03/lt.mp4,386,456,The physician has brought an ultrasound machine closer to the patient.,4
+2023_07_21_trish/clip_02_03/lt.mp4,468,548," The physician is examining the patient's right wrist, presumably to place an arterial line.",4
+2023_07_21_trish/clip_02_04/lt.mp4,19,67, The patient is laying still and is cooperative.,4
+2023_07_21_trish/clip_02_04/lt.mp4,67,107,The patient is calm and alert.,4
+2023_07_21_trish/clip_02_04/lt.mp4,107,162,The patient is wearing a CPAP mask.,4
+2023_07_21_trish/clip_02_04/lt.mp4,162,293,The respiratory therapist is adjusting the ventilator settings to the patient's CPAP.,4
+2023_07_21_trish/clip_02_04/lt.mp4,293,420,The physician is using ultrasound to assess the patient's right radial artery.,4
+2023_07_21_trish/clip_03_01/lt.mp4,16,156," The physician is using ultrasound to assess the patient's vessels in her right in her wrist, right in her forearm and right upper arm.",4
+2023_07_21_trish/clip_03_01/lt.mp4,156,268,The respiratory therapist is adjusting the settings to the patient's CPAP or BIPAP.,4
+2023_07_21_trish/clip_03_01/lt.mp4,268,324,The nurse is setting up a pure wick suction system.,4
+2023_07_21_trish/clip_03_02/lt.mp4,17,182, The physician is using ultrasound to place a peripheral intravenous catheter in the patient's right inner forearm.,4
+2023_07_21_trish/clip_03_02/lt.mp4,182,266,The respiratory therapist is managing the patient's BIPAP settings on the ventilator.,4
+2023_07_21_trish/clip_03_02/lt.mp4,266,323,"The patient is alert, calm, and cooperative.",4
+2023_07_21_trish/clip_03_03/lt.mp4,56,134, The patient is a RAS0 and is calm and cooperative.,4
+2023_07_21_trish/clip_03_03/lt.mp4,134,317,The physician has finished placing an ultrasound guided IV in the patient's right inner forearm and is placing a Tegaderm dressing on top of it.,4
+2023_07_21_trish/clip_03_03/lt.mp4,317,426,The nurse flushes the IV and administers medications through the patient's right upper extremity.,4
+2023_07_21_trish/clip_03_03/lt.mp4,507,567, right inner forearm IV.,4
+2023_07_21_trish/clip_03_03/lt.mp4,567,643,The respiratory therapist continues to manage the patient's BiPAP settings on the BiPAP machine.,4
+2023_07_21_trish/clip_03_04/lt.mp4,24,126, The patient is a RAS negative one and is drowsy but arousable.,4
+2023_07_21_trish/clip_03_04/lt.mp4,126,353,The nurse is trying to make the patient's new IV tubing with normal saline.,4
+2023_07_21_trish/clip_03_04/lt.mp4,353,397,Nurse attaches this new tubing to,4
+2023_07_21_trish/clip_03_04/lt.mp4,431,476," The ultrasound guided any patients, right?",4
+2023_07_21_trish/clip_03_04/lt.mp4,722,810,Has a stop machine is checking the results.,4
+2023_07_21_trish/clip_03_04/lt.mp4,810,838,The patient continues to wear her.,4
+2023_07_21_trish/clip_03_05/lt.mp4,27,101, This attaches IV tubing to the patient's new IV.,4
+2023_07_21_trish/clip_03_05/lt.mp4,101,219,The respiratory therapist continues to manage the patient's BIPAP settings.,4
+2023_07_21_trish/clip_03_05/lt.mp4,219,402,The nurse removes the blood pressure cuff from the patient's right arm and begins to take the patient's blood pressure on the patient's right leg with a larger blood pressure cuff.,4
+2023_07_21_trish/clip_03_05/lt.mp4,402,460,The patient remains calm and cooperative,4
+2023_07_21_trish/clip_03_05/lt.mp4,480,499, and has the biped vascular.,4
+2023_07_21_trish/clip_03_06/lt.mp4,43,263, The nurse switched back to taking the blood pressure in the patient's right arm.,4
+2023_07_21_trish/clip_03_06/lt.mp4,263,314,The patient is calm and cooperative.,4
+2023_07_21_trish/clip_03_06/lt.mp4,314,373,The patient is verbal and interactive.,4
+2023_07_21_trish/clip_03_06/lt.mp4,373,453,The respiratory therapist is continuing to monitor by popstix.,4
+2023_07_21_trish/clip_03_06/lt.mp4,491,543, The nurse cleans the ice fat machine with sandy wipes and is moving her.,4
+2023_07_21_trish/clip_04_01/lt.mp4,31,146, Respiratory therapist is continuing to monitor the patient's settings and response.,4
+2023_07_21_trish/clip_04_01/lt.mp4,146,204,She pauses to adjust the patient's bypass.,4
+2023_07_21_trish/clip_04_01/lt.mp4,204,255,The patient is calm and cooperative.,4
+2023_07_21_trish/clip_05_01/lt.mp4,29,188, The respiratory therapist is switching the patient over to a different machine and setting this machine up for use.,4
+2023_07_24_julie/clip_01_01/lt.mp4,4,252," This patient is immediate post-missed reacher, so important things to know would be monitoring of hemodynamic vitals and checking different pressors that the patient may be on.",4
+2023_07_24_julie/clip_01_02/lt.mp4,41,126, The patient appears to be slightly confused by pulling at medical equipment.,4
+2023_07_24_julie/clip_01_02/lt.mp4,126,213,"But if it's post-procedure, this wouldn't be uncommon as the patient might still be recovering from anesthesia.",4
+2023_07_24_julie/clip_01_02/lt.mp4,213,333,But it would be important to watch the patient's neural status and make sure that the patient doesn't pull out any important lines.,4
+2023_07_24_julie/clip_11/lt.mp4,7,80," Given that a chest x-ray was taken here, I would want to know the results of the chest x-ray.",4
+2023_07_27_julie/clip_01_01/lt.mp4,7,196," The patient is immediately post-operative, so it would be important to monitor vital signs, pressors, and whatever other parameters the physician has set post the specific procedure that this patient had performed.",4
+2023_07_27_julie/clip_01_04/lt.mp4,24,87," In this clip, there is an ISTAT result that is given to the physician.",4
+2023_07_27_julie/clip_01_04/lt.mp4,87,246,"It would be important to check the ventilator settings and see how the patient is tolerating the ventilator, as well as the medication, pressors, and hemodynamics.",4
+2023_07_27_julie/clip_04_02/lt.mp4,16,124, The important thing for change of shift report would be the results of the chest x-ray.,4
+2023_07_27_julie/clip_05_02/lt.mp4,16,227," I would want to know the results of the EKG machine and how responsive the patient is, as if the patient is responsive and taking appropriate tidal volumes in a respiratory rate, the patient could potentially be extubated.",4
+2023_07_30_trish/clip_01_01/lt.mp4,24,133, The patient is not moving or responding to indirect stimuli.,4
+2023_07_30_trish/clip_01_01/lt.mp4,133,219,The patient is intubated and is on nitrous oxide.,4
+2023_07_30_trish/clip_01_02/lt.mp4,49,252, The patient is a RAS negative 5 as he is being settled into his new ICU room and Foley care and pericare are being performed on him.,4
+2023_07_30_trish/clip_01_03/lt.mp4,19,79, The patient is a RAS negative five.,4
+2023_07_30_trish/clip_01_03/lt.mp4,79,258,"The patient is not responsive as the nurses are repositioning him, changing his linens and cleaning a bowel movement that he had.",4
+2023_07_30_trish/clip_01_03/lt.mp4,258,302,The patient is incontinent of stool.,4
+2023_07_30_trish/clip_01_03/lt.mp4,302,342,The patient has a Foley catheter.,4
+2023_07_30_trish/clip_01_03/lt.mp4,342,363,The patient is intubated.,4
+2023_07_30_trish/clip_02_02/lt.mp4,14,31, Nothing to report.,4
+2023_07_30_trish/clip_03/lt.mp4,22,298," The patient spontaneously, the patient wiggled his bilateral toes in response to some kind of stimulation from the physician.",4
+2023_07_30_trish/clip_03/lt.mp4,298,342,No other physical responses noted.,4
+2023_07_30_trish/clip_05/lt.mp4,15,70, The patient is being repositioned and turned to his left side.,4
+2023_07_30_trish/clip_05/lt.mp4,70,174,The nurses use the repo sheet and two wedges to turn the patient adequately to his left side.,4
+2023_07_30_trish/clip_05/lt.mp4,174,239,The patient remains unresponsive throughout the repositioning.,4
+2023_07_30_trish/clip_05/lt.mp4,239,391,The nurses tie the patient's bilateral wrist restraints and elevate his bilateral upper extremities.,4
+2023_07_30_trish/clip_07/lt.mp4,20,119, Patient's breath is negative four in response to the nurse cleaning his face with a washcloth.,4
+2023_07_30_trish/clip_16_01/lt.mp4,24,201, The nurse is preparing to place an ultrasound guided intravenous access on the patient.,4
+2023_07_30_trish/clip_16_02/lt.mp4,35,303," Nurse is using ultrasound to assess the patient's right upper extremity vessels to find a location to place a PICC line, a peripherally inserted central catheter line.",4
+2023_07_31_julie/clip_03_01/lt.mp4,5,156," This patient appears to be vomiting, so I would notify the next shift of patient's need for nausea medication.",4
+2023_07_31_julie/clip_03_01/lt.mp4,156,228,"And an EKG was done, and it would be important to know the results of the EKG.",4
+2023_07_31_julie/clip_03_03/lt.mp4,18,181," Patient is hooked up to a defibrillator and it's unclear to my eye on the monitor why this was done, but it would be important to know why the patient is hooked up to the monitor.",4
+2023_08_03_trish/clip_01_01/lt.mp4,23,98, The patient is being brought into the room post procedure.,4
+2023_08_03_trish/clip_01_01/lt.mp4,98,146,There are anesthesiologists in the room.,4
+2023_08_03_trish/clip_01_01/lt.mp4,146,268,One of the anesthesiologists is bagging the patient via the patient's endotracheal tube.,4
+2023_08_03_trish/clip_01_01/lt.mp4,268,343,The patient is a RAS negative five.,4
+2023_08_03_trish/clip_01_01/lt.mp4,343,405,The patient has two chest tubes.,4
+2023_08_03_trish/clip_01_01/lt.mp4,405,430,The patient has a Foley catheter.,4
+2023_08_03_trish/clip_01_01/lt.mp4,474,496, and an arterial line.,4
+2023_08_03_trish/clip_01_02/lt.mp4,31,116, The patient is unresponsive and is a RAS negative five.,4
+2023_08_03_trish/clip_01_02/lt.mp4,116,208,The respiratory therapist is adjusting and monitoring the mechanical ventilator.,4
+2023_08_03_trish/clip_01_02/lt.mp4,208,353,A nurse is preparing to draw blood through the patient's left radial arterial line.,4
+2023_08_03_trish/clip_01_02/lt.mp4,353,468,She also attaches a vamp to the patient's left arterial line tubing.,4
+2023_08_03_trish/clip_01_02/lt.mp4,517,586, and the patient is connected to a cardiac output monitor.,4
+2023_08_03_trish/clip_02/lt.mp4,15,76, The patient is now awake and following commands.,4
+2023_08_03_trish/clip_02/lt.mp4,76,158,The patient is nodding appropriately in response to verbal stimulation.,4
+2023_08_03_trish/clip_02/lt.mp4,158,241,The patient remains intubated and restrained.,4
+2023_08_03_trish/clip_08/lt.mp4,26,270, The nurses have attached the patient's Foley catheter temperature probe to the monitor to continuously monitor the patient's bladder temperature.,4
+2023_08_03_trish/clip_10/lt.mp4,28,88, Nothing to report.,4
+2023_08_03_trish/clip_10/lt.mp4,88,256,The patient is collecting a blood sample from the patient's left radial arterial line for a blood sugar that he is taking with a glucometer at the bedside.,4
+2023_08_03_trish/clip_11/lt.mp4,34,144, The nurse is assessing something under the patient's blanket on his right inner thigh.,4
+2023_08_03_trish/clip_12/lt.mp4,114,264," able to view the task that the nurse is performing due to the camera angle, but it involves drawing blood from the patient's radial arterial line.",4
+2023_08_03_trish/clip_12/lt.mp4,264,438,This is evident by the flushing of the arterial line towards the end of the video.,4
+2023_08_03_trish/clip_14/lt.mp4,16,66, The patient is moving his extremities spontaneously.,4
+2023_08_03_trish/clip_14/lt.mp4,66,124,The patient remains calm while he is intubated.,4
+2023_08_03_trish/clip_15/lt.mp4,19,84, This is collecting and measuring the patient's urine output from the Foley catheter bag.,4
+2023_08_03_trish/clip_17/lt.mp4,22,269, The patient is alert and is able to write notes and messages for the staff and the clinician.,4
+2023_08_03_trish/clip_17/lt.mp4,269,350,The nurse is appropriate and responsive.,4
+2023_08_03_trish/clip_17/lt.mp4,350,454,"The patient is moving all extremities strongly, spontaneously, and purposefully.",4
+2023_08_03_trish/clip_17/lt.mp4,471,511, The patient's breathing is unlabored.,4
+2023_08_03_trish/clip_17/lt.mp4,511,546,The patient is not in distress.,4
+2023_08_03_trish/clip_17/lt.mp4,546,606,The patient is still mechanically ventilated via an endotracheal tube.,4
+2023_08_03_trish/clip_18/lt.mp4,17,105, The nurse is presumably drawing blood from the patient's left radial arterial line.,4
+2023_08_03_trish/clip_18/lt.mp4,105,185,He is using a one milliliter syringe to draw the blood.,4
+2023_08_03_trish/clip_18/lt.mp4,185,268,The patient is calm and cooperative and awake.,4
+2023_08_03_trish/clip_18/lt.mp4,268,281,The patient is a RAS0.,4
+2023_08_03_trish/clip_23_01/lt.mp4,34,111, Nurse is changing the dressing on the patient's left radial art line.,4
+2023_08_03_trish/clip_23_02/lt.mp4,35,72, Patient is calm and cooperative.,4
+2023_08_03_trish/clip_23_02/lt.mp4,72,183,The patient is a RAS0 as the nurse is changing the patient's left radial arterial line dressing.,4
+2023_08_03_trish/clip_26/lt.mp4,16,111, The nurse is changing the dressing on the patient's chest tubes.,4
+2023_08_03_trish/clip_26/lt.mp4,111,195,There is scant serosanguinous drainage.,4
+2023_08_03_trish/clip_26/lt.mp4,195,273,Nurse is using four by four gauze and blue tape for the dressing.,4
+2023_08_03_trish/clip_29_02/lt.mp4,18,69, Nothing to report.,4
+2023_08_03_trish/clip_29_02/lt.mp4,69,197,The patient is able to turn and reposition himself with minimal assist.,4
+2023_08_03_trish/clip_29_02/lt.mp4,197,269,The patient is alert and calm.,4
+2023_08_03_trish/clip_29_02/lt.mp4,269,291,The patient is cooperative.,4
+2023_08_03_trish/clip_29_02/lt.mp4,291,367,The patient is able to write notes on a clipboard.,4
+2023_08_03_trish/clip_29_02/lt.mp4,367,389,The patient remains intubated.,4
+2023_08_03_trish/clip_29_03/lt.mp4,62,156, This is posting the SCD sleeve on the patient's left leg.,4
+2023_08_03_trish/clip_29_03/lt.mp4,156,252,The patient's right leg should not be in an SCD.,4
+2023_08_03_trish/clip_29_03/lt.mp4,252,464,The other nurse is performing oral care for the patient using a genco reception and oral care section swabs with chlorhexidine.,4
+2023_08_03_trish/clip_29_03/lt.mp4,511,641, The nurse suctioned the patient's endotracheal tube using the inline suction and the patient tolerated this well.,4
+2023_08_08_julie/clip_06/lt.mp4,9,269," This appears to be a dialysis patient, so it would be important to know how the patient tolerates dialysis, vital signs during dialysis, and the indication for dialysis, whether it's for metabolic clearance or hemodynamic support.",4
+2023_08_08_julie/clip_22/lt.mp4,16,93, The patient is on continuous renal replacement therapy.,4
+2023_08_08_julie/clip_22/lt.mp4,93,127,The patient is alert and awake.,4
+2023_08_08_julie/clip_22/lt.mp4,127,173,The patient is verbal and cooperative.,4
+2023_08_08_julie/clip_22/lt.mp4,173,254,The physician is at the bedside performing a limited exam on the patient.,4
+2023_08_08_julie/clip_24_01/lt.mp4,24,149," In this particular clip, the patient's family member appears to be rubbing the patient's knee or leg, I assume because the patient's having pain.",4
+2023_08_08_julie/clip_24_01/lt.mp4,149,282,"If that's the case, I would make sure to assess the whole leg and look for any swelling or erythema to make sure this patient doesn't have a DVT.",4
+2023_08_08_julie/clip_24_01/lt.mp4,282,363,"He is wearing STDs, so I'll prevent that, but I'm not sure how mobile he is.",4
+2023_08_08_julie/clip_26/lt.mp4,12,131," In this clip, the nurse is performing a bladder scan on the patient to see how much needle he is making or retaining.",4
+2023_08_08_julie/clip_26/lt.mp4,131,226,"Since this is a dialysis patient, he doesn't make much, but it would be important to know if he is producing anything.",4
+2023_08_09_julie/clip_02_01/lt.mp4,39,222," The provider is placing an arterial line, presumably to monitor hemodynamic SAS closely, so it would be important to know what the patient's vital signs are and what the target parameters are for her blood pressure.",4
+2023_08_09_julie/clip_04_02/lt.mp4,17,84," In this clip, the provider is still working to place an arterial line.",4
+2023_08_09_julie/clip_05_01/lt.mp4,16,269," The arterial line has successfully been placed into the radial artery, so now we would be able to closely monitor hemodynamic status of this patient to determine whatever blood pressure parameters we are setting for the patient and titrate medications appropriately.",4
+2023_08_09_julie/clip_05_03/lt.mp4,17,75, The nurse is adjusting the medication a couple of times in this clip.,4
+2023_08_09_julie/clip_05_03/lt.mp4,75,232,"And now that the patient has an arterial line in place, it would be important to monitor hemodynamic status and adjust the medication according to what the providers have set as the parameters.",4
+2023_08_09_julie/clip_13/lt.mp4,22,153," The nurse is looking at the monitor often in this clip, so it would be important to know the hemodynamics so that you can titrate the patient's medications accordingly.",4
+2023_08_09_julie/clip_13/lt.mp4,153,210,There are angles when it appears too dark to tell what the nurse is doing.,4
+2023_08_09_julie/clip_13/lt.mp4,210,322,"However, I believe the nurse is drawing blood at one point in this video, so it would be important to know the lab values for the patient.",4
+2023_08_09_julie/clip_16/lt.mp4,6,106," In this clip, this patient suddenly has a blue emesis bagged against her face, indicating that she probably is nauseous.",4
+2023_08_09_julie/clip_16/lt.mp4,106,249,So it would be important for the oncoming nurse to know that anti-medics may be needed and to find a reason for her nausea.,4
+2023_08_09_julie/clip_17/lt.mp4,12,255," The nurse in this clip is adjusting the medication on the IV pump, so it'd be important to know what number the patient is receiving of the medication that's being infused and what the parameters are or goal blood pressure for the patient to meet.",4
+2023_08_11_julie/clip_01/lt.mp4,12,28, no reportable events.,4
+2023_08_11_julie/clip_06_01/lt.mp4,9,116," In this clip, the nurse has performed a bladder scan, and the patient is attempting to urinate.",4
+2023_08_11_julie/clip_06_01/lt.mp4,116,211,So it would be important to know how much was in the bladder scan and whether or not the patient is able to void.,4
+2023_08_11_julie/clip_06_01/lt.mp4,211,263,"And if not, then there is some retention there that needs to be addressed.",4
+2023_08_11_julie/clip_09/lt.mp4,13,162," In this clip, the nurses check the patient's blood sugar, so it would be important to know what his bedside glucose has been and what the insulin regimen is to cover for it, if any.",4
+2023_08_18_trish/clip_01_01/lt.mp4,43,111, Nurses are settling the patient into a room.,4
+2023_08_18_trish/clip_01_01/lt.mp4,111,150,The patient remains asleep throughout the process.,4
+2023_08_18_trish/clip_19/lt.mp4,18,81, The patient is agitated and restless.,4
+2023_08_18_trish/clip_19/lt.mp4,81,108,The patient appears uncomfortable.,4
+2023_08_18_trish/clip_19/lt.mp4,108,177,The patient now has bilateral wrist restraints on.,4
+2023_08_18_trish/clip_20/lt.mp4,32,67, The patient continues to be agitated.,4
+2023_08_18_trish/clip_20/lt.mp4,67,129,The nurses are at the bedside.,4
+2023_08_18_trish/clip_20/lt.mp4,129,160,The physician is at the bedside.,4
+2023_08_18_trish/clip_20/lt.mp4,160,240,The patient is verbal and appears uncomfortable.,4
+2023_08_18_trish/clip_20/lt.mp4,240,304,The patient has bilateral soft wrist restraints on.,4
+2023_08_18_trish/clip_21/lt.mp4,22,36, Nothing to report.,4
+2023_08_18_trish/clip_22/lt.mp4,30,60, Patient continues to be agitated.,4
+2023_08_18_trish/clip_25_01/lt.mp4,25,64, The patient is getting a chest x-ray done.,4
+2023_08_18_trish/clip_26/lt.mp4,19,28, To report.,4
+2023_08_23_julie/clip_03/lt.mp4,7,143," In this clip, it seems the nurse is having a difficult time getting a temperature reading on the patient, so it would be important to know what the temperature is to make sure the patient isn't septic.",4
+2023_08_23_julie/clip_05/lt.mp4,14,92," In this clip, the nurse is assessing breath sounds, heart tones, and abdominal sounds.",4
+2023_08_23_julie/clip_05/lt.mp4,92,201,So it would be important to know the findings of those and relay that information to the physician if it's outside of the desired limits.,4
+2023_08_23_julie/clip_06/lt.mp4,22,185," The nurse in this clip is placing a barrier on the patient, which could potentially indicate that the patient is hypothermic and could be having a cold sepsis.",4
+2023_08_23_julie/clip_06/lt.mp4,185,242,So it would be important to monitor the patient's temperature to make sure he's recovering.,4
+2023_08_23_julie/clip_07_01/lt.mp4,5,112," In this clip, the providers are setting up to put in an invasive line, either an arterial line or a central access line.",4
+2023_08_23_julie/clip_07_01/lt.mp4,112,169,So it would be important to assist with the setup of that.,4
+2023_08_23_julie/clip_07_01/lt.mp4,169,226,"And if it's an arterial line, monitor the hemodynamics once the arterial line is placed.",4
+2023_08_23_julie/clip_07_02/lt.mp4,5,143," In this clip, the provider appears to be setting up to insert an arterial line, so it would be important to know how that procedure went, assuming there would be no difficulty.",4
+2023_08_23_julie/clip_07_02/lt.mp4,143,271,"And once the arterial line is in, it would be important to monitor hemodynamics in this patient to assess if the patient needs further intervention.",4
+2023_08_23_julie/clip_08_01/lt.mp4,7,156," The provider here is setting up to insert an arterial line, so it would be important to make sure that the procedure goes well and once the arterial line is inserted to monitor the patient's hemodynamics.",4
+2023_08_23_julie/clip_08_06/lt.mp4,21,73," In this clip, the bedside alarm is alarming and flashing.",4
+2023_08_23_julie/clip_08_06/lt.mp4,73,166,"However, I cannot see what the number shows, but I'm assuming the blood pressure is low.",4
+2023_08_23_julie/clip_08_06/lt.mp4,166,220,"The nurse is hanging a bag of medication, which I presume would be pressors.",4
+2023_08_23_julie/clip_08_06/lt.mp4,220,333,"If this is the case, it would be important to know the patient's hemodynamics and his response to medication.",4
+2023_08_23_julie/clip_08_07/lt.mp4,13,94," Nerves in this clip appears to be starting a medication, presumably pressors, to increase the patient's blood pressure.",4
+2023_08_23_julie/clip_08_07/lt.mp4,94,193,So it would be important to know the needed titration for that to keep the patient within its hemodynamic parameters.,4
+2023_08_23_julie/clip_08_09/lt.mp4,9,189," The arterial line was successfully placed, therefore we can start closely hemodynamic monitoring this patient as directed by the patient's physician orders or parameters.",4
+2023_08_23_julie/clip_13_03/lt.mp4,3,115," In this clip, the chest x-ray was taken, so it would be important for follow-up on the result of the chest x-ray.",4
+2023_08_23_julie/clip_13_03/lt.mp4,115,276,"It also seems that this patient has lost IV access or is bleeding from the IV, so we need to replace the IV so that he has adequate access for medications.",4

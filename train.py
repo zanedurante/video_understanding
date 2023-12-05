@@ -38,6 +38,8 @@ def get_args():
     args.add_argument("--backbone_lr_multiplier", type=float, default=None)
     args.add_argument("--num_frozen_epochs", type=int, default=None)
     args.add_argument("--max_epochs", type=int, default=None)
+    args.add_argument("--text_encoder_weight_decay", type=float, default=None)
+    args.add_argument("--text_encoder_lr_multiplier", type=float, default=None)
 
     args = args.parse_args()
     return args
@@ -123,15 +125,19 @@ def main(args):
             total_num_steps=total_num_steps,
         )
     else:
+        print("Getting model module")
         module = model_module(
             config,
             total_num_steps=total_num_steps,
         )
+        print("Loaded model module")
 
     if use_lr_finder:  # TODO: Remove temp .ckpt created from lr finder
         print("Running lr finder...")
         trainer = pl.Trainer()
+        print("Making tuner")
         tuner = Tuner(trainer)
+        print("Finding lr...")
         lr_finder = tuner.lr_find(
             module, data_module, min_lr=1e-12, max_lr=1e-0, num_training=200
         )

@@ -3,7 +3,7 @@ trainer: # pytorch lightning flags
   is_deterministic: False
   precision: 32
   num_workers: cpus-2 # os.cpu_count() - 2
-  scheduler: cosine
+  scheduler: cosine # TODO: Make this fully configurable
 
 logger:
   visualization_dir: visualizations

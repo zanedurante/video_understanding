@@ -30,7 +30,7 @@ def _make_grid(video, ncol=4):
     return grid
 
 
-def visualize_sample(sample, use_clip_norm=True):
+def visualize_sample(sample, use_clip_norm=True, overlay=True):
     """
     Visualizes a sample from the dataset.
     Sample is a dict with keys: 'video': video_tensor, (optional) 'label': label_tensor, (optional) 'caption': caption_string
@@ -39,6 +39,9 @@ def visualize_sample(sample, use_clip_norm=True):
     video = sample["video"]
     label = sample.get("label", None)
     caption = sample.get("caption", None)
+
+    if not overlay:
+        label, caption = None, None
 
     # video is a tensor of shape (T, C, H, W)
     # label is a tensor of shape (1)
@@ -78,17 +81,24 @@ def visualize_sample(sample, use_clip_norm=True):
 
 
 def visualize_dataset(
-    dataset_name, output_dir="visualizations", num_samples=16, use_clip_norm=True
+    dataset_name, output_dir="visualizations", num_samples=16, use_clip_norm=True, num_frames=4, overlay=True
 ):
     """
     Visualizes a dataset by loading samples from it and visualizing it.
     """
+    # remove after _ if present in dataset name
+    if "_" in dataset_name:
+        modifier = "_" + dataset_name.split("_")[1]
+        dataset_name = dataset_name.split("_")[0]
+    else:
+        modifier = ""
 
-    dataset = VideoDataset(dataset_name, dataset_split="train")
-
+    dataset = VideoDataset(dataset_name, dataset_split="train"+modifier, num_frames=num_frames)
+    if num_samples == -1:
+        num_samples = len(dataset)
     for i in tqdm(range(num_samples)):
         sample = dataset[i]
 
-        combined_image = visualize_sample(sample, use_clip_norm=use_clip_norm)
+        combined_image = visualize_sample(sample, use_clip_norm=use_clip_norm, overlay=overlay)
         # save image to visualizations/{i}.png
         cv2.imwrite("{}/{}.png".format(output_dir, i), combined_image)
