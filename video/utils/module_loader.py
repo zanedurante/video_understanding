@@ -2,15 +2,24 @@
 Utils for handling pytorch lightning modules.
 """
 
-from video.modules import Classifier, DualEncoder
+from video.modules import Classifier, DualEncoder, Captioner
 from video.datasets.data_module import VideoDataModule
 
 
 def get_model_module(module_name):
+    module_name = module_name.lower()
     if module_name == "classifier":
         return Classifier
     elif module_name == "dual_encoder":
         return DualEncoder
+    elif module_name == "captioner":
+        return Captioner
+    else:
+        raise NotImplementedError(
+            "Module {} not implemented in video.utils.module_loader's get_model_module()".format(
+                module_name
+            )
+        )
 
 
 def get_data_module_from_config(config):

@@ -71,6 +71,27 @@ def merge_wandb_args(config, wandb_args):
         elif key == "text_encoder_lr_multiplier":
             if value is not None:
                 config.trainer.text_encoder_lr_multiplier = value
+        elif key == "text_decoder_lr_multiplier":
+            if value is not None:
+                config.trainer.text_decoder_lr_multiplier = value
+        elif key == "text_decoder_weight_decay":
+            if value is not None:
+                config.trainer.text_decoder_weight_decay = value
+        elif key == "prompt_lr_multiplier":
+            if value is not None:
+                config.trainer.prompt_lr_multiplier = value
+        elif key == "prompt_weight_decay":
+            if value is not None:
+                config.trainer.prompt_weight_decay = value
+        elif key == "text_first":
+            if value is not None:
+                config.model.text_first = value
+        elif key == "num_learnable_prompt_tokens":
+            if value is not None:
+                config.model.num_learnable_prompt_tokens = value
+        elif key == "use_start_token_for_caption":
+            if value is not None:
+                config.model.use_start_token_for_caption = value
     return config
 
 
@@ -90,6 +111,13 @@ def get_wandb_args(args):
         "fast_run",
         "text_encoder_lr_multiplier",
         "text_encoder_weight_decay",
+        "text_decoder_lr_multiplier",
+        "text_decoder_weight_decay",
+        "prompt_lr_multiplier",
+        "prompt_weight_decay",
+        "text_first",
+        "num_learnable_prompt_tokens",
+        "use_start_token_for_caption",
     ]
     wandb_args = {}
     if args is None:

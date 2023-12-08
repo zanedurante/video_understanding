@@ -40,14 +40,19 @@ def get_args():
     args.add_argument("--max_epochs", type=int, default=None)
     args.add_argument("--text_encoder_weight_decay", type=float, default=None)
     args.add_argument("--text_encoder_lr_multiplier", type=float, default=None)
+    args.add_argument("--text_decoder_lr_multiplier", type=float, default=None)
+    args.add_argument("--text_decoder_weight_decay", type=float, default=None)
+    args.add_argument("--prompt_lr_multiplier", type=float, default=None)
+    args.add_argument("--prompt_weight_decay", type=float, default=None)
+    args.add_argument("--text_first", type=bool, default=None)
+    args.add_argument("--num_learnable_prompt_tokens", type=int, default=None)
+    args.add_argument("--use_start_token_for_caption", type=bool, default=None)
 
     args = args.parse_args()
     return args
 
 
 def main(args):
-    # TODO: use the configs set in configs/
-    # TODO: Setup wandb sweep like: https://www.youtube.com/watch?v=WZvG6hwxUEw
     use_lr_finder = args.find_lr
     disable_wandb = args.disable_wandb
     fast_run = args.fast_run
@@ -57,9 +62,7 @@ def main(args):
         args.deterministic or config.trainer.is_deterministic
     )  # False by default
 
-    module_type = config.model.type  # TODO: Use this to load the correct module
-    num_classes = 101  # Can we infer from the dataset(s)?
-    dataset_name = "ucf101"  # Load from datasets in configs
+    module_type = config.model.type
 
     if is_deterministic:
         torch.backends.cudnn.deterministic = True

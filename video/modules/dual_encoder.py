@@ -10,6 +10,10 @@ import numpy as np
 
 
 class DualEncoder(pl.LightningModule):
+    """
+    Basic idea: text encoder and video encoder are trained to embed text and video into a shared space
+    """
+
     def __init__(
         self,
         config,
@@ -75,7 +79,7 @@ class DualEncoder(pl.LightningModule):
         if self.head_type is None or self.head_type.lower() == "none":
             self.visual_head = nn.Identity()
             self.text_head = nn.Identity()
-        elif self.head_type == "linear":
+        elif self.head_type.lower() == "linear":
             self.visual_head = nn.Sequential(
                 nn.Dropout(self.head_dropout),
                 nn.Linear(
@@ -89,7 +93,7 @@ class DualEncoder(pl.LightningModule):
                     self.text_encoder.get_text_embed_dim(), self.shared_embed_dim
                 ),
             )
-        elif self.head_type == "mlp":
+        elif self.head_type.lower() == "mlp":
             self.visual_head = nn.Sequential(
                 nn.Linear(
                     self.video_backbone.get_video_level_embed_dim(),
@@ -114,7 +118,7 @@ class DualEncoder(pl.LightningModule):
                 ),  # By default just repeat the video_level_embed_dim
             )
         else:
-            raise ValueError(f"Invalid head type: {self.head_type}")
+            raise NotImplementedError(f"Head type {self.head_type} not implemented.")
 
     def on_train_epoch_start(self):
         if self.current_epoch == 0 and self.num_frozen_epochs > 0:

@@ -20,6 +20,7 @@ setup(
         "wandb",
         "matplotlib",
         "omegaconf",
+        "transformers",
     ],
     dependency_links=["https://download.pytorch.org/whl/cu113"],
 )

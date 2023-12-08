@@ -25,6 +25,7 @@ Assumes cuda version 11.3  For different cuda versions, we will need to update t
 
 ### install remaining dependencies in setup.py 
 `pip install ftfy, regex, decord, pandas, black, wandb, matplotlib, omegaconf, opencv-python`
+`pip install transformers`
 
 ### final step: run pytest in the video_understanding directory.  This will run all tests to make sure you are setup correctly. Warnings are ok
 `pytest`

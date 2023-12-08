@@ -1,0 +1,44 @@
+program: train.py
+method: random  # or grid, random, bayes
+metric:
+  name: val_loss
+  goal: minimize
+parameters:
+  fast_run:
+    values: [True] # use special a100 setting for torch.set_float32_matmul_precision("high")
+  use_sweep:
+    values: [True]
+  config: 
+    values: [configs/captioning/ucf101.yaml] # This is the config file to use
+  lr:
+    values: [1e-4]
+  num_frames:
+    values: [16]
+  head:
+    values: [linear]
+  head_dropout:
+    min: 0.0
+    max: 0.7
+  head_weight_decay:
+    values: [0.0, 0.05, 0.1]
+  backbone_weight_decay:
+    values: [0.0, 0.05, 0.1]
+  prompt_weight_decay:
+    values: [0.0, 0.05, 0.1]
+  prompt_lr_multiplier:
+    values: [0.0001, 0.01, 0.2, 1.0]
+  num_frozen_epochs:
+    values: [0, 1, 2, 3, 4, 5]
+  max_epochs:
+    values: [16] # Do longer run next
+  backbone_lr_multiplier:
+    values: [0.0001, 0.01, 0.2, 1.0]
+  text_decoder_lr_multiplier:
+    values: [0.0001, 0.01, 0.2, 1.0]
+  text_first:
+    values: [True, False]
+  use_start_token_for_caption:
+    values: [True, False]
+  num_learnable_prompt_tokens:
+    values: [0, 1, 2, 4, 8, 16]
+  # Add other parameters you want to tune
