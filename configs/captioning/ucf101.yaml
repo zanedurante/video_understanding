@@ -14,6 +14,7 @@ model:
   text_first: True
   num_learnable_prompt_tokens: 1
   use_start_token_for_caption: True
+  prompt: "A video of: "
 
 trainer:
   lr: 1e-4
