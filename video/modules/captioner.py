@@ -61,6 +61,7 @@ class Captioner(pl.LightningModule):
         self.prompt_lr_multiplier = get_val_from_config(
             config, "trainer.prompt_lr_multiplier", 1.0
         )
+        self.prompt = get_val_from_config(config, "model.prompt", "A video of: ")
         self.lr = get_val_from_config(config, "trainer.lr", 1e-4)
         self.batch_size = get_val_from_config(config, "trainer.batch_size", 16)
         self.val_batch_size = get_val_from_config(
@@ -163,8 +164,7 @@ class Captioner(pl.LightningModule):
         return
 
     def get_prompt(self):  # TODO: Add prompts to the config
-        prompt = "A video of: "
-        return prompt
+        return self.prompt
 
     def forward(self, batch):
         video = batch["video"]
@@ -194,7 +194,7 @@ class Captioner(pl.LightningModule):
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
 
-        debug = False
+        debug = True
         if debug:
             print("Labels: ", self.text_decoder.tokenizer.decode(labels[0]))
 
@@ -221,7 +221,7 @@ class Captioner(pl.LightningModule):
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
         
-        debug = False
+        debug = True
         if debug:
             print("\nLabels: ", self.text_decoder.tokenizer.decode(labels[0]))
 

@@ -4,6 +4,7 @@ trainer: # pytorch lightning flags
   precision: 32
   num_workers: cpus-2 # os.cpu_count() - 2
   scheduler: cosine # TODO: Make this fully configurable
+  accumulate_grad_batches: 1
 
 logger:
   visualization_dir: visualizations

@@ -107,6 +107,7 @@ def main(args):
         ],
         log_every_n_steps=config.logger.log_every_n_steps,
         deterministic=is_deterministic,
+        accumulate_grad_batches=config.trainer.accumulate_grad_batches,
     )
 
     data_module = get_data_module_from_config(config)

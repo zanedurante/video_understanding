@@ -50,15 +50,13 @@ class BaseTextDecoder(nn.Module):
         inputs_embeds = self.prepare_inputs(
             text_batch, prompt=prompt, visual_inputs=visual_inputs, **kwargs
         )
-        output_preds = self.llm(inputs_embeds=inputs_embeds, **kwargs)
-
-        # Only return the preds for the caption tokens at the end
+        print("\n Input embedding shape:", inputs_embeds.shape)
         total_num_skip = 0
         if prompt is not None:
             total_num_skip += len(self.tokenizer.encode(prompt))
         total_num_skip += (
             self.num_learnable_prompt_tokens * 3
-        )  # 3 for prefix, mid, suffix
+        )  # 3 for prefix, mid, suffix prompt tokens
         if visual_inputs is not None:
             total_num_skip += visual_inputs.shape[1]
         if (
@@ -66,6 +64,14 @@ class BaseTextDecoder(nn.Module):
         ):  # Skip start token at the beginning of the caption
             total_num_skip += 1
 
+        attn_mask = self.get_custom_mask(inputs_embeds.shape[0], inputs_embeds.shape[1], total_num_skip=total_num_skip)
+        # attn_mask = torch.ones(inputs_embeds.shape[0], inputs_embeds.shape[1]).int().to(self.llm.device)
+        output_preds = self.llm(inputs_embeds=inputs_embeds, attention_mask=attn_mask, **kwargs)
+
+        # Only return the preds for the caption tokens at the end
+
+        print("\n Output preds shape:", output_preds.logits.shape)
+        print("Skipping first: ", total_num_skip, " tokens")
         return output_preds.logits[:, total_num_skip:, :]
 
     def get_labels(self, text_batch):
@@ -75,6 +81,13 @@ class BaseTextDecoder(nn.Module):
             self.llm.device
         )  # ignore start token
         return labels
+    
+    def get_custom_mask(self, batch_size, seq_length, total_num_skip=0):
+        # Creates a custom mask that allows for attention between all of the first total_num_skip tokens and then is causal afterwards
+        mask = torch.ones(batch_size, seq_length).int().to(self.llm.device)
+        mask[:, :total_num_skip] = 0
+        return mask
+
 
     def prepare_inputs(
         self, text_batch, prompt="", visual_inputs=None, extra_embeds=None, **kwargs
@@ -164,7 +177,7 @@ class BaseTextDecoder(nn.Module):
                 [inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5]],
                 dim=1,
             )
-
+        
         return combined_inputs
 
     def generate(self, text_batch, prompt=None, visual_inputs=None, **kwargs):
