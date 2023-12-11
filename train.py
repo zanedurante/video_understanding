@@ -47,6 +47,7 @@ def get_args():
     args.add_argument("--text_first", type=bool, default=None)
     args.add_argument("--num_learnable_prompt_tokens", type=int, default=None)
     args.add_argument("--use_start_token_for_caption", type=bool, default=None)
+    args.add_argument("--prompt", type=str, default=None)
 
     args = args.parse_args()
     return args

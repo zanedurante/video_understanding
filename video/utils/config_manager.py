@@ -92,6 +92,9 @@ def merge_wandb_args(config, wandb_args):
         elif key == "use_start_token_for_caption":
             if value is not None:
                 config.model.use_start_token_for_caption = value
+        elif key == "prompt":
+            if value is not None:
+                config.model.prompt = value
     return config
 
 
@@ -118,6 +121,7 @@ def get_wandb_args(args):
         "text_first",
         "num_learnable_prompt_tokens",
         "use_start_token_for_caption",
+        "prompt",
     ]
     wandb_args = {}
     if args is None:
