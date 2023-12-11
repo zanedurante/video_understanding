@@ -2,6 +2,8 @@
 from transformers import OPTForCausalLM, GPT2Tokenizer
 import torch.nn as nn
 from video.text_decoders.base_decoder import BaseTextDecoder
+from tokenizers.processors import TemplateProcessing
+
 
 name2ckpt = {
     "125m": "facebook/opt-125m",
@@ -31,7 +33,8 @@ class OPTTextDecoder(BaseTextDecoder):
         self.llm, self.tokenizer = load_opt_model_tokenizer(opt_model_name)
         self.embed_dim = self.llm.config.hidden_size
         self.vocab_size = self.llm.config.vocab_size
-        self.ignore_index = -100  # which index to ignore in the loss, right now not using? TODO: Figure out what is best for this
+        self.ignore_index = 1  # which index to ignore in the loss, ignore pad tokens
+        self.added_eos_token = "</s>" # Tokenize does not add the eos token in huggingface for some reason...
 
 
 def load_opt_model_tokenizer(opt_model_name, **kwargs):

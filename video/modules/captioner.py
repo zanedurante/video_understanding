@@ -221,7 +221,7 @@ class Captioner(pl.LightningModule):
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
         
-        debug = True
+        debug = False
         if debug:
             print("\nLabels: ", self.text_decoder.tokenizer.decode(labels[0]))
 

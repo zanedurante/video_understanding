@@ -20,6 +20,7 @@ class BaseTextDecoder(nn.Module):
         self.vocab_size = None  # model specific, should set in constructor
         self.tokenizer_uses_end_token = False  # model specific, whether the tokenizer uses an end token by default when tokenizing
         self.ignore_index = 1 # tokenizer specific, tokenizer pad token index
+        self.added_eos_token = "" # Needed for OPT, since the tokenizer does not add the eos token for some reason...
 
         # Hyperparameters to be set in the config:
         self.text_first = text_first  # Otherwise it uses the visual tokens first
@@ -67,8 +68,9 @@ class BaseTextDecoder(nn.Module):
 
         return output_preds.logits[:, total_num_skip:, :]
 
-    def get_labels(self, text):
-        tokenized_text = self.tokenizer(text, padding=True, return_tensors="pt")
+    def get_labels(self, text_batch):
+        text_batch = [text + self.added_eos_token for text in text_batch]
+        tokenized_text = self.tokenizer(text_batch, padding=True, return_tensors="pt")
         labels = tokenized_text.input_ids.clone()[:, 1:].to(
             self.llm.device
         )  # ignore start token
@@ -83,13 +85,13 @@ class BaseTextDecoder(nn.Module):
             raise NotImplementedError("Extra tokens not implemented yet")
         batch_size = len(text_batch)
         text_prompts = [prompt for text in text_batch]  # Assumes prompt is a string
+        text_batch = [text + self.added_eos_token for text in text_batch] # add eos token to batch (added_eos_token is "" for most models)
         tokenized_prompts = self.tokenizer(
             text_prompts, padding=False, return_tensors="pt"
         ).input_ids.to(self.llm.model.device)
         tokenized_text = self.tokenizer(
             text_batch, padding=True, return_tensors="pt"
         ).input_ids.to(self.llm.model.device)
-
         text_inputs = self.llm.model.decoder.embed_tokens(tokenized_prompts)
         text_targets = self.llm.model.decoder.embed_tokens(tokenized_text)[
             :, 1:, :
