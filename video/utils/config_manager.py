@@ -52,13 +52,13 @@ def merge_wandb_args(config, wandb_args):
                 config.model.head_dropout = value
         elif key == "head_weight_decay":
             if value is not None:
-                config.model.head_weight_decay = value
+                config.trainer.head_weight_decay = value
         elif key == "backbone_weight_decay":
             if value is not None:
-                config.model.backbone_weight_decay = value
+                config.trainer.backbone_weight_decay = value
         elif key == "backbone_lr_multiplier":
             if value is not None:
-                config.model.backbone_lr_multiplier = value
+                config.trainer.backbone_lr_multiplier = value
         elif key == "num_frozen_epochs":
             if value is not None:
                 config.trainer.num_frozen_epochs = value

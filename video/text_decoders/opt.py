@@ -31,6 +31,7 @@ class OPTTextDecoder(BaseTextDecoder):
         self.llm, self.tokenizer = load_opt_model_tokenizer(opt_model_name)
         self.embed_dim = self.llm.config.hidden_size
         self.vocab_size = self.llm.config.vocab_size
+        self.ignore_index = -100  # which index to ignore in the loss, right now not using? TODO: Figure out what is best for this
 
 
 def load_opt_model_tokenizer(opt_model_name, **kwargs):

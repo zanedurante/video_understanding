@@ -19,6 +19,7 @@ class BaseTextDecoder(nn.Module):
         self.embed_dim = 768  # model specific, should set in constructor
         self.vocab_size = None  # model specific, should set in constructor
         self.tokenizer_uses_end_token = False  # model specific, whether the tokenizer uses an end token by default when tokenizing
+        self.ignore_index = 1 # tokenizer specific, tokenizer pad token index
 
         # Hyperparameters to be set in the config:
         self.text_first = text_first  # Otherwise it uses the visual tokens first

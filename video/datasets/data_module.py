@@ -8,6 +8,19 @@ DATASETS_TO_STATS = {
         "num_classes": 101,
         "num_train_videos": 9537,
     },
+    "ucf101_wrong": # Created for a sanity check, the first two balance beam videos are re-captioned as baby crawling instead.
+    {
+        "num_classes": 101,
+        "num_train_videos": 9537,
+    },
+    "ucf101_2":{
+        "num_classes": 101,
+        "num_train_videos": 9586,
+    },
+    "ucf101_3":{
+        "num_classes": 101,
+        "num_train_videos": 9624,
+    },
     "500p_0": {
         "num_classes": 0,
         "num_train_videos": 1731,

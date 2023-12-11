@@ -69,11 +69,12 @@ class Captioner(pl.LightningModule):
         self.train_acc = torchmetrics.Accuracy(
             task="multiclass", num_classes=self.text_decoder.vocab_size
         )
-        self.train_loss = nn.CrossEntropyLoss(ignore_index=-100)
+        ignore_index = self.text_decoder.ignore_index
+        self.train_loss = nn.CrossEntropyLoss(ignore_index=ignore_index) # Pad token is 1
         self.val_acc = torchmetrics.Accuracy(
             task="multiclass", num_classes=self.text_decoder.vocab_size
         )
-        self.val_loss = nn.CrossEntropyLoss(ignore_index=-100)
+        self.val_loss = nn.CrossEntropyLoss(ignore_index=ignore_index)
         self.head_weight_decay = get_val_from_config(
             config, "trainer.head_weight_decay", 0.0
         )
@@ -193,6 +194,10 @@ class Captioner(pl.LightningModule):
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
 
+        debug = False
+        if debug:
+            print("Labels: ", self.text_decoder.tokenizer.decode(labels[0]))
+
         # Flatten the logits and labels
         loss = self.train_loss(
             text_logits.view(-1, text_logits.size(-1)), labels.view(-1)
@@ -200,6 +205,10 @@ class Captioner(pl.LightningModule):
 
         # Calculate accuracy
         preds = text_logits.argmax(-1)
+
+        if debug:
+            print("Preds:  ", self.text_decoder.tokenizer.decode(preds[0]))
+
         acc = self.train_acc(preds.view(-1), labels.view(-1))
 
         self.log("train_loss", loss, batch_size=batch_size, on_step=True, prog_bar=True)
@@ -211,8 +220,10 @@ class Captioner(pl.LightningModule):
         batch_size = len(batch["caption"])
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
-
-        # Shift logits and labels for loss calculation
+        
+        debug = True
+        if debug:
+            print("\nLabels: ", self.text_decoder.tokenizer.decode(labels[0]))
 
         # Flatten the logits and labels
         loss = self.val_loss(
@@ -221,7 +232,14 @@ class Captioner(pl.LightningModule):
 
         # Calculate accuracy
         preds = text_logits.argmax(-1)
+
+        if debug:
+            print("Preds:  ", self.text_decoder.tokenizer.decode(preds[0]))
+
+
         acc = self.val_acc(preds.view(-1), labels.view(-1))
+        if debug:
+            print("Batch acc: ", acc)
 
         self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True)
         self.log("val_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True)

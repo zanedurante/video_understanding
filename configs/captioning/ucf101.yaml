@@ -2,7 +2,7 @@
 # TODO: Load with OmegaConf from default.yaml
 data:
   datasets: 
-    - ucf101 # contains the re-annotated videos in training split
+    - ucf101_wrong # contains the re-annotated videos in training split
   num_frames: 16
 
 model:
@@ -10,23 +10,21 @@ model:
   backbone_name: clip_ViT-B/32
   text_decoder_name: opt_125m
   head: linear
-  head_dropout: 0.00
+  head_dropout: 0.67
   text_first: True
-  num_learnable_prompt_tokens: 4
-  use_start_token_for_caption: False
-
-
+  num_learnable_prompt_tokens: 1
+  use_start_token_for_caption: True
 
 trainer:
-  lr: 3e-4
+  lr: 1e-4
   batch_size: 16
-  max_epochs: 10
-  num_frozen_epochs: 1
+  max_epochs: 16
+  num_frozen_epochs: 0
   backbone_lr_multiplier: 1.0
-  text_encoder_lr_multiplier: 1.0
+  text_decoder_lr_multiplier: 0.01
   head_weight_decay: 0.0
   backbone_weight_decay: 0.0
-  prompt_lr_multiplier: 1.0
+  prompt_lr_multiplier: 0.2
   prompt_weight_decay: 0.0
   precision: 32
   num_workers: cpus-4
