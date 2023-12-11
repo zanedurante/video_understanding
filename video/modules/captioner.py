@@ -24,6 +24,7 @@ class Captioner(pl.LightningModule):
     ):
         super().__init__()
         self.config = config
+        self.debug = False # set to true for debugging prints
         backbone_name = get_val_from_config(config, "model.backbone_name")
         self.num_frames = get_val_from_config(config, "data.num_frames")
         text_decoder_name = get_val_from_config(config, "model.text_decoder_name")
@@ -194,8 +195,7 @@ class Captioner(pl.LightningModule):
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
 
-        debug = True
-        if debug:
+        if self.debug:
             print("Labels: ", self.text_decoder.tokenizer.decode(labels[0]))
 
         # Flatten the logits and labels
@@ -206,7 +206,7 @@ class Captioner(pl.LightningModule):
         # Calculate accuracy
         preds = text_logits.argmax(-1)
 
-        if debug:
+        if self.debug:
             print("Preds:  ", self.text_decoder.tokenizer.decode(preds[0]))
 
         acc = self.train_acc(preds.view(-1), labels.view(-1))
@@ -221,8 +221,7 @@ class Captioner(pl.LightningModule):
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
         
-        debug = True
-        if debug:
+        if self.debug:
             print("\nLabels: ", self.text_decoder.tokenizer.decode(labels[0]))
 
         # Flatten the logits and labels
@@ -233,12 +232,12 @@ class Captioner(pl.LightningModule):
         # Calculate accuracy
         preds = text_logits.argmax(-1)
 
-        if debug:
+        if self.debug:
             print("Preds:  ", self.text_decoder.tokenizer.decode(preds[0]))
 
 
         acc = self.val_acc(preds.view(-1), labels.view(-1))
-        if debug:
+        if self.debug:
             print("Batch acc: ", acc)
 
         self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True)
