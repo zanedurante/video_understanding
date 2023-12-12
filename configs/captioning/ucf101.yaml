@@ -2,7 +2,7 @@
 # TODO: Load with OmegaConf from default.yaml
 data:
   datasets: 
-    - ucf101_wrong # contains the re-annotated videos in training split
+    - ucf101 # contains the re-annotated videos in training split
   num_frames: 16
 
 model:

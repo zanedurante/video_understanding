@@ -50,7 +50,7 @@ class BaseTextDecoder(nn.Module):
         inputs_embeds = self.prepare_inputs(
             text_batch, prompt=prompt, visual_inputs=visual_inputs, **kwargs
         )
-        print("\n Input embedding shape:", inputs_embeds.shape)
+
         total_num_skip = 0
         if prompt is not None:
             total_num_skip += len(self.tokenizer.encode(prompt))
@@ -70,8 +70,6 @@ class BaseTextDecoder(nn.Module):
 
         # Only return the preds for the caption tokens at the end
 
-        print("\n Output preds shape:", output_preds.logits.shape)
-        print("Skipping first: ", total_num_skip, " tokens")
         return output_preds.logits[:, total_num_skip:, :]
 
     def get_labels(self, text_batch):
