@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import cv2
 from tqdm import tqdm
+from PIL import Image
 
 from video.datasets.dataset import VideoDataset
 from video.datasets.dataset import (
@@ -30,7 +31,7 @@ def _make_grid(video, ncol=4):
     return grid
 
 
-def visualize_sample(sample, use_clip_norm=True, overlay=True):
+def visualize_sample(sample, use_clip_norm=True, overlay=True, use_grid=True):
     """
     Visualizes a sample from the dataset.
     Sample is a dict with keys: 'video': video_tensor, (optional) 'label': label_tensor, (optional) 'caption': caption_string
@@ -61,8 +62,15 @@ def visualize_sample(sample, use_clip_norm=True, overlay=True):
     # reverse original normalization for visualization
     video = video * torch.tensor(norm_std).view(3, 1, 1)
     video = video + torch.tensor(norm_mean).view(3, 1, 1)
+    
+    if not use_grid:
+        # convert into list of frames
+        # reshape (c, h, w) --> (h, w, c)
+        frames = [Image.fromarray((frame.numpy() * 255).astype(np.uint8).transpose(1, 2, 0)) for frame in video]
+        
+        return frames
 
-    grid = _make_grid(video)
+    grid = _make_grid(video)   
     grid = cv2.cvtColor(grid, cv2.COLOR_RGB2BGR)
 
     if label is not None:
@@ -87,6 +95,7 @@ def visualize_dataset(
     use_clip_norm=True,
     num_frames=4,
     overlay=True,
+    use_gif=False, # saves as gif instead of grid
 ):
     """
     Visualizes a dataset by loading samples from it and visualizing it.
@@ -105,9 +114,26 @@ def visualize_dataset(
         num_samples = len(dataset)
     for i in tqdm(range(num_samples)):
         sample = dataset[i]
+        if use_gif:
+            frames = visualize_sample(
+                sample, use_clip_norm=use_clip_norm, overlay=False, use_grid=False
+            )
 
-        combined_image = visualize_sample(
-            sample, use_clip_norm=use_clip_norm, overlay=overlay
-        )
-        # save image to visualizations/{i}.png
-        cv2.imwrite("{}/{}.png".format(output_dir, i), combined_image)
+            # save video as gif
+            video_path = "{}/{}.gif".format(output_dir, i)
+
+            frames[0].save(
+                video_path,
+                save_all=True,
+                append_images=frames[1:],
+                duration=100,
+                loop=0,
+                optimize=False
+            )
+
+        else:
+            combined_image = visualize_sample(
+                sample, use_clip_norm=use_clip_norm, overlay=overlay
+            )
+            # save image to visualizations/{i}.png
+            cv2.imwrite("{}/{}.png".format(output_dir, i), combined_image)
