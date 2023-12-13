@@ -30,8 +30,15 @@ In the current state, absolutely not.  You can see all the TODOs at the bottom o
 - [x] Add hyperparameter sweeps with wandb
 - [x] Detect the number of classes for the dataset(s) automatically (requires setup)
 - [x] Finishing touches on wandb sweeps
-- [ ] Extend codebase to support video-text matching as a task.
-- [ ] Add hmdb to test on another dataset
+- [ ] Configure model checkpoint locations
+- [ ] Create evaluate.py (give config, create args for metrics, and give test/val.csv)
+- [ ] Renew pytest-bed
+- [ ] Add hmdb dataset
+- [ ] Add Kinetics-400 dataset
+- [ ] Add Kinetics-700 dataset
+- [ ] Add WebVid10M dataset
+- [ ] Add RewrittenWebVid dataset
+- [ ] Revisit codebase to support video-text matching as a task.
 - [ ] Allow for multiple datasets for training (how to weight?)
 - [ ] Modify code to allow for large csv loading
 - [ ] Add multiple dataset support + Kinetics-400
