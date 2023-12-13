@@ -454,7 +454,6 @@ class VisionTransformer(nn.Module):
         return x
 
 
-@register_model
 def vit_small_patch16_224(pretrained=False, **kwargs):
     model = VisionTransformer(
         patch_size=16,
@@ -469,7 +468,6 @@ def vit_small_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def vit_base_patch16_224(pretrained=False, **kwargs):
     model = VisionTransformer(
         patch_size=16,
@@ -484,7 +482,6 @@ def vit_base_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def vit_large_patch16_224(pretrained=False, **kwargs):
     model = VisionTransformer(
         patch_size=16,
@@ -499,7 +496,6 @@ def vit_large_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def vit_huge_patch16_224(pretrained=False, **kwargs):
     model = VisionTransformer(
         patch_size=16,
@@ -514,7 +510,6 @@ def vit_huge_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def vit_giant_patch14_224(pretrained=False, **kwargs):
     model = VisionTransformer(
         patch_size=14,

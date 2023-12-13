@@ -360,7 +360,6 @@ class PretrainVisionTransformer(nn.Module):
         return x
 
 
-@register_model
 def pretrain_videomae_small_patch16_224(pretrained=False, **kwargs):
     model = PretrainVisionTransformer(
         img_size=224,
@@ -383,7 +382,6 @@ def pretrain_videomae_small_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def pretrain_videomae_base_patch16_224(pretrained=False, **kwargs):
     model = PretrainVisionTransformer(
         img_size=224,
@@ -406,7 +404,6 @@ def pretrain_videomae_base_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def pretrain_videomae_large_patch16_224(pretrained=False, **kwargs):
     model = PretrainVisionTransformer(
         img_size=224,
@@ -429,7 +426,6 @@ def pretrain_videomae_large_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def pretrain_videomae_huge_patch16_224(pretrained=False, **kwargs):
     model = PretrainVisionTransformer(
         img_size=224,
@@ -452,7 +448,6 @@ def pretrain_videomae_huge_patch16_224(pretrained=False, **kwargs):
     return model
 
 
-@register_model
 def pretrain_videomae_giant_patch14_224(pretrained=False, **kwargs):
     model = PretrainVisionTransformer(
         img_size=224,
