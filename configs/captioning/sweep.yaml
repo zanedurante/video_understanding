@@ -9,7 +9,7 @@ parameters:
   use_sweep:
     values: [True]
   config: 
-    values: [configs/captioning/ucf101.yaml] # This is the config file to use
+    values: [configs/captioning/500p.yaml] # This is the config file to use
   lr:
     values: [1e-4]
   num_frames:
@@ -42,5 +42,5 @@ parameters:
   num_learnable_prompt_tokens:
     values: [0, 1, 2, 4, 8, 16]
   prompt:
-    values: ["A video of: ", "A photo of a ", "A video of a ", "A video of a person ", "A video of a person doing ", "A video of a person doing a "]
+    values: ["A photo of a ", "A video of a ", "A video of a person ", "A video of a person doing ", "A video of a person doing a "]
   # Add other parameters you want to tune
