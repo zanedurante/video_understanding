@@ -1,0 +1,4 @@
+*.ckpt
+video/datasets/*/*.csv
+*.wandb
+*.log

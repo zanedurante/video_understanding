@@ -12,6 +12,7 @@ class BaseTextDecoder(nn.Module):
         text_first=True,
         num_learnable_prompt_tokens=0,
         use_start_token_for_caption=False,
+        max_caption_length=128,
         **kwargs
     ):  # Subclasses need to set self.llm and self.tokenizer
         super().__init__()
@@ -21,6 +22,8 @@ class BaseTextDecoder(nn.Module):
         self.tokenizer_uses_end_token = False  # model specific, whether the tokenizer uses an end token by default when tokenizing
         self.ignore_index = 1 # tokenizer specific, tokenizer pad token index
         self.added_eos_token = "" # Needed for OPT, since the tokenizer does not add the eos token for some reason...
+        self.max_caption_length = max_caption_length
+        print("==== MAX INPUT LENGTH:", max_caption_length)
 
         # Hyperparameters to be set in the config:
         self.text_first = text_first  # Otherwise it uses the visual tokens first
@@ -74,7 +77,7 @@ class BaseTextDecoder(nn.Module):
 
     def get_labels(self, text_batch):
         text_batch = [text + self.added_eos_token for text in text_batch]
-        tokenized_text = self.tokenizer(text_batch, padding=True, return_tensors="pt")
+        tokenized_text = self.tokenizer(text_batch, padding=True, truncation=True, return_tensors="pt", max_length=self.max_caption_length)
         labels = tokenized_text.input_ids.clone()[:, 1:].to(
             self.llm.device
         )  # ignore start token
@@ -101,7 +104,7 @@ class BaseTextDecoder(nn.Module):
             text_prompts, padding=False, return_tensors="pt"
         ).input_ids.to(self.llm.model.device)
         tokenized_text = self.tokenizer(
-            text_batch, padding=True, return_tensors="pt"
+            text_batch, padding=True, truncation=True, return_tensors="pt", max_length=self.max_caption_length
         ).input_ids.to(self.llm.model.device)
         text_inputs = self.llm.model.decoder.embed_tokens(tokenized_prompts)
         text_targets = self.llm.model.decoder.embed_tokens(tokenized_text)[

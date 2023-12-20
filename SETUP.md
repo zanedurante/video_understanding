@@ -22,6 +22,7 @@ Assumes cuda version 11.3  For different cuda versions, we will need to update t
 
 ### install pytorch lightning
 `pip install lightning`
+`pip install pytorch-lightning`
 
 ### install remaining dependencies in setup.py 
 `pip install ftfy, regex, decord, pandas, black, wandb, matplotlib, omegaconf, opencv-python`

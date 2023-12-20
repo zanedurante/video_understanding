@@ -6,13 +6,16 @@ import torch
 import argparse
 import wandb
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping
+from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping, ModelCheckpoint
+import pytorch_lightning
+print(pytorch_lightning.__version__)
 from pytorch_lightning.tuner import Tuner
 import os
 from glob import glob
 from omegaconf import OmegaConf
 from video.utils.config_manager import get_config, get_num_workers
 from video.utils.module_loader import get_model_module, get_data_module_from_config
+from pytorch_lightning.utilities import rank_zero_only
 
 
 def get_args():
@@ -59,11 +62,10 @@ def main(args):
     fast_run = args.fast_run
     config_path = args.config
     config = get_config(config_path, args)
+    print("Config: {}".format(config))
     is_deterministic = (
         args.deterministic or config.trainer.is_deterministic
     )  # False by default
-
-    module_type = config.model.type
 
     if is_deterministic:
         torch.backends.cudnn.deterministic = True
@@ -74,6 +76,15 @@ def main(args):
 
     pl.seed_everything(config.trainer.seed, workers=True)
 
+    checkpoint_callback = ModelCheckpoint(
+        dirpath='/mnt/datasets_mnt/pytorch_lightning_ckpts/',
+        filename='{epoch}-{val_loss:.2f}',
+        save_top_k=3,
+        verbose=True,
+        monitor='val_loss',
+        mode='min'
+    )
+
     if fast_run:
         print("Setting float32 matmul precision to high for fast run")
         torch.set_float32_matmul_precision("high")
@@ -83,21 +94,29 @@ def main(args):
         "logs", name=config.logger.short_run_name
     )  # use short run name for csv logger
 
-    if not disable_wandb:
+    # Only log to wandb from rank 0 process
+    if not disable_wandb and rank_zero_only.rank == 0:
         with open("wandb.key", "r") as file:
             wandb.login(key=file.read().strip())
+        print("Running wandb init")
+        
         wandb.init(
             project="video_understanding",
             config=OmegaConf.to_container(config),
             name=config.logger.run_name,
         )
+        print("Creating wandb logger")
         # I think this is unnecessary now
         logger = WandbLogger(
             name=config.logger.run_name, project="video_understanding", config=config
         )
+        print("Finished creating wandb logger")
 
+    # detect number of devices and use that number
+    num_gpus = torch.cuda.device_count()
     trainer = pl.Trainer(
-        devices=1,
+        strategy="ddp_find_unused_parameters_true",
+        devices=num_gpus,
         accelerator="gpu",
         precision=config.trainer.precision,
         max_epochs=config.trainer.max_epochs,
@@ -105,6 +124,7 @@ def main(args):
         callbacks=[
             LearningRateMonitor(logging_interval="step"),
             EarlyStopping(monitor="val_loss", patience=3, mode="min"),
+            checkpoint_callback,
         ],
         log_every_n_steps=config.logger.log_every_n_steps,
         deterministic=is_deterministic,
@@ -120,8 +140,8 @@ def main(args):
         * config.trainer.max_epochs
     )
 
+    print("Getting model module")
     model_module = get_model_module(config.model.type)
-
     if type(model_module) == Classifier:
         module = model_module(
             config,
@@ -129,12 +149,11 @@ def main(args):
             total_num_steps=total_num_steps,
         )
     else:
-        print("Getting model module")
         module = model_module(
             config,
             total_num_steps=total_num_steps,
         )
-        print("Loaded model module")
+    print("Loaded model module")
 
     if use_lr_finder:  # TODO: Remove temp .ckpt created from lr finder
         print("Running lr finder...")

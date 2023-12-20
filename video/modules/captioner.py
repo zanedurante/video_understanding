@@ -28,6 +28,7 @@ class Captioner(pl.LightningModule):
         backbone_name = get_val_from_config(config, "model.backbone_name")
         self.num_frames = get_val_from_config(config, "data.num_frames")
         text_decoder_name = get_val_from_config(config, "model.text_decoder_name")
+        self.max_caption_length = get_val_from_config(config, "model.max_input_length", 77)
         self.video_backbone = get_backbone(
             backbone_name, num_frames=self.num_frames
         ).float()  # TODO: How to make precision configurable
@@ -43,6 +44,7 @@ class Captioner(pl.LightningModule):
             text_first=text_first,
             num_learnable_prompt_tokens=num_learnable_prompt_tokens,
             use_start_token_for_caption=use_start_token_for_caption,
+            max_caption_length=self.max_caption_length,
         ).float()  # TODO: Need to figure out how to do different precision
         self.head_type = get_val_from_config(
             config, "model.head"
@@ -212,7 +214,7 @@ class Captioner(pl.LightningModule):
         acc = self.train_acc(preds.view(-1), labels.view(-1))
 
         self.log("train_loss", loss, batch_size=batch_size, on_step=True, prog_bar=True)
-        self.log("train_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True)
+        self.log("train_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
 
         return loss
 
@@ -240,8 +242,8 @@ class Captioner(pl.LightningModule):
         if self.debug:
             print("Batch acc: ", acc)
 
-        self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True)
-        self.log("val_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True)
+        self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
+        self.log("val_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
 
         return loss
 

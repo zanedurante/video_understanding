@@ -9,9 +9,9 @@ parameters:
   use_sweep:
     values: [True]
   config: 
-    values: [configs/captioning/ucf101.yaml] # This is the config file to use
+    values: [configs/captioning/webvid_small.yaml] # This is the base config file to use
   lr:
-    values: [1e-4]
+    values: [1e-3, 2e-3, 4e-3, 1e-4]
   num_frames:
     values: [16]
   head:
@@ -28,9 +28,9 @@ parameters:
   prompt_lr_multiplier:
     values: [0.0001, 0.01, 0.2, 1.0]
   num_frozen_epochs:
-    values: [0, 1, 2, 3, 4, 5]
+    values: [0, 1]
   max_epochs:
-    values: [16] # Do longer run next
+    values: [4] 
   backbone_lr_multiplier:
     values: [0.0001, 0.01, 0.2, 1.0]
   text_decoder_lr_multiplier:
@@ -42,5 +42,5 @@ parameters:
   num_learnable_prompt_tokens:
     values: [0, 1, 2, 4, 8, 16]
   prompt:
-    values: ["A video of: ", "A photo of a ", "A video of a ", "A video of a person ", "A video of a person doing ", "A video of a person doing a "]
+    values: ["", "A video of ", "A photo of a ", "A video of a "]
   # Add other parameters you want to tune

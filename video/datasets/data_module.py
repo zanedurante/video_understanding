@@ -45,6 +45,14 @@ DATASETS_TO_STATS = {
         "num_classes": 0,
         "num_train_videos": 1603,
     },
+    "webvid_rewritten": {
+        "num_classes": 0,
+        "num_train_videos": 10716266,
+    },
+    "webvid_small-rewritten": {
+        "num_classes": 0,
+        "num_train_videos": 99999,
+    },
 }
 
 
