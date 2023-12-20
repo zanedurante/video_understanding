@@ -42,5 +42,9 @@ parameters:
   num_learnable_prompt_tokens:
     values: [0, 1, 2, 4, 8, 16]
   prompt:
+<<<<<<< HEAD
     values: ["", "A video of ", "A photo of a ", "A video of a "]
+=======
+    values: ["A photo of a ", "A video of a ", "A video of a person ", "A video of a person doing ", "A video of a person doing a "]
+>>>>>>> 60ef712aa4ecd867bd3bd8069791034c1c0295da
   # Add other parameters you want to tune
