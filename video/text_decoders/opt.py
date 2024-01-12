@@ -33,8 +33,13 @@ class OPTTextDecoder(BaseTextDecoder):
         self.llm, self.tokenizer = load_opt_model_tokenizer(opt_model_name)
         self.embed_dim = self.llm.config.hidden_size
         self.vocab_size = self.llm.config.vocab_size
+        self.tokenizer_uses_end_token = False
         self.ignore_index = 1  # which index to ignore in the loss, ignore pad tokens
-        self.added_eos_token = "</s>" # Tokenize does not add the eos token in huggingface for some reason...
+        self.add_eos_token = False # whether to add the eos token to the end of the text
+        if self.add_eos_token:
+            self.added_eos_token = "</s>" # Tokenize does not add the eos token in huggingface for some reason...
+        else:
+            self.added_eos_token = ""
 
 
 def load_opt_model_tokenizer(opt_model_name, **kwargs):
@@ -55,17 +60,23 @@ def load_opt_model_tokenizer(opt_model_name, **kwargs):
 
 if __name__ == "__main__":
     from torch.nn import CrossEntropyLoss
+    import torch
 
-    prompt = "The first letter of the English alphabet is: A. The second letter of the English alphabet is: "
-    texts = ["B. The third letter of the English alphabet is: C."]
+    prompt = "The first letter of the English alphabet is: A. The second letter of the English alphabet is:" # do not predict tokens in this prompt
+    texts = [" B. The third letter of the English alphabet is: C."] # predict every token in this text
     llm, tokenizer = load_opt_model_tokenizer("125m")
 
     # Encode the prompt and generate a response
     inputs = tokenizer(
         [prompt + text for text in texts], padding=True, return_tensors="pt"
     )
+    print("Input ids: ", inputs.input_ids)
+
     labels = inputs.input_ids.clone()
-    prompt_length = len(tokenizer.encode(prompt))
+    encoded_prompt = tokenizer.encode(prompt)
+    print("Encoded prompt: ", encoded_prompt)
+    prompt_length = len(encoded_prompt)
+
     labels[:, :prompt_length] = -100  # Ignore loss on prompt tokens
 
     outputs = llm(**inputs)
@@ -79,8 +90,17 @@ if __name__ == "__main__":
     loss_fct = CrossEntropyLoss(
         ignore_index=-100
     )  # This will ignore the -100 indices in labels
+    print(shift_logits.view(-1, shift_logits.size(-1)).shape)
+    print(shift_labels.view(-1).shape)
     loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
     print("Loss: ", loss.item())
+    # print predicted values vs labels (use prompt_length - 1 since shifted)
+    print("Predicted: ", torch.argmax(shift_logits.view(-1, shift_logits.size(-1))[prompt_length-1:], dim=1))
+    print("Labels: ", shift_labels.view(-1)[prompt_length-1:])
+    # print in text format
+    print("Predicted: ", tokenizer.decode(torch.argmax(shift_logits.view(-1, shift_logits.size(-1))[prompt_length-1:], dim=1)))
+    print("Labels: ", tokenizer.decode(shift_labels.view(-1)[prompt_length-1:]))
+
     # outputs = llm.generate(**inputs, max_length=77)
 
     # Decode the generated text

@@ -55,7 +55,10 @@ class BaseTextDecoder(nn.Module):
         )
 
         total_num_skip = 0
+        if type(prompt) == list:
+            raise NotImplementedError("Forward pass for prompt as list is not implemented yet, will need to change logic here.")
         if prompt is not None:
+            #print("==== PROMPT:", prompt, "encoded as tokens:", self.tokenizer.encode(prompt))
             total_num_skip += len(self.tokenizer.encode(prompt))
         total_num_skip += (
             self.num_learnable_prompt_tokens * 3
@@ -66,21 +69,23 @@ class BaseTextDecoder(nn.Module):
             self.use_start_token_for_caption
         ):  # Skip start token at the beginning of the caption
             total_num_skip += 1
-
-        attn_mask = self.get_custom_mask(inputs_embeds.shape[0], inputs_embeds.shape[1], total_num_skip=total_num_skip)
+        
+        if total_num_skip > 0:
+            total_num_skip -= 1 # skip the first token, since it is the start token
+        
+        # currently not using an attention mask!
+        # attn_mask = self.get_custom_mask(inputs_embeds.shape[0], inputs_embeds.shape[1], total_num_skip=total_num_skip)
         # attn_mask = torch.ones(inputs_embeds.shape[0], inputs_embeds.shape[1]).int().to(self.llm.device)
-        output_preds = self.llm(inputs_embeds=inputs_embeds, attention_mask=attn_mask, **kwargs)
+        output_preds = self.llm(inputs_embeds=inputs_embeds, **kwargs)
 
-        # Only return the preds for the caption tokens at the end
-
-        return output_preds.logits[:, total_num_skip:, :]
+        return output_preds.logits[:, total_num_skip:-1, :] # skip last token since it is predicted after the end token
 
     def get_labels(self, text_batch):
         text_batch = [text + self.added_eos_token for text in text_batch]
         tokenized_text = self.tokenizer(text_batch, padding=True, truncation=True, return_tensors="pt", max_length=self.max_caption_length)
         labels = tokenized_text.input_ids.clone()[:, 1:].to(
             self.llm.device
-        )  # ignore start token
+        )  # ignore start token 
         return labels
     
     def get_custom_mask(self, batch_size, seq_length, total_num_skip=0):
@@ -98,7 +103,12 @@ class BaseTextDecoder(nn.Module):
         if extra_embeds is not None:
             raise NotImplementedError("Extra tokens not implemented yet")
         batch_size = len(text_batch)
-        text_prompts = [prompt for text in text_batch]  # Assumes prompt is a string
+        if type(prompt) == str:
+            text_prompts = [prompt for _ in text_batch]  # Assumes prompt is a string
+        elif type(prompt) == list:
+            text_prompts = prompt
+        else:
+            raise ValueError("prompt input needs to be list or string!")
         text_batch = [text + self.added_eos_token for text in text_batch] # add eos token to batch (added_eos_token is "" for most models)
         tokenized_prompts = self.tokenizer(
             text_prompts, padding=False, return_tensors="pt"
