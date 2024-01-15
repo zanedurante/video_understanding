@@ -1,0 +1,3 @@
+[submodule "video/video_encoders/video_mae/ClinicalMAE"]
+	path = video/video_encoders/video_mae/ClinicalMAE
+	url = git@github.com:zanedurante/ClinicalMAE.git
