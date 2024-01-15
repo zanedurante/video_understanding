@@ -17,3 +17,4 @@ lightning_logs/*
 video_understanding/*
 
 video/datasets/*/*.csv
+*~
