@@ -1,5 +1,6 @@
 import torch
 from video.video_encoders.clip.encoders import load_clip_backbone
+from video.video_encoders.video_mae.encoders import VideoMAEv2Base
 
 
 """
@@ -15,5 +16,7 @@ def get_backbone(backbone_name, **kwargs):
     model_name = "_".join(backbone_name.split("_")[1:])
     if model_type == "clip":
         return load_clip_backbone(model_name, **kwargs)
+    elif backbone_name == 'VideoMAEv2Base':
+        return VideoMAEv2Base(**kwargs)
     else:
         raise NotImplementedError("Backbone {} not implemented".format(backbone_name))

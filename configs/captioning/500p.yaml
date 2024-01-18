@@ -7,7 +7,7 @@ data:
 
 model:
   type: captioner # which module to use
-  backbone_name: clip_ViT-B/32
+  backbone_name: VideoMAEv2Base # clip_ViT-B/32
   text_decoder_name: opt_125m
   head: linear
   head_dropout: 0.10

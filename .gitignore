@@ -18,3 +18,4 @@ video_understanding/*
 
 video/datasets/*/*.csv
 *~
+.vscode

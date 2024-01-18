@@ -64,11 +64,13 @@ class VideoMAEv2Base(torch.nn.Module):
         # there are no missing keys. Having unexpected keys is okay.
         assert not errs.missing_keys
         
-    def forward(self, video_batch):
+    def forward(self, video_batch:torch.Tensor):
         C,T,H,W = self.C,self.T,self.H,self.W
-        msg = f'video_batch must be of shape [B,{C},{T},{H},{W}]'
+        msg = f'video_batch must be of shape [B,{T},{C},{H},{W}]'
         assert (video_batch.ndim == 5 and 
-                video_batch.shape[1:] == (C,T,H,W)),msg
+                video_batch.shape[1:] == (T,C,H,W)),msg
+        # VideoMAEv2 expects [B,C,T,H,W]. Transpose here.
+        video_batch = video_batch.transpose(1,2) # [B,C,T,H,W]
         B = video_batch.shape[0]
         NH,NW,NT,N,E = self.NH,self.NW,self.NT,self.N,self.E
         # Create an empty mask, i.e. do not mask anything.
@@ -76,15 +78,15 @@ class VideoMAEv2Base(torch.nn.Module):
         mask = torch.full([B,N], False,
                           dtype=torch.bool, device=video_batch.device)
         emb = self.encoder(video_batch,mask) # [B,N,E]
-        emb = emb.reshape([B,NT,NH,NW,E])
+        emb = emb.reshape([B,NT,NH*NW,E]) # [B,NT,NH*NW,E]
         return emb
     
-    def get_spatio_temporal_embeds(self, video_batch):
+    def get_spatio_temporal_embeds(self, video_batch:torch.Tensor, **kwargs):
         return self.forward(video_batch)
     
-    def get_spatio_temporal_embed_dims(self):
-        NH,NW,NT,N,E = self.NH,self.NW,self.NT,self.N,self.E
-        return (NT,NH,NW,E)
+    def get_spatio_temporal_embed_dims(self, **kwargs):
+        NH,NW,NT,E = self.NH,self.NW,self.NT,self.E
+        return (NT,NH*NW,E)
 
     def convert_spatio_temporal_embeds_to_video(self, spatio_temporal_embeds):
         # Just returning the input. This should return a tensor of shape [B,D]
