@@ -26,12 +26,17 @@ class Captioner(pl.LightningModule):
         self.config = config
         self.debug = False # set to true for debugging prints
         backbone_name = get_val_from_config(config, "model.backbone_name")
+        backbone_pretrained_ckpt = get_val_from_config(config, "model.backbone_pretrained_ckpt", None)
         self.num_frames = get_val_from_config(config, "data.num_frames")
         text_decoder_name = get_val_from_config(config, "model.text_decoder_name")
         self.max_caption_length = get_val_from_config(config, "model.max_input_length", 77)
         self.video_backbone = get_backbone(
-            backbone_name, num_frames=self.num_frames
+            backbone_name, 
+            num_frames=self.num_frames, 
+            pretrained_path=backbone_pretrained_ckpt
         ).float()  # TODO: How to make precision configurable
+        if backbone_pretrained_ckpt is not None:
+            self.video_backbone._load_pretrained()
         text_first = get_val_from_config(config, "model.text_first", True)
         num_learnable_prompt_tokens = get_val_from_config(
             config, "model.num_learnable_prompt_tokens", 0

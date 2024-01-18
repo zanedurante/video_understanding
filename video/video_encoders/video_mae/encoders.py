@@ -50,7 +50,7 @@ class VideoMAEv2Base(torch.nn.Module):
             init_values=0.0,
             tubelet_size=self.PT,
             use_learnable_pos_emb=False,
-            with_cp=True,
+            with_cp=False,
             all_frames=self.T,
             cos_attn=False)
         

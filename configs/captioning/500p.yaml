@@ -8,6 +8,7 @@ data:
 model:
   type: captioner # which module to use
   backbone_name: VideoMAEv2Base # clip_ViT-B/32
+  backbone_pretrained_ckpt: /data/output/vit_b_hybrid_pt_800e/checkpoint-51.pth
   text_decoder_name: opt_125m
   head: linear
   head_dropout: 0.10
@@ -18,7 +19,7 @@ model:
 
 trainer:
   lr: 1e-4
-  batch_size: 4
+  batch_size: 2
   max_epochs: 16
   num_frozen_epochs: 0
   backbone_lr_multiplier: 0.01
@@ -29,7 +30,7 @@ trainer:
   prompt_weight_decay: 0.0
   precision: 32
   num_workers: cpus-4
-  accumulate_grad_batches: 4
+  accumulate_grad_batches: 32
 
 logger:
   log_every_n_steps: 10
