@@ -142,7 +142,8 @@ def main(args):
 
     print("Getting model module")
     model_module = get_model_module(config.model.type)
-    if type(model_module) == Classifier:
+    if model_module is Classifier:
+        print("Num classes: {}".format(data_module.get_stats()["num_classes"]))
         module = model_module(
             config,
             num_classes=data_module.get_stats()["num_classes"],

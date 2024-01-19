@@ -34,6 +34,13 @@ Assumes cuda version 11.3  For different cuda versions, we will need to update t
 `pip install ftfy, regex, decord, pandas, black, wandb, matplotlib, omegaconf, opencv-python`
 
 `pip install transformers`
+`pip install timm`
+
+### git submodule setup
+In the main `video_understanding` directory, do:
+`git submodule init`
+`git submodule update`
+
 
 ### (optional): Setup crontab for wandb syncing (useful for if wandb cannot connect normally)
 `crontab -e`

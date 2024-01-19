@@ -11,13 +11,12 @@ parameters:
   config: 
     values: [configs/classification/default.yaml] # This is the config file to use
   lr:
-    min: 0.00001
-    max: 0.001
+    values: [1e-4]
   num_frames:
-    values: [8, 16, 32]
+    values: [16]
   #batch_size:
-  #backbone_name:
-  #  values: [clip_ViT-B/16, clip_ViT-B/32]
+  backbone_name:
+    values: [clip_ViT-B/16, clip_ViT-B/32]
   head:
     values: [linear, mlp]
   head_dropout:

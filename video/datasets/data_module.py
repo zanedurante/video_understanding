@@ -22,27 +22,27 @@ DATASETS_TO_STATS = {
         "num_train_videos": 9624,
     },
     "500p_0": {
-        "num_classes": 0,
+        "num_classes": 10,
         "num_train_videos": 1731,
     },
     "500p_1": {
-        "num_classes": 0,
+        "num_classes": 10,
         "num_train_videos": 1273,
     },
     "500p_2": {
-        "num_classes": 0,
+        "num_classes": 10,
         "num_train_videos": 1603,
     },
     "500p_new0": {
-        "num_classes": 0,
+        "num_classes": 10,
         "num_train_videos": 1731,
     },
     "500p_new1": {
-        "num_classes": 0,
+        "num_classes": 10,
         "num_train_videos": 1273,
     },
     "500p_new2": {
-        "num_classes": 0,
+        "num_classes": 10,
         "num_train_videos": 1603,
     },
     "webvid_rewritten": {

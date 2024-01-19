@@ -1,0 +1,28 @@
+# This is not currently used, but it is how I will configure the codebase
+# TODO: Load with OmegaConf from default.yaml
+data:
+  datasets: 
+    - 500p_new0 # contains the re-annotated videos in training split
+  num_frames: 16
+  #norm_type: imagenet # can be imagenet or clip
+
+model:
+  type: classifier # which module to use
+  backbone_name: clip_ViT-B/32 # VideoMAEv2Base # clip_ViT-B/32
+  #backbone_pretrained_ckpt: /data/clinical_mae/vit_b_hybrid_pt_800e/checkpoint-51.pth
+  head: linear
+  head_dropout: 0.25
+
+trainer:
+  lr: 0.0004
+  batch_size: 1
+  max_epochs: 20
+  num_frozen_epochs: 2
+  head_weight_decay: 0.035
+  num_workers: 11 # os.cpu_count() - 2
+  backbone_weight_decay: 0.04
+  backbone_lr_multiplier: 1.7e-5
+  accumulate_grad_batches: 64
+
+logger:
+  log_every_n_steps: 10

@@ -47,6 +47,7 @@ class Classifier(pl.LightningModule):
         self.backbone_is_frozen = False
         self.head_dropout = get_val_from_config(config, "model.head_dropout", 0.0)
         self.total_num_steps = total_num_steps
+        self.loss = nn.CrossEntropyLoss()
 
         # Build the classifier head
         if self.head_type == "linear":
@@ -109,11 +110,11 @@ class Classifier(pl.LightningModule):
         batch_size = batch["video"].shape[0]
         logits = self(batch)
         labels = batch["label"]
-        loss = nn.CrossEntropyLoss()(logits, labels)
+        loss = self.loss(logits, labels)
         train_acc = self.train_acc(logits, labels)
-        self.log("train_loss", loss, batch_size=batch_size, prog_bar=True)
+        self.log("train_loss", loss, batch_size=batch_size, prog_bar=True, sync_dist=True)
         self.log(
-            "train_acc", train_acc, batch_size=batch_size, on_step=False, on_epoch=True
+            "train_acc", train_acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True
         )
         return loss
 
@@ -121,11 +122,11 @@ class Classifier(pl.LightningModule):
         batch_size = batch["video"].shape[0]
         logits = self(batch)
         labels = batch["label"]
-        loss = nn.CrossEntropyLoss()(logits, labels)
+        loss = self.loss(logits, labels)
         val_acc = self.val_acc(logits, labels)
-        self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True)
+        self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
         self.log(
-            "val_acc", val_acc, batch_size=batch_size, on_step=False, on_epoch=True
+            "val_acc", val_acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True
         )
         return loss
 

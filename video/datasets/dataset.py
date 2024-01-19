@@ -10,6 +10,8 @@ CLIP_PIXEL_MEAN = (0.48145466, 0.4578275, 0.40821073)
 CLIP_PIXEL_STD = (0.26862954, 0.26130258, 0.27577711)
 IMAGENET_PIXEL_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_PIXEL_STD = (0.229, 0.224, 0.225)
+# TODO: Add mae pixel mean and std
+
 
 
 def has_val_split(dataset_name):
@@ -59,11 +61,14 @@ def init_transform_dict(
     norm_mean=IMAGENET_PIXEL_MEAN,
     norm_std=IMAGENET_PIXEL_STD,
     use_clip_norm=True,
+    **kwargs,
 ):
     # Use normalization from: https://github.com/openai/CLIP/blob/a1d071733d7111c9c014f024669f959182114e33/clip/clip.py#L83
     if use_clip_norm:
         norm_mean = CLIP_PIXEL_MEAN
         norm_std = CLIP_PIXEL_STD
+    
+    print("Using normalization: mean={}, std={}".format(norm_mean, norm_std))
     normalize = transforms.Normalize(mean=norm_mean, std=norm_std)
     tsfm_dict = {
         "train": transforms.Compose(
@@ -98,25 +103,25 @@ def init_transform_dict(
     return tsfm_dict
 
 
-def get_transforms(split):
+def get_transforms(split, **kwargs):
     if "train" in split:
-        return init_transform_dict()["train"]
+        return init_transform_dict(**kwargs)["train"]
     elif "val" in split:
-        return init_transform_dict()["val"]
+        return init_transform_dict(**kwargs)["val"]
     elif "test" in split:
-        return init_transform_dict()["test"]
+        return init_transform_dict(**kwargs)["test"]
     else:
         raise ValueError("Split {} not supported.".format(split))
 
 
 class VideoDataset(Dataset):
-    def __init__(self, dataset_name, dataset_split, num_frames=4):
+    def __init__(self, dataset_name, dataset_split, num_frames=4, **kwargs):
         self.dataset_name = dataset_name
         self.dataset_split = dataset_split
         self.dataset_dir_path = get_dataset_dir(dataset_name)
         self.data = get_dataset_csv(dataset_name, dataset_split)
         self.num_frames = num_frames
-        self.transforms = get_transforms(dataset_split)
+        self.transforms = get_transforms(dataset_split, **kwargs)
 
     def __len__(self):
         return len(self.data)

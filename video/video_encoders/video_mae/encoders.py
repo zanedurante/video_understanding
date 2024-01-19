@@ -11,7 +11,7 @@ class VideoMAEv2Base(torch.nn.Module):
                  pretrained_path:pathlib.Path=None,
                  frozen:bool=False,
                  lora:bool=False,
-                 device:str='cude',
+                 device:str='cuda',
                  num_frames:int=16) -> None:
         super().__init__()
         # super().__init__(pretrained_path,
@@ -91,10 +91,21 @@ class VideoMAEv2Base(torch.nn.Module):
     def convert_spatio_temporal_embeds_to_video(self, spatio_temporal_embeds):
         # Just returning the input. This should return a tensor of shape [B,D]
         # where D is the dim of the video level embeds.
+        # TODO: Investigate a better way to do this
+
+        # average across temporal dim (currently h, w, t, e)
+        spatio_temporal_embeds = spatio_temporal_embeds.mean(dim=1)
+        # flatten 
+        spatio_temporal_embeds = spatio_temporal_embeds.flatten(start_dim=1)
         return spatio_temporal_embeds
+
+    def get_video_level_embeds(self, video_batch):
+        st_embeds = self.get_spatio_temporal_embeds(video_batch)
+        video_embeds = self.convert_spatio_temporal_embeds_to_video(st_embeds)
+        return video_embeds
     
     def get_video_level_embed_dim(self):
-        return self.E
+        return self.NH * self.NW * self.E
                     
 
 if __name__ == '__main__':
