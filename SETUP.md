@@ -28,5 +28,9 @@ Assumes cuda version 11.3  For different cuda versions, we will need to update t
 `pip install ftfy, regex, decord, pandas, black, wandb, matplotlib, omegaconf, opencv-python`
 `pip install transformers`
 
+### (optional): Setup crontab for wandb syncing (useful for if wandb cannot connect normally)
+`crontab -e`
+Paste at the bottom of the file: `*/5 * * * * /home/durante/code/video_understanding/sync_wandb.sh`
+
 ### final step: run pytest in the video_understanding directory.  This will run all tests to make sure you are setup correctly. Warnings are ok
 `pytest`
