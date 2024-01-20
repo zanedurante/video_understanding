@@ -68,7 +68,6 @@ def init_transform_dict(
         norm_mean = CLIP_PIXEL_MEAN
         norm_std = CLIP_PIXEL_STD
     
-    print("Using normalization: mean={}, std={}".format(norm_mean, norm_std))
     normalize = transforms.Normalize(mean=norm_mean, std=norm_std)
     tsfm_dict = {
         "train": transforms.Compose(
