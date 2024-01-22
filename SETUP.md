@@ -1,14 +1,5 @@
-## Instructions for easy setup (not working right now for some reason, not using --extra-index-url correctly)
-`conda create --name video python=3.8`
-
-`conda activate video`
-
-`git clone https://github.com/zanedurante/video_understanding.git`
-
-`cd video_understanding` 
-
-`pip install -e .`
-
+## Instructions for easy setup (linux)
+TODO: Make setup script, currently not implemented
 
 ## Instructions for manual setup
 Assumes cuda version 11.3  For different cuda versions, we will need to update the pytorch version as well.
@@ -28,18 +19,20 @@ Assumes cuda version 11.3  For different cuda versions, we will need to update t
 ### install pytorch lightning
 `pip install lightning`
 
-`pip install pytorch-lightning`
+### install remaining dependencies
+`pip install ftfy regex decord pandas black wandb matplotlib omegaconf opencv-python`
 
-### install remaining dependencies in setup.py 
-`pip install ftfy, regex, decord, pandas, black, wandb, matplotlib, omegaconf, opencv-python`
+`pip install transformers==4.36`
 
-`pip install transformers`
 `pip install timm`
 
 ### git submodule setup
 In the main `video_understanding` directory, do:
 `git submodule init`
+
 `git submodule update`
+
+`pip install -e .`
 
 
 ### (optional): Setup crontab for wandb syncing (useful for if wandb cannot connect normally)
@@ -47,5 +40,5 @@ In the main `video_understanding` directory, do:
 
 Paste at the bottom of the file: `*/5 * * * * /home/durante/code/video_understanding/sync_wandb.sh`
 
-### final step: run pytest in the video_understanding directory.  This will run all tests to make sure you are setup correctly. Warnings are ok
+### final step: run pytest in the video_understanding directory.  This will run all tests to make sure you are setup correctly. Warnings are ok -- should take about 3-5 mins to run
 `pytest`
