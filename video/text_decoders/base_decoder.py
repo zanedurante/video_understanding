@@ -53,13 +53,15 @@ class BaseTextDecoder(nn.Module):
         inputs_embeds = self.prepare_inputs(
             text_batch, prompt=prompt, visual_inputs=visual_inputs, **kwargs
         )
-
         total_num_skip = 0
         if type(prompt) == list:
-            raise NotImplementedError("Forward pass for prompt as list is not implemented yet, will need to change logic here.")
-        if prompt is not None:
+            total_num_skip += max([len(self.tokenizer.encode(p)) for p in prompt])
+            # TODO: Ideally we can use variable length prompts without having this kind of implementation since this uses padding during forward pass...
+        elif type(prompt) == str:
             #print("==== PROMPT:", prompt, "encoded as tokens:", self.tokenizer.encode(prompt))
             total_num_skip += len(self.tokenizer.encode(prompt))
+        else:
+            raise ValueError("prompt input needs to be list or string!")
         total_num_skip += (
             self.num_learnable_prompt_tokens * 3
         )  # 3 for prefix, mid, suffix prompt tokens
@@ -111,8 +113,8 @@ class BaseTextDecoder(nn.Module):
             raise ValueError("prompt input needs to be list or string!")
         text_batch = [text + self.added_eos_token for text in text_batch] # add eos token to batch (added_eos_token is "" for most models)
         tokenized_prompts = self.tokenizer(
-            text_prompts, padding=False, return_tensors="pt"
-        ).input_ids.to(self.llm.model.device)
+            text_prompts, padding=True, truncation=True, return_tensors="pt"
+        ).input_ids.to(self.llm.model.device) # TODO: Change to remove the padding later, currently feeds padding to the model, maybe not ideal
         tokenized_text = self.tokenizer(
             text_batch, padding=True, truncation=True, return_tensors="pt", max_length=self.max_caption_length
         ).input_ids.to(self.llm.model.device)

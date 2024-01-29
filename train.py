@@ -30,6 +30,7 @@ def get_args():
     args.add_argument(
         "--use_sweep", type=bool, default=False
     )  # Whether using wandb sweep
+    
     args.add_argument("--lr", type=float, default=None)
     args.add_argument("--num_frames", type=int, default=None)
     args.add_argument("--backbone_name", type=str, default=None)

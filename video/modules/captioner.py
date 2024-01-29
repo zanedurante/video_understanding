@@ -176,8 +176,12 @@ class Captioner(pl.LightningModule):
 
     def forward(self, batch):
         video = batch["video"]
-        text = batch["caption"]
         prompt = self.get_prompt()
+        if prompt == "use_question":
+            prompt = batch["question"]
+            text = batch["answer"]
+        else:
+            text = batch["caption"]
         video_features = self.video_backbone.get_spatio_temporal_embeds(
             video, drop_cls=self.drop_cls_token
         )
@@ -193,12 +197,16 @@ class Captioner(pl.LightningModule):
         return text_outputs
 
     def get_labels(self, batch):
-        text = batch["caption"]
+        prompt = self.get_prompt()
+        if prompt == "use_question":
+            text = batch["answer"]
+        else:
+            text = batch["caption"]
         labels = self.text_decoder.get_labels(text)
         return labels
 
     def training_step(self, batch, batch_idx):
-        batch_size = len(batch["caption"])
+        batch_size = len(batch["video"])
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
 
@@ -224,7 +232,7 @@ class Captioner(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        batch_size = len(batch["caption"])
+        batch_size = len(batch["video"])
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
         
@@ -235,6 +243,8 @@ class Captioner(pl.LightningModule):
         loss = self.val_loss(
             text_logits.view(-1, text_logits.size(-1)), labels.view(-1)
         )
+
+        # TODO: Add BLEU-4 metric here
 
         # Calculate accuracy
         preds = text_logits.argmax(-1)

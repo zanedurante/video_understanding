@@ -1,0 +1,22 @@
+data:
+  datasets: 
+    - ucf101 
+  num_frames: 8
+  num_actions: 101 # number of new action tokens to add
+
+trainer:
+  type: action_predictor
+  lr: 0.0004
+  max_epochs: 100
+  num_frozen_epochs: 2
+  head_weight_decay: 0.035
+  backbone_weight_decay: 0.04
+  head_dropout: 0.25
+  backbone_lr_multiplier: 1.7e-5
+  # LLM + soft prompt params
+  text_decoder_lr_multiplier: 0.01
+  prompt_lr_multiplier: 0.2
+  prompt_weight_decay: 0.0
+
+logger:
+  log_every_n_steps: 10

@@ -128,9 +128,9 @@ def test_opt_text_decoder_visual_forward():
 """
 
 if __name__ == "__main__":
-    # test_get_text_decoder()
-    # test_load_opt_model_tokenizer()
-    # test_opt_forward()
+    test_get_text_decoder()
+    test_load_opt_model_tokenizer()
+    test_opt_forward()
     test_prepare_inputs_for_opt()
     test_opt_text_decoder_forward()
     test_opt_text_decoder_forward_hard()
