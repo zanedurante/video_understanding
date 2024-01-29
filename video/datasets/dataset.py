@@ -133,6 +133,12 @@ class VideoDataset(Dataset):
         caption = row.get(
             "caption", ""
         )  # default to empty string if caption is not present
+        question = row.get(
+            "question", ""
+        )
+        answer = row.get(
+            "answer", ""
+        )
         start_frame = row.get("start_frame", 0)
         end_frame = row.get("end_frame", -1)
         num_skip_frames = row.get("num_skip_frames", -1)
@@ -151,7 +157,9 @@ class VideoDataset(Dataset):
         if not loaded_correctly:
             print("WARNING: Video {} failed to load correctly.".format(full_video_path))
             caption = "A black screen."
+            question = "What is occurring in this video?"
+            answer = "A black screen."
             label = torch.tensor(0).long()  # have 0 be the label for black screen
 
-        sample = {"video": video_tensor, "label": label, "caption": caption}
+        sample = {"video": video_tensor, "label": label, "caption": caption, "question": question, "answer": answer}
         return sample

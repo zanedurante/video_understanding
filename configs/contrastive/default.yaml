@@ -8,7 +8,7 @@ data:
 model:
   type: dual_encoder # which module to use
   backbone_name: clip_ViT-B/16
-  text_encoder_name: clip_ViT-B/16
+  text_encoder_name: clip_ViT-B/16 # corresponding to CLIP
   head: null
   shared_embed_dim: null # Detect from backbone
   head_dropout: 0.0
