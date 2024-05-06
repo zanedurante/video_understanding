@@ -1,3 +1,6 @@
 [submodule "video/video_encoders/video_mae/ClinicalMAE"]
 	path = video/video_encoders/video_mae/ClinicalMAE
 	url = git@github.com:zanedurante/ClinicalMAE.git
+[submodule "video/video_encoders/v_jepa/jepa"]
+	path = video/video_encoders/v_jepa/jepa
+	url = git@github.com:klshrinidhi/jepa.git
