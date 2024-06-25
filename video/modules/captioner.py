@@ -11,7 +11,8 @@ from transformers import OPTForCausalLM, GPT2Tokenizer
 import nltk
 from nltk.translate.bleu_score import sentence_bleu
 from nltk.tokenize import word_tokenize
-nltk.download('punkt')
+
+nltk.download("punkt")
 
 # TODO: Implement LLaMA
 
@@ -28,16 +29,20 @@ class Captioner(pl.LightningModule):
     ):
         super().__init__()
         self.config = config
-        self.debug = False # set to true for debugging prints
+        self.debug = False  # set to true for debugging prints
         backbone_name = get_val_from_config(config, "model.backbone_name")
-        backbone_pretrained_ckpt = get_val_from_config(config, "model.backbone_pretrained_ckpt", None)
+        backbone_pretrained_ckpt = get_val_from_config(
+            config, "model.backbone_pretrained_ckpt", None
+        )
         self.num_frames = get_val_from_config(config, "data.num_frames")
         text_decoder_name = get_val_from_config(config, "model.text_decoder_name")
-        self.max_caption_length = get_val_from_config(config, "model.max_input_length", 70)
+        self.max_caption_length = get_val_from_config(
+            config, "model.max_input_length", 70
+        )
         self.video_backbone = get_backbone(
-            backbone_name, 
-            num_frames=self.num_frames, 
-            pretrained_path=backbone_pretrained_ckpt
+            backbone_name,
+            num_frames=self.num_frames,
+            pretrained_path=backbone_pretrained_ckpt,
         ).float()  # TODO: How to make precision configurable
         if backbone_pretrained_ckpt is not None:
             self.video_backbone._load_pretrained()
@@ -83,7 +88,9 @@ class Captioner(pl.LightningModule):
             task="multiclass", num_classes=self.text_decoder.vocab_size
         )
         ignore_index = self.text_decoder.ignore_index
-        self.train_loss = nn.CrossEntropyLoss(ignore_index=ignore_index) # Pad token is 1
+        self.train_loss = nn.CrossEntropyLoss(
+            ignore_index=ignore_index
+        )  # Pad token is 1
         self.val_acc = torchmetrics.Accuracy(
             task="multiclass", num_classes=self.text_decoder.vocab_size
         )
@@ -121,10 +128,10 @@ class Captioner(pl.LightningModule):
                 nn.Linear(video_encoder_output_dim, text_decoder_input_dim),
             )
             # TODO: Fix this (hacky rn), load from AVL model
-            #if "avl_pretrain" in text_decoder_name:
+            # if "avl_pretrain" in text_decoder_name:
             #    print("Manually loading linear layer from the AVL ckpt!")
             #    ckpt = torch.load("/home/durante/code/video_understanding/checkpoints/avl_model.pth", map_location="cpu")
-            #    
+            #
             #    self.head[1].weight.data = ckpt["model"]["linear_projection.weight"]
             #    self.head[1].bias.data = ckpt["model"]["linear_projection.bias"]
             #    del ckpt
@@ -207,7 +214,7 @@ class Captioner(pl.LightningModule):
             text, prompt=prompt, visual_inputs=video_features
         )
         return text_outputs
-    
+
     def generate(self, batch, temperature=0.0):
         video = batch["video"]
         prompt = self.get_prompt()
@@ -226,7 +233,10 @@ class Captioner(pl.LightningModule):
         )
         video_features = self.head(video_features)
         text_outputs = self.text_decoder.generate(
-            text, prompt=prompt, visual_inputs=video_features, temperature=temperature,
+            text,
+            prompt=prompt,
+            visual_inputs=video_features,
+            temperature=temperature,
         )
         return text_outputs
 
@@ -261,17 +271,26 @@ class Captioner(pl.LightningModule):
         acc = self.train_acc(preds.view(-1), labels.view(-1))
 
         self.log("train_loss", loss, batch_size=batch_size, on_step=True, prog_bar=True)
-        self.log("train_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
+        self.log(
+            "train_acc",
+            acc,
+            batch_size=batch_size,
+            on_step=False,
+            on_epoch=True,
+            sync_dist=True,
+        )
 
         return loss
 
     def validation_step(self, batch, batch_idx):
         batch_size = len(batch["video"])
         if batch_size > 1:
-            raise ValueError("Validation batch size must be 1 for current metric calculations (BLEU-4)")
+            raise ValueError(
+                "Validation batch size must be 1 for current metric calculations (BLEU-4)"
+            )
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
-        
+
         if self.debug:
             print("\nLabels: ", self.text_decoder.tokenizer.decode(labels[0]))
 
@@ -288,21 +307,20 @@ class Captioner(pl.LightningModule):
         if self.debug:
             print("generated text:", text)
         # TODO: Add BLEU-4 metric here
-        #gt_text = ""
-        #if "caption" in batch:
+        # gt_text = ""
+        # if "caption" in batch:
         #    gt_text = batch["caption"][0]
-        #elif "answer" in batch:
+        # elif "answer" in batch:
         #    gt_text = batch["answer"][0]
-        #else:
+        # else:
         #    raise ValueError("No ground truth text found in batch when computing BLEU-4 score")
-        #assert type(gt_text) == str
-        #assert type(text) == str
-        #reference_tokens = [word_tokenize(gt_text)]
-        #candidate_tokens = word_tokenize(text)
-        #score = sentence_bleu(reference_tokens, candidate_tokens, weights=(0.25, 0.25, 0.25, 0.25))
-        #self.log("bleu-4", score, on_step=False, on_epoch=True, sync_dist=True)        
+        # assert type(gt_text) == str
+        # assert type(text) == str
+        # reference_tokens = [word_tokenize(gt_text)]
+        # candidate_tokens = word_tokenize(text)
+        # score = sentence_bleu(reference_tokens, candidate_tokens, weights=(0.25, 0.25, 0.25, 0.25))
+        # self.log("bleu-4", score, on_step=False, on_epoch=True, sync_dist=True)
         # BLEU-4 code ends here
-
 
         # Calculate accuracy
         preds = text_logits.argmax(-1)
@@ -314,15 +332,36 @@ class Captioner(pl.LightningModule):
         if self.debug:
             print("Batch acc: ", acc)
 
-        self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
-        self.log("val_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
-        self.log("val_perplexity", perplexity, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
+        self.log(
+            "val_loss",
+            loss,
+            batch_size=batch_size,
+            on_step=False,
+            on_epoch=True,
+            sync_dist=True,
+        )
+        self.log(
+            "val_acc",
+            acc,
+            batch_size=batch_size,
+            on_step=False,
+            on_epoch=True,
+            sync_dist=True,
+        )
+        self.log(
+            "val_perplexity",
+            perplexity,
+            batch_size=batch_size,
+            on_step=False,
+            on_epoch=True,
+            sync_dist=True,
+        )
 
         return loss
 
     def test_step(self, batch, batch_idx):
         return self.validation_step(batch, batch_idx)
-        
+
     def configure_optimizers(self):
         backbone_params = [p for p in self.video_backbone.parameters()]
 

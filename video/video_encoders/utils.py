@@ -16,10 +16,12 @@ def get_backbone(backbone_name, **kwargs):
     model_name = "_".join(backbone_name.split("_")[1:])
     if model_type == "clip":
         return load_clip_backbone(model_name, **kwargs)
-    elif backbone_name == 'VideoMAEv2Base':
+    elif backbone_name == "VideoMAEv2Base":
         return VideoMAEv2Base(**kwargs)
     elif backbone_name == "avl_pretrain":
-        return load_vit_b_video("/home/durante/code/video_understanding/checkpoints/avl_model.pth", **kwargs)
+        return load_vit_b_video(
+            "/home/durante/code/video_understanding/checkpoints/avl_model.pth", **kwargs
+        )
     elif backbone_name == "avl":
         return create_vit_b_video(**kwargs)
     else:

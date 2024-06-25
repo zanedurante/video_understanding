@@ -36,9 +36,11 @@ class OPTTextDecoder(BaseTextDecoder):
         self.vocab_size = self.llm.config.vocab_size
         self.tokenizer_uses_end_token = False
         self.ignore_index = 1  # which index to ignore in the loss, ignore pad tokens
-        self.add_eos_token = False # whether to add the eos token to the end of the text
+        self.add_eos_token = (
+            False  # whether to add the eos token to the end of the text
+        )
         if self.add_eos_token:
-            self.added_eos_token = "</s>" # Tokenize does not add the eos token in huggingface for some reason...
+            self.added_eos_token = "</s>"  # Tokenize does not add the eos token in huggingface for some reason...
         else:
             self.added_eos_token = ""
 
@@ -53,17 +55,18 @@ def load_opt_model_tokenizer(opt_model_name, **kwargs):
                 opt_model_name, name2ckpt.keys()
             )
         )
-    if opt_model_name == "avl": # TODO: Replace with huggingface load
-        ckpt = torch.load("/home/durante/code/video_understanding/checkpoints/avl_model.pth", map_location="cpu")
-        opt_model = OPTForCausalLM.from_pretrained(
-            "facebook/opt-125m", **kwargs
+    if opt_model_name == "avl":  # TODO: Replace with huggingface load
+        ckpt = torch.load(
+            "/home/durante/code/video_understanding/checkpoints/avl_model.pth",
+            map_location="cpu",
         )
+        opt_model = OPTForCausalLM.from_pretrained("facebook/opt-125m", **kwargs)
         # from 50272 --> 51576
         num_addeded_tokens = 51576 - 50272
 
-        opt_model.resize_token_embeddings(51576) # TODO: fix this hard coded for now
+        opt_model.resize_token_embeddings(51576)  # TODO: fix this hard coded for now
         modified_state_dict = {}
-        for k, v in ckpt['model'].items():
+        for k, v in ckpt["model"].items():
             new_k = k.replace("model.model.", "model.")
             new_k = new_k.replace("model.lm_head.", "lm_head.")
             modified_state_dict[new_k] = v
@@ -88,8 +91,10 @@ if __name__ == "__main__":
     from torch.nn import CrossEntropyLoss
     import torch
 
-    prompt = "The first letter of the English alphabet is: A. The second letter of the English alphabet is:" # do not predict tokens in this prompt
-    texts = [" B. The third letter of the English alphabet is: C."] # predict every token in this text
+    prompt = "The first letter of the English alphabet is: A. The second letter of the English alphabet is:"  # do not predict tokens in this prompt
+    texts = [
+        " B. The third letter of the English alphabet is: C."
+    ]  # predict every token in this text
     llm, tokenizer = load_opt_model_tokenizer("125m")
 
     # Encode the prompt and generate a response
@@ -121,11 +126,23 @@ if __name__ == "__main__":
     loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
     print("Loss: ", loss.item())
     # print predicted values vs labels (use prompt_length - 1 since shifted)
-    print("Predicted: ", torch.argmax(shift_logits.view(-1, shift_logits.size(-1))[prompt_length-1:], dim=1))
-    print("Labels: ", shift_labels.view(-1)[prompt_length-1:])
+    print(
+        "Predicted: ",
+        torch.argmax(
+            shift_logits.view(-1, shift_logits.size(-1))[prompt_length - 1 :], dim=1
+        ),
+    )
+    print("Labels: ", shift_labels.view(-1)[prompt_length - 1 :])
     # print in text format
-    print("Predicted: ", tokenizer.decode(torch.argmax(shift_logits.view(-1, shift_logits.size(-1))[prompt_length-1:], dim=1)))
-    print("Labels: ", tokenizer.decode(shift_labels.view(-1)[prompt_length-1:]))
+    print(
+        "Predicted: ",
+        tokenizer.decode(
+            torch.argmax(
+                shift_logits.view(-1, shift_logits.size(-1))[prompt_length - 1 :], dim=1
+            )
+        ),
+    )
+    print("Labels: ", tokenizer.decode(shift_labels.view(-1)[prompt_length - 1 :]))
 
     # outputs = llm.generate(**inputs, max_length=77)
 

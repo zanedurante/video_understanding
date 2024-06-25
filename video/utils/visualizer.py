@@ -62,15 +62,18 @@ def visualize_sample(sample, use_clip_norm=True, overlay=True, use_grid=True):
     # reverse original normalization for visualization
     video = video * torch.tensor(norm_std).view(3, 1, 1)
     video = video + torch.tensor(norm_mean).view(3, 1, 1)
-    
+
     if not use_grid:
         # convert into list of frames
         # reshape (c, h, w) --> (h, w, c)
-        frames = [Image.fromarray((frame.numpy() * 255).astype(np.uint8).transpose(1, 2, 0)) for frame in video]
-        
+        frames = [
+            Image.fromarray((frame.numpy() * 255).astype(np.uint8).transpose(1, 2, 0))
+            for frame in video
+        ]
+
         return frames
 
-    grid = _make_grid(video)   
+    grid = _make_grid(video)
     grid = cv2.cvtColor(grid, cv2.COLOR_RGB2BGR)
 
     if label is not None:
@@ -95,7 +98,7 @@ def visualize_dataset(
     use_clip_norm=True,
     num_frames=4,
     overlay=True,
-    use_gif=False, # saves as gif instead of grid
+    use_gif=False,  # saves as gif instead of grid
     shuffle=True,
 ):
     """
@@ -119,7 +122,7 @@ def visualize_dataset(
         num_samples = len(dataset)
     for i in tqdm(range(num_samples)):
         sample = dataset[i]
-        print("Label for", i, sample['label'])
+        print("Label for", i, sample["label"])
         if use_gif:
             frames = visualize_sample(
                 sample, use_clip_norm=use_clip_norm, overlay=overlay, use_grid=False
@@ -134,7 +137,7 @@ def visualize_dataset(
                 append_images=frames[1:],
                 duration=100,
                 loop=0,
-                optimize=False
+                optimize=False,
             )
 
         else:

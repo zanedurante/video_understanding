@@ -6,8 +6,13 @@ import torch
 import argparse
 import wandb
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import LearningRateMonitor, EarlyStopping, ModelCheckpoint
+from pytorch_lightning.callbacks import (
+    LearningRateMonitor,
+    EarlyStopping,
+    ModelCheckpoint,
+)
 import pytorch_lightning
+
 print(pytorch_lightning.__version__)
 from pytorch_lightning.tuner import Tuner
 import os
@@ -30,7 +35,7 @@ def get_args():
     args.add_argument(
         "--use_sweep", type=bool, default=False
     )  # Whether using wandb sweep
-    
+
     args.add_argument("--lr", type=float, default=None)
     args.add_argument("--num_frames", type=int, default=None)
     args.add_argument("--backbone_name", type=str, default=None)
@@ -54,7 +59,6 @@ def get_args():
     args.add_argument("--use_start_token_for_caption", type=bool, default=None)
     args.add_argument("--prompt", type=str, default=None)
     args.add_argument("--backbone_pretrained_ckpt", type=str, default=None)
-    
 
     args = args.parse_args()
     return args
@@ -81,12 +85,12 @@ def main(args):
     pl.seed_everything(config.trainer.seed, workers=True)
 
     checkpoint_callback = ModelCheckpoint(
-        dirpath='/mnt/datasets_mnt/pytorch_lightning_ckpts/',
-        filename='{epoch}-{val_loss:.2f}',
+        dirpath="/mnt/datasets_mnt/pytorch_lightning_ckpts/",
+        filename="{epoch}-{val_loss:.2f}",
         save_top_k=3,
         verbose=True,
-        monitor='val_loss',
-        mode='min'
+        monitor="val_loss",
+        mode="min",
     )
 
     if fast_run:
@@ -103,7 +107,7 @@ def main(args):
         with open("wandb.key", "r") as file:
             wandb.login(key=file.read().strip())
         print("Running wandb init")
-        
+
         wandb.init(
             project="video_understanding",
             config=OmegaConf.to_container(config),
@@ -117,7 +121,6 @@ def main(args):
         print("Finished creating wandb logger")
 
     print("Logging config for reproducibility: {}".format(config))
-
 
     # detect number of devices and use that number
     num_gpus = torch.cuda.device_count()
@@ -197,7 +200,9 @@ def main(args):
     if config.trainer.skip_test:
         print("Skipping test")
     else:
-        trainer.test(module, data_module) # TODO: Change to only trigger if config is set
+        trainer.test(
+            module, data_module
+        )  # TODO: Change to only trigger if config is set
 
     if not disable_wandb:
         wandb.finish()

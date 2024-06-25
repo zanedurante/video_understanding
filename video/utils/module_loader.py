@@ -36,7 +36,7 @@ def get_data_module_from_config(config):
             norm_type = "imagenet"
     else:
         norm_type = config.data.norm_type.lower()
-    
+
     print("Using {} normalization.".format(norm_type))
 
     use_clip_norm = True

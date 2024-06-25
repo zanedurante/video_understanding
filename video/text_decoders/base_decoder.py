@@ -20,8 +20,8 @@ class BaseTextDecoder(nn.Module):
         self.embed_dim = 768  # model specific, should set in constructor
         self.vocab_size = None  # model specific, should set in constructor
         self.tokenizer_uses_end_token = False  # model specific, whether the tokenizer uses an end token by default when tokenizing
-        self.ignore_index = 1 # tokenizer specific, tokenizer pad token index
-        self.added_eos_token = "" # Needed for OPT, since the tokenizer does not add the eos token for some reason...
+        self.ignore_index = 1  # tokenizer specific, tokenizer pad token index
+        self.added_eos_token = ""  # Needed for OPT, since the tokenizer does not add the eos token for some reason...
         self.max_caption_length = max_caption_length
         print("==== MAX INPUT LENGTH:", max_caption_length)
 
@@ -58,7 +58,7 @@ class BaseTextDecoder(nn.Module):
             total_num_skip += max([len(self.tokenizer.encode(p)) for p in prompt])
             # TODO: Ideally we can use variable length prompts without having this kind of implementation since this uses padding during forward pass...
         elif type(prompt) == str:
-            #print("==== PROMPT:", prompt, "encoded as tokens:", self.tokenizer.encode(prompt))
+            # print("==== PROMPT:", prompt, "encoded as tokens:", self.tokenizer.encode(prompt))
             total_num_skip += len(self.tokenizer.encode(prompt))
         else:
             raise ValueError("prompt input needs to be list or string!")
@@ -71,34 +71,47 @@ class BaseTextDecoder(nn.Module):
             self.use_start_token_for_caption
         ):  # Skip start token at the beginning of the caption
             total_num_skip += 1
-        
+
         if total_num_skip > 0:
-            total_num_skip -= 1 # skip the first token, since it is the start token
-        
+            total_num_skip -= 1  # skip the first token, since it is the start token
+
         # currently not using an attention mask!
         # attn_mask = self.get_custom_mask(inputs_embeds.shape[0], inputs_embeds.shape[1], total_num_skip=total_num_skip)
         # attn_mask = torch.ones(inputs_embeds.shape[0], inputs_embeds.shape[1]).int().to(self.llm.device)
         output_preds = self.llm(inputs_embeds=inputs_embeds, **kwargs)
 
-        return output_preds.logits[:, total_num_skip:-1, :] # skip last token since it is predicted after the end token
+        return output_preds.logits[
+            :, total_num_skip:-1, :
+        ]  # skip last token since it is predicted after the end token
 
     def get_labels(self, text_batch):
         text_batch = [text + self.added_eos_token for text in text_batch]
-        tokenized_text = self.tokenizer(text_batch, padding=True, truncation=True, return_tensors="pt", max_length=self.max_caption_length)
+        tokenized_text = self.tokenizer(
+            text_batch,
+            padding=True,
+            truncation=True,
+            return_tensors="pt",
+            max_length=self.max_caption_length,
+        )
         labels = tokenized_text.input_ids.clone()[:, 1:].to(
             self.llm.device
-        )  # ignore start token 
+        )  # ignore start token
         return labels
-    
+
     def get_custom_mask(self, batch_size, seq_length, total_num_skip=0):
         # Creates a custom mask that allows for attention between all of the first total_num_skip tokens and then is causal afterwards
         mask = torch.ones(batch_size, seq_length).int().to(self.llm.device)
         mask[:, :total_num_skip] = 0
         return mask
 
-
     def prepare_inputs(
-        self, text_batch, prompt="", visual_inputs=None, extra_embeds=None, drop_text=False, **kwargs
+        self,
+        text_batch,
+        prompt="",
+        visual_inputs=None,
+        extra_embeds=None,
+        drop_text=False,
+        **kwargs
     ):
         # Goal: predict the next token in the text_batch, given the prompt and visual inputs
 
@@ -111,20 +124,31 @@ class BaseTextDecoder(nn.Module):
             text_prompts = prompt
         else:
             raise ValueError("prompt input needs to be list or string!")
-        text_batch = [text + self.added_eos_token for text in text_batch] # add eos token to batch (added_eos_token is "" for most models)
+        text_batch = [
+            text + self.added_eos_token for text in text_batch
+        ]  # add eos token to batch (added_eos_token is "" for most models)
         tokenized_prompts = self.tokenizer(
             text_prompts, padding=True, truncation=True, return_tensors="pt"
-        ).input_ids.to(self.llm.model.device) # TODO: Change to remove the padding later, currently feeds padding to the model, maybe not ideal
+        ).input_ids.to(
+            self.llm.model.device
+        )  # TODO: Change to remove the padding later, currently feeds padding to the model, maybe not ideal
         tokenized_text = self.tokenizer(
-            text_batch, padding=True, truncation=True, return_tensors="pt", max_length=self.max_caption_length
+            text_batch,
+            padding=True,
+            truncation=True,
+            return_tensors="pt",
+            max_length=self.max_caption_length,
         ).input_ids.to(self.llm.model.device)
         text_inputs = self.llm.model.decoder.embed_tokens(tokenized_prompts)
         text_targets = self.llm.model.decoder.embed_tokens(tokenized_text)[
             :, 1:, :
         ]  # Use optional start token instead
-        if drop_text: # only used during evaluation, don't give gt text
+        if drop_text:  # only used during evaluation, don't give gt text
             text_targets = torch.zeros(
-                text_targets.shape[0], text_targets.shape[1], self.embed_dim, device=text_targets.device
+                text_targets.shape[0],
+                text_targets.shape[1],
+                self.embed_dim,
+                device=text_targets.device,
             )
         start_token = torch.zeros(
             text_inputs.shape[0], 0, self.embed_dim, device=text_inputs.device
@@ -194,19 +218,25 @@ class BaseTextDecoder(nn.Module):
                 [inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5]],
                 dim=1,
             )
-        
+
         return combined_inputs
 
-    def generate(self, text_batch, prompt=None, visual_inputs=None, temperature=0.0, **kwargs):
+    def generate(
+        self, text_batch, prompt=None, visual_inputs=None, temperature=0.0, **kwargs
+    ):
         inputs_embeds = self.prepare_inputs(
-            text_batch, prompt=prompt, visual_inputs=visual_inputs, drop_text=True, **kwargs
+            text_batch,
+            prompt=prompt,
+            visual_inputs=visual_inputs,
+            drop_text=True,
+            **kwargs
         )
         total_num_skip = 0
         if type(prompt) == list:
             total_num_skip += max([len(self.tokenizer.encode(p)) for p in prompt])
             # TODO: Ideally we can use variable length prompts without having this kind of implementation since this uses padding during forward pass...
         elif type(prompt) == str:
-            #print("==== PROMPT:", prompt, "encoded as tokens:", self.tokenizer.encode(prompt))
+            # print("==== PROMPT:", prompt, "encoded as tokens:", self.tokenizer.encode(prompt))
             total_num_skip += len(self.tokenizer.encode(prompt))
         else:
             raise ValueError("prompt input needs to be list or string!")
@@ -219,9 +249,9 @@ class BaseTextDecoder(nn.Module):
             self.use_start_token_for_caption
         ):  # Skip start token at the beginning of the caption
             total_num_skip += 1
-        
+
         if total_num_skip > 0:
-            total_num_skip -= 1 # skip the first token, since it is the start token
+            total_num_skip -= 1  # skip the first token, since it is the start token
 
         # TODO: Maybe use total_num_skip?
         return self.llm.generate(inputs_embeds=inputs_embeds, **kwargs)

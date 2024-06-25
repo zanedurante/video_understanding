@@ -56,7 +56,9 @@ class Classifier(pl.LightningModule):
                 nn.Linear(self.video_backbone.get_video_level_embed_dim(), num_classes),
             )
         elif self.head_type == "mlp":
-            hidden_dim = get_val_from_config(config, "model.head_hidden_dim", 1024) # By default just use video_level_embed_dim
+            hidden_dim = get_val_from_config(
+                config, "model.head_hidden_dim", 1024
+            )  # By default just use video_level_embed_dim
             print("For MLP, using hidden dim:", hidden_dim)
             self.head = nn.Sequential(
                 nn.Linear(
@@ -65,9 +67,7 @@ class Classifier(pl.LightningModule):
                 ),
                 nn.GELU(),
                 nn.Dropout(self.head_dropout),
-                nn.Linear(
-                    hidden_dim, num_classes
-                ),  
+                nn.Linear(hidden_dim, num_classes),
             )
         else:
             raise NotImplementedError(
@@ -114,9 +114,16 @@ class Classifier(pl.LightningModule):
         labels = batch["label"]
         loss = self.loss(logits, labels)
         train_acc = self.train_acc(logits, labels)
-        self.log("train_loss", loss, batch_size=batch_size, prog_bar=True, sync_dist=True)
         self.log(
-            "train_acc", train_acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True
+            "train_loss", loss, batch_size=batch_size, prog_bar=True, sync_dist=True
+        )
+        self.log(
+            "train_acc",
+            train_acc,
+            batch_size=batch_size,
+            on_step=False,
+            on_epoch=True,
+            sync_dist=True,
         )
         return loss
 
@@ -126,9 +133,21 @@ class Classifier(pl.LightningModule):
         labels = batch["label"]
         loss = self.loss(logits, labels)
         val_acc = self.val_acc(logits, labels)
-        self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
         self.log(
-            "val_acc", val_acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True
+            "val_loss",
+            loss,
+            batch_size=batch_size,
+            on_step=False,
+            on_epoch=True,
+            sync_dist=True,
+        )
+        self.log(
+            "val_acc",
+            val_acc,
+            batch_size=batch_size,
+            on_step=False,
+            on_epoch=True,
+            sync_dist=True,
         )
         return loss
 

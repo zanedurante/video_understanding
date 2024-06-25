@@ -13,7 +13,6 @@ IMAGENET_PIXEL_STD = (0.229, 0.224, 0.225)
 # TODO: Add mae pixel mean and std
 
 
-
 def has_val_split(dataset_name):
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(curr_dir, dataset_name, "dataset_dir.txt"), "r") as f:
@@ -67,7 +66,7 @@ def init_transform_dict(
     if use_clip_norm:
         norm_mean = CLIP_PIXEL_MEAN
         norm_std = CLIP_PIXEL_STD
-    
+
     normalize = transforms.Normalize(mean=norm_mean, std=norm_std)
     tsfm_dict = {
         "train": transforms.Compose(
@@ -133,12 +132,8 @@ class VideoDataset(Dataset):
         caption = row.get(
             "caption", ""
         )  # default to empty string if caption is not present
-        question = row.get(
-            "question", ""
-        )
-        answer = row.get(
-            "answer", ""
-        )
+        question = row.get("question", "")
+        answer = row.get("answer", "")
         start_frame = row.get("start_frame", 0)
         end_frame = row.get("end_frame", -1)
         num_skip_frames = row.get("num_skip_frames", -1)
@@ -161,7 +156,13 @@ class VideoDataset(Dataset):
             answer = "A black screen."
             label = torch.tensor(0).long()  # have 0 be the label for black screen
 
-        sample = {"video": video_tensor, "label": label, "caption": caption, "question": question, "answer": answer}
+        sample = {
+            "video": video_tensor,
+            "label": label,
+            "caption": caption,
+            "question": question,
+            "answer": answer,
+        }
         return sample
 
     def shuffle(self):

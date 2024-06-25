@@ -23,4 +23,3 @@ test_df.to_csv("rewritten_test.csv", index=False)
 # save prefix to dataset_dir.txt
 with open("dataset_dir.txt", "w") as f:
     f.write(prefix)
-

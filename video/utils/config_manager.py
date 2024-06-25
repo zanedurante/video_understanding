@@ -141,7 +141,7 @@ def get_wandb_args(args):
 
 def get_num_workers(config_str):
     # format is either cpus-<int>, cpus/<int>, or <int>
-    config_str = str(config_str) # cast to str in case it's an int
+    config_str = str(config_str)  # cast to str in case it's an int
     try:
         if config_str.startswith("cpus-"):
             return os.cpu_count() - int(config_str.split("-")[1])

@@ -19,6 +19,7 @@ captions = df["caption"]
 global_captions = df["global_caption"]
 video_paths = [path.replace(DATASET_DIR, "") for path in df["video_path"]]
 
+
 def get_category_json_path_from_video_path(video_path):
     category = video_path.split("/")[0]
     # find json that ends with "field.json"
@@ -27,21 +28,23 @@ def get_category_json_path_from_video_path(video_path):
         for file in files:
             if file.endswith("field.json"):
                 json_paths.append(os.path.join(root, file))
-    
+
     if len(json_paths) == 0:
         print("WARNING: No json found for video path {}".format(video_path))
-    
+
     # choose most recent one, in format like: 2023_06_17_20_42_43_185_field.json
     # (yyyy_mm_dd_hh_mm_ss_ms_field.json)
     json_path = sorted(json_paths)[-1]
 
     return json_path
 
+
 def get_val_from_json(json_path, string):
     with open(json_path, "r") as f:
         json_dict = json.load(f)
     val = str(json_dict[string])
     return val
+
 
 def score2label(rass_score):
     # converts string from format "-5 - Unarousable" to integer label -5
@@ -50,9 +53,12 @@ def score2label(rass_score):
         int_val = 0
     else:
         int_val = int(rass_score.split(" ")[0])
-    return int_val + 5 # normalize to be 0-9 instead of -5 to 4
+    return int_val + 5  # normalize to be 0-9 instead of -5 to 4
 
-category_json_paths = [get_category_json_path_from_video_path(path) for path in video_paths]
+
+category_json_paths = [
+    get_category_json_path_from_video_path(path) for path in video_paths
+]
 print("Getting rass scores")
 rass_scores = [get_val_from_json(path, "rass_score") for path in category_json_paths]
 print("Getting bed angles")

@@ -8,6 +8,7 @@ from transformers import GPT2Tokenizer, OPTForCausalLM
 from torch.nn import CrossEntropyLoss
 import torch
 
+
 # Dummy function that returns fake visual embeddings
 def get_visual_inputs(text="a dog in a field"):
     # Tokenize the text and get the token embeddings
@@ -57,12 +58,17 @@ def test_opt_forward():
     assert loss.item() > 0.0
     assert loss.item() < 0.20  # loss should be very low, this is an easy example
 
+
 def test_prepare_inputs_for_opt():
     # Check that the prepare_inputs function is working correctly for simple text case
     prompt = "The person is walking and then"
-    response = " the person is running.\nI'm not sure if you're being sarcastic or not, but I"
+    response = (
+        " the person is running.\nI'm not sure if you're being sarcastic or not, but I"
+    )
     decoder = load_opt_decoder("125m")
-    func_input_embeds = decoder.prepare_inputs([response], prompt=prompt, visual_inputs=None)
+    func_input_embeds = decoder.prepare_inputs(
+        [response], prompt=prompt, visual_inputs=None
+    )
     llm, tokenizer = load_opt_model_tokenizer("125m")
     inputs = tokenizer([prompt], padding=True, return_tensors="pt")
     input_embeds = llm.model.decoder.embed_tokens(inputs.input_ids)
@@ -78,7 +84,7 @@ def test_opt_text_decoder_forward():
     texts = [" B. The third letter of the English alphabet is: C."]
     outputs = decoder(texts, prompt=prompt, visual_inputs=None)
     labels = decoder.get_labels(texts)
-    
+
     # get argmax of outputs and outputs_no_mask
     outputs_idxs = torch.argmax(outputs, dim=-1)
 
@@ -105,7 +111,7 @@ def test_opt_text_decoder_forward_hard():
     texts = ["Aqueducts hunger yellow bundle"]
     outputs = decoder(texts, prompt=prompt, visual_inputs=None)
     labels = decoder.get_labels(texts)
-    
+
     # get argmax of outputs and outputs_no_mask
     outputs_idxs = torch.argmax(outputs, dim=-1)
 
