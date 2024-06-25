@@ -98,7 +98,7 @@ class BaseTextDecoder(nn.Module):
 
 
     def prepare_inputs(
-        self, text_batch, prompt="", visual_inputs=None, extra_embeds=None, **kwargs
+        self, text_batch, prompt="", visual_inputs=None, extra_embeds=None, drop_text=False, **kwargs
     ):
         # Goal: predict the next token in the text_batch, given the prompt and visual inputs
 
@@ -122,6 +122,10 @@ class BaseTextDecoder(nn.Module):
         text_targets = self.llm.model.decoder.embed_tokens(tokenized_text)[
             :, 1:, :
         ]  # Use optional start token instead
+        if drop_text: # only used during evaluation, don't give gt text
+            text_targets = torch.zeros(
+                text_targets.shape[0], text_targets.shape[1], self.embed_dim, device=text_targets.device
+            )
         start_token = torch.zeros(
             text_inputs.shape[0], 0, self.embed_dim, device=text_inputs.device
         )
@@ -193,8 +197,31 @@ class BaseTextDecoder(nn.Module):
         
         return combined_inputs
 
-    def generate(self, text_batch, prompt=None, visual_inputs=None, **kwargs):
+    def generate(self, text_batch, prompt=None, visual_inputs=None, temperature=0.0, **kwargs):
         inputs_embeds = self.prepare_inputs(
-            text_batch, prompt=prompt, visual_inputs=visual_inputs, **kwargs
+            text_batch, prompt=prompt, visual_inputs=visual_inputs, drop_text=True, **kwargs
         )
+        total_num_skip = 0
+        if type(prompt) == list:
+            total_num_skip += max([len(self.tokenizer.encode(p)) for p in prompt])
+            # TODO: Ideally we can use variable length prompts without having this kind of implementation since this uses padding during forward pass...
+        elif type(prompt) == str:
+            #print("==== PROMPT:", prompt, "encoded as tokens:", self.tokenizer.encode(prompt))
+            total_num_skip += len(self.tokenizer.encode(prompt))
+        else:
+            raise ValueError("prompt input needs to be list or string!")
+        total_num_skip += (
+            self.num_learnable_prompt_tokens * 3
+        )  # 3 for prefix, mid, suffix prompt tokens
+        if visual_inputs is not None:
+            total_num_skip += visual_inputs.shape[1]
+        if (
+            self.use_start_token_for_caption
+        ):  # Skip start token at the beginning of the caption
+            total_num_skip += 1
+        
+        if total_num_skip > 0:
+            total_num_skip -= 1 # skip the first token, since it is the start token
+
+        # TODO: Maybe use total_num_skip?
         return self.llm.generate(inputs_embeds=inputs_embeds, **kwargs)

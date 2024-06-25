@@ -18,7 +18,7 @@ def has_val_split(dataset_name):
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     with open(os.path.join(curr_dir, dataset_name, "dataset_dir.txt"), "r") as f:
         dataset_dir = f.read().strip()
-    return dataset_dir + "/val.csv" in os.listdir(dataset_dir)
+    return "val.csv" in os.listdir(dataset_dir)
 
 
 def get_dataset_dir(dataset_name):
@@ -163,3 +163,6 @@ class VideoDataset(Dataset):
 
         sample = {"video": video_tensor, "label": label, "caption": caption, "question": question, "answer": answer}
         return sample
+
+    def shuffle(self):
+        self.data = self.data.sample(frac=1).reset_index(drop=True)

@@ -38,4 +38,20 @@ val_orig['answer'] = val_as
 
 train_orig.to_csv('train_qa0.csv', index=False)
 val_orig.to_csv('test_qa0.csv', index=False)
+
+# Combine the dfs into one big df and create new 80:10:10 splits
+combined_df = pd.concat([train_orig, val_orig], ignore_index=True)
+
+# shuffle the rows
+combined_df = combined_df.sample(frac=1).reset_index(drop=True)
+
+# first .80 for train, next .10 for val, last .10 for test
+train_df = combined_df[:int(len(combined_df)*.8)]
+val_df = combined_df[int(len(combined_df)*.8):int(len(combined_df)*.9)]
+test_df = combined_df[int(len(combined_df)*.9):]
+
+# save as new csvs: train_avl0.csv, val_avl0.csv, test_avl0.csv
+train_df.to_csv('train_avl0.csv', index=False)
+val_df.to_csv('val_avl0.csv', index=False)
+test_df.to_csv('test_avl0.csv', index=False)
         

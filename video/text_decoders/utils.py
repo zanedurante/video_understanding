@@ -13,5 +13,13 @@ def get_text_decoder(text_decoder_name, **kwargs):
 
     if model_type == "opt":
         return load_opt_decoder(model_name, **kwargs)
+    elif model_type == "avl":
+        if model_name == "125m":
+            return load_opt_decoder("125m", **kwargs)
+        else: # use pretraining
+            return load_opt_decoder("avl", **kwargs)
+
+        return load_opt_decoder("125m", **kwargs)
+
     else:
         raise NotImplementedError("LLM {} not implemented".format(model_type))

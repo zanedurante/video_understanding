@@ -8,6 +8,10 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from video.utils.config_manager import get_val_from_config
 import numpy as np
 from transformers import OPTForCausalLM, GPT2Tokenizer
+import nltk
+from nltk.translate.bleu_score import sentence_bleu
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
 
 # TODO: Implement LLaMA
 
@@ -29,7 +33,7 @@ class Captioner(pl.LightningModule):
         backbone_pretrained_ckpt = get_val_from_config(config, "model.backbone_pretrained_ckpt", None)
         self.num_frames = get_val_from_config(config, "data.num_frames")
         text_decoder_name = get_val_from_config(config, "model.text_decoder_name")
-        self.max_caption_length = get_val_from_config(config, "model.max_input_length", 77)
+        self.max_caption_length = get_val_from_config(config, "model.max_input_length", 70)
         self.video_backbone = get_backbone(
             backbone_name, 
             num_frames=self.num_frames, 
@@ -116,6 +120,14 @@ class Captioner(pl.LightningModule):
                 nn.Dropout(self.head_dropout),
                 nn.Linear(video_encoder_output_dim, text_decoder_input_dim),
             )
+            # TODO: Fix this (hacky rn), load from AVL model
+            #if "avl_pretrain" in text_decoder_name:
+            #    print("Manually loading linear layer from the AVL ckpt!")
+            #    ckpt = torch.load("/home/durante/code/video_understanding/checkpoints/avl_model.pth", map_location="cpu")
+            #    
+            #    self.head[1].weight.data = ckpt["model"]["linear_projection.weight"]
+            #    self.head[1].bias.data = ckpt["model"]["linear_projection.bias"]
+            #    del ckpt
         elif self.head_type.lower() == "mlp":
             self.head = nn.Sequential(
                 nn.Dropout(self.head_dropout),
@@ -195,6 +207,28 @@ class Captioner(pl.LightningModule):
             text, prompt=prompt, visual_inputs=video_features
         )
         return text_outputs
+    
+    def generate(self, batch, temperature=0.0):
+        video = batch["video"]
+        prompt = self.get_prompt()
+        if prompt == "use_question":
+            prompt = batch["question"]
+            text = batch["answer"]
+        else:
+            text = batch["caption"]
+        video_features = self.video_backbone.get_spatio_temporal_embeds(
+            video, drop_cls=self.drop_cls_token
+        )
+        # TODO: Maybe need to reshape video_features before passing to head
+        # Flatten temporal dimension (b, t, h*w, d) -> (b, t*h*w, d) (keep h*w together)
+        video_features = video_features.reshape(
+            video_features.shape[0], -1, video_features.shape[-1]
+        )
+        video_features = self.head(video_features)
+        text_outputs = self.text_decoder.generate(
+            text, prompt=prompt, visual_inputs=video_features, temperature=temperature,
+        )
+        return text_outputs
 
     def get_labels(self, batch):
         prompt = self.get_prompt()
@@ -233,6 +267,8 @@ class Captioner(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         batch_size = len(batch["video"])
+        if batch_size > 1:
+            raise ValueError("Validation batch size must be 1 for current metric calculations (BLEU-4)")
         text_logits = self(batch).contiguous()
         labels = self.get_labels(batch).contiguous()
         
@@ -244,7 +280,29 @@ class Captioner(pl.LightningModule):
             text_logits.view(-1, text_logits.size(-1)), labels.view(-1)
         )
 
+        perplexity = np.exp(loss.item())
+
+        # BLEU-4 code starts here
+        generated_tokens = self.generate(batch)
+        text = self.text_decoder.tokenizer.decode(generated_tokens[0])
+        if self.debug:
+            print("generated text:", text)
         # TODO: Add BLEU-4 metric here
+        #gt_text = ""
+        #if "caption" in batch:
+        #    gt_text = batch["caption"][0]
+        #elif "answer" in batch:
+        #    gt_text = batch["answer"][0]
+        #else:
+        #    raise ValueError("No ground truth text found in batch when computing BLEU-4 score")
+        #assert type(gt_text) == str
+        #assert type(text) == str
+        #reference_tokens = [word_tokenize(gt_text)]
+        #candidate_tokens = word_tokenize(text)
+        #score = sentence_bleu(reference_tokens, candidate_tokens, weights=(0.25, 0.25, 0.25, 0.25))
+        #self.log("bleu-4", score, on_step=False, on_epoch=True, sync_dist=True)        
+        # BLEU-4 code ends here
+
 
         # Calculate accuracy
         preds = text_logits.argmax(-1)
@@ -252,16 +310,19 @@ class Captioner(pl.LightningModule):
         if self.debug:
             print("Preds:  ", self.text_decoder.tokenizer.decode(preds[0]))
 
-
         acc = self.val_acc(preds.view(-1), labels.view(-1))
         if self.debug:
             print("Batch acc: ", acc)
 
         self.log("val_loss", loss, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
         self.log("val_acc", acc, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
+        self.log("val_perplexity", perplexity, batch_size=batch_size, on_step=False, on_epoch=True, sync_dist=True)
 
         return loss
 
+    def test_step(self, batch, batch_idx):
+        return self.validation_step(batch, batch_idx)
+        
     def configure_optimizers(self):
         backbone_params = [p for p in self.video_backbone.parameters()]
 

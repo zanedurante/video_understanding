@@ -5,6 +5,8 @@ trainer: # pytorch lightning flags
   num_workers: cpus-2 # os.cpu_count() - 2
   scheduler: cosine # TODO: Make this fully configurable
   accumulate_grad_batches: 1
+  check_val_every_n_epoch: 1
+  skip_test: True
 
 logger:
   visualization_dir: visualizations

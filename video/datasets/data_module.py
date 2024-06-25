@@ -45,6 +45,26 @@ DATASETS_TO_STATS = {
         "num_classes": 10,
         "num_train_videos": 1603,
     },
+    "500p_avl": {
+        "num_classes": 10,
+        "num_train_videos": 1841,
+    },
+    "500p_qa0": {
+        "num_classes": 10,
+        "num_train_videos": 1731,
+    },
+    "500p_small": {
+        "num_classes": 10,
+        "num_train_videos": 15,
+    },
+    "icu-interaction": {
+        "num_classes": 2,
+        "num_train_videos": 38100,
+    },
+    "icu-interaction_small": {
+        "num_classes": 2,
+        "num_train_videos": 100,
+    },
     "webvid_rewritten": {
         "num_classes": 0,
         "num_train_videos": 10716266,

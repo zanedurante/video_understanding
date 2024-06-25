@@ -3,9 +3,10 @@ from transformers import OPTForCausalLM, GPT2Tokenizer
 import torch.nn as nn
 from video.text_decoders.base_decoder import BaseTextDecoder
 from tokenizers.processors import TemplateProcessing
-
+import torch
 
 name2ckpt = {
+    "avl": "zanedurante/avl_model.pth",
     "125m": "facebook/opt-125m",
     "350m": "facebook/opt-350m",
     "1.3b": "facebook/opt-1.3b",
@@ -52,6 +53,31 @@ def load_opt_model_tokenizer(opt_model_name, **kwargs):
                 opt_model_name, name2ckpt.keys()
             )
         )
+    if opt_model_name == "avl": # TODO: Replace with huggingface load
+        ckpt = torch.load("/home/durante/code/video_understanding/checkpoints/avl_model.pth", map_location="cpu")
+        opt_model = OPTForCausalLM.from_pretrained(
+            "facebook/opt-125m", **kwargs
+        )
+        # from 50272 --> 51576
+        num_addeded_tokens = 51576 - 50272
+
+        opt_model.resize_token_embeddings(51576) # TODO: fix this hard coded for now
+        modified_state_dict = {}
+        for k, v in ckpt['model'].items():
+            new_k = k.replace("model.model.", "model.")
+            new_k = new_k.replace("model.lm_head.", "lm_head.")
+            modified_state_dict[new_k] = v
+        unused = opt_model.load_state_dict(modified_state_dict, strict=False)
+        tokenizer = GPT2Tokenizer.from_pretrained("facebook/opt-125m")
+        # add new tokens to tokenizer
+        tokenizer.add_special_tokens(
+            {
+                "additional_special_tokens": [
+                    f"<|{i}|>" for i in range(num_addeded_tokens)
+                ]
+            }
+        )
+        return opt_model, tokenizer
 
     return OPTForCausalLM.from_pretrained(
         ckpt, **kwargs

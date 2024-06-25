@@ -59,7 +59,18 @@ class VideoMAEv2Base(torch.nn.Module):
             return
         print(f'loading pretrained weights from {self.ckpt_f}')
         ckpt = torch.load(self.ckpt_f, map_location='cpu')
-        errs = self.load_state_dict(ckpt['model'],strict=False)
+        if 'module' in ckpt.keys(): # allows loading from original mae ckpts
+            # add encoder. to the keys
+            ckpt['module'] = {"encoder." + k :v for k,v in ckpt['module'].items()}
+            ckpt['module']['encoder.norm.weight'] = ckpt['module']['encoder.fc_norm.weight']
+            ckpt['module']['encoder.norm.bias'] = ckpt['module']['encoder.fc_norm.bias']
+
+            del ckpt['module']['encoder.fc_norm.weight']
+            del ckpt['module']['encoder.fc_norm.bias']
+
+            errs = self.load_state_dict(ckpt['module'],strict=False)
+        else:
+            errs = self.load_state_dict(ckpt['model'],strict=False)
         # There will be more keys in the checkpoint file than needed. Make sure
         # there are no missing keys. Having unexpected keys is okay.
         assert not errs.missing_keys

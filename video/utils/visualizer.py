@@ -96,6 +96,7 @@ def visualize_dataset(
     num_frames=4,
     overlay=True,
     use_gif=False, # saves as gif instead of grid
+    shuffle=True,
 ):
     """
     Visualizes a dataset by loading samples from it and visualizing it.
@@ -110,13 +111,18 @@ def visualize_dataset(
     dataset = VideoDataset(
         dataset_name, dataset_split="train" + modifier, num_frames=num_frames
     )
+
+    if shuffle:
+        dataset.shuffle()
+
     if num_samples == -1:
         num_samples = len(dataset)
     for i in tqdm(range(num_samples)):
         sample = dataset[i]
+        print("Label for", i, sample['label'])
         if use_gif:
             frames = visualize_sample(
-                sample, use_clip_norm=use_clip_norm, overlay=False, use_grid=False
+                sample, use_clip_norm=use_clip_norm, overlay=overlay, use_grid=False
             )
 
             # save video as gif

@@ -53,6 +53,12 @@ def merge_wandb_args(config, wandb_args):
         elif key == "head_weight_decay":
             if value is not None:
                 config.trainer.head_weight_decay = value
+        elif key == "head_hidden_dim":
+            if value is not None:
+                config.model.head_hidden_dim = value
+        elif key == "backbone_pretrained_ckpt":
+            if value is not None:
+                config.model.backbone_pretrained_ckpt = value
         elif key == "backbone_weight_decay":
             if value is not None:
                 config.trainer.backbone_weight_decay = value

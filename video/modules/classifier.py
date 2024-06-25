@@ -56,16 +56,18 @@ class Classifier(pl.LightningModule):
                 nn.Linear(self.video_backbone.get_video_level_embed_dim(), num_classes),
             )
         elif self.head_type == "mlp":
+            hidden_dim = get_val_from_config(config, "model.head_hidden_dim", 1024) # By default just use video_level_embed_dim
+            print("For MLP, using hidden dim:", hidden_dim)
             self.head = nn.Sequential(
                 nn.Linear(
                     self.video_backbone.get_video_level_embed_dim(),
-                    self.video_backbone.get_video_level_embed_dim(),
+                    hidden_dim,
                 ),
                 nn.GELU(),
                 nn.Dropout(self.head_dropout),
                 nn.Linear(
-                    self.video_backbone.get_video_level_embed_dim(), num_classes
-                ),  # By default just repeat the video_level_embed_dim
+                    hidden_dim, num_classes
+                ),  
             )
         else:
             raise NotImplementedError(

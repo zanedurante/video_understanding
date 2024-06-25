@@ -38,6 +38,7 @@ def get_args():
     args.add_argument("--head", type=str, default=None)
     args.add_argument("--head_dropout", type=float, default=None)
     args.add_argument("--head_weight_decay", type=float, default=None)
+    args.add_argument("--head_hidden_dim", type=int, default=None)
     args.add_argument("--backbone_weight_decay", type=float, default=None)
     args.add_argument("--backbone_lr_multiplier", type=float, default=None)
     args.add_argument("--num_frozen_epochs", type=int, default=None)
@@ -52,6 +53,8 @@ def get_args():
     args.add_argument("--num_learnable_prompt_tokens", type=int, default=None)
     args.add_argument("--use_start_token_for_caption", type=bool, default=None)
     args.add_argument("--prompt", type=str, default=None)
+    args.add_argument("--backbone_pretrained_ckpt", type=str, default=None)
+    
 
     args = args.parse_args()
     return args
@@ -113,6 +116,9 @@ def main(args):
         )
         print("Finished creating wandb logger")
 
+    print("Logging config for reproducibility: {}".format(config))
+
+
     # detect number of devices and use that number
     num_gpus = torch.cuda.device_count()
     trainer = pl.Trainer(
@@ -130,6 +136,7 @@ def main(args):
         log_every_n_steps=config.logger.log_every_n_steps,
         deterministic=is_deterministic,
         accumulate_grad_batches=config.trainer.accumulate_grad_batches,
+        check_val_every_n_epoch=config.trainer.check_val_every_n_epoch,
     )
 
     data_module = get_data_module_from_config(config)
@@ -187,6 +194,10 @@ def main(args):
         exit()
 
     trainer.fit(module, data_module)
+    if config.trainer.skip_test:
+        print("Skipping test")
+    else:
+        trainer.test(module, data_module) # TODO: Change to only trigger if config is set
 
     if not disable_wandb:
         wandb.finish()
