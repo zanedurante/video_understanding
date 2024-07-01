@@ -18,7 +18,7 @@ trainer:
   batch_size: 16
   max_epochs: 10
   num_frozen_epochs: 2
-  backbone_lr_multiplier: 0.00001
+  backbone_lr_multiplier: 1.0
   precision: 32
 
 logger:

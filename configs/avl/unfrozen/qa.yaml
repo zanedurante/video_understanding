@@ -1,0 +1,38 @@
+# This is not currently used, but it is how I will configure the codebase
+# TODO: Load with OmegaConf from default.yaml
+data:
+  datasets: 
+    - 500p_avl # contains the re-annotated videos in training split
+  num_frames: 9
+  #norm_type: imagenet # can be imagenet or clip
+
+model:
+  type: captioner # which module to use
+  backbone_name: clip_ViT-B/16
+  #backbone_pretrained_ckpt: /data/clinical_mae/vit_b_hybrid_pt_800e/checkpoint-51.pth
+  text_decoder_name: opt_125m
+  head: linear
+  head_dropout: 0.00
+  text_first: True
+  num_learnable_prompt_tokens: 0
+  use_start_token_for_caption: False
+  prompt: use_question
+
+trainer:
+  lr: 4e-5
+  batch_size: 1
+  max_epochs: 20
+  num_frozen_epochs: 0
+  head_weight_decay: 0.0
+  backbone_weight_decay: 0.0
+  prompt_lr_multiplier: 1.00
+  backbone_lr_multiplier: 1.00
+  text_decoder_lr_multiplier: 1.00
+  prompt_weight_decay: 0.0
+  precision: 32
+  num_workers: cpus/5
+  accumulate_grad_batches: 64
+  check_val_every_n_epoch: 5
+
+logger:
+  log_every_n_steps: 10

@@ -72,6 +72,10 @@ DATASETS_TO_STATS = {
         "num_classes": 0,
         "num_train_videos": 99999,
     },
+    "diving48": {
+        "num_classes": 48,
+        "num_train_videos": 15027,
+    },
 }
 
 

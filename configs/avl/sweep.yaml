@@ -1,0 +1,29 @@
+program: train.py
+method: grid  # or grid, random, bayes
+metric:
+  name: val_loss
+  goal: minimize
+parameters:
+  fast_run:
+    values: [True] # use special a100 setting for torch.set_float32_matmul_precision("high")
+  use_sweep:
+    values: [True]
+  config: 
+    values: [configs/avl/captioning.yaml] # This is the base config file to use
+  lr:
+    values: [1e-5]
+  num_frames:
+    values: [9]
+  head:
+    values: [linear]
+  max_epochs:
+    values: [20] 
+  backbone_lr_multiplier:
+    values: [0.0, 1.0]
+  text_decoder_lr_multiplier:
+    values: [0.0, 1.0]
+  num_learnable_prompt_tokens:
+    values: [0]
+  prompt:
+    values: ["A video of ", "use_question"] # Captioning vs QA
+  # Add other parameters you want to tune

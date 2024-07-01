@@ -1,0 +1,28 @@
+# This is not currently used, but it is how I will configure the codebase
+# TODO: Load with OmegaConf from default.yaml
+data:
+  datasets: 
+    - icu-interaction # contains the re-annotated videos in training split
+  num_frames: 16
+  #norm_type: imagenet # can be imagenet or clip
+
+model:
+  type: classifier # which module to use
+  backbone_name: VideoMAEv2Base
+  backbone_pretrained_ckpt: /data/clinical_mae/vit_b_hybrid_pt_800e/checkpoint-50.pth'
+  head: mlp
+  head_dropout: 0.00
+
+trainer:
+  lr: 1e-6
+  batch_size: 2 #32
+  max_epochs: 20
+  num_frozen_epochs: 2
+  head_weight_decay: 0.01
+  num_workers: 12 # os.cpu_count() - 2
+  backbone_weight_decay: 0.00
+  backbone_lr_multiplier: 1.7e-5
+  accumulate_grad_batches: 16
+
+logger:
+  log_every_n_steps: 10
