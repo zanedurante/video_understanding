@@ -24,7 +24,7 @@ Assumes cuda version 11.3  For different cuda versions, we will need to update t
 
 `pip install transformers==4.36`
 
-`pip install timm einops`
+`pip install timm einops scikit-learn`
 
 ### git submodule setup
 In the main `video_understanding` directory, do:

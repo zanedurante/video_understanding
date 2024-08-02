@@ -76,6 +76,10 @@ DATASETS_TO_STATS = {
         "num_classes": 48,
         "num_train_videos": 15027,
     },
+    "icu": {
+        "num_classes": 3,
+        "num_train_videos": 24876,
+    }
 }
 
 
@@ -98,6 +102,8 @@ class VideoDataModule(pl.LightningDataModule):
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.kwargs = kwargs
+        if "multilabel" in kwargs:
+            self.multilabel = kwargs["multilabel"]
 
     def setup(self, stage=None):
         self.train_dataset = VideoDataset(

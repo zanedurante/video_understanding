@@ -37,6 +37,16 @@ def get_data_module_from_config(config):
     else:
         norm_type = config.data.norm_type.lower()
 
+    multilabel = False
+    labels = None
+    if hasattr(config.data, "multilabel"):
+        if config.data.multilabel:
+            multilabel = True
+            try:
+                labels = config.data.labels
+            except:
+                raise ValueError("Multilabel dataset requires `labels` to be set in config as list.")
+
     print("Using {} normalization.".format(norm_type))
 
     use_clip_norm = True
@@ -49,5 +59,8 @@ def get_data_module_from_config(config):
         num_workers=config.trainer.num_workers,
         num_frames=config.data.num_frames,
         use_clip_norm=use_clip_norm,
+        multilabel=multilabel,
+        labels=labels,
+
     )
     return module

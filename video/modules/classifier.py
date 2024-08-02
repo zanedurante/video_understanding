@@ -5,6 +5,8 @@ from video.video_encoders import get_backbone
 import torchmetrics
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from video.utils.config_manager import get_val_from_config
+from torchmetrics.classification import MultilabelConfusionMatrix, MulticlassConfusionMatrix
+import numpy as np
 
 
 class Classifier(pl.LightningModule):
@@ -12,10 +14,12 @@ class Classifier(pl.LightningModule):
         self,
         config,
         num_classes=101,
+        multilabel=False,
         total_num_steps=1e6,
     ):
         super().__init__()
         self.config = config
+        self.multilabel = multilabel
         backbone_name = get_val_from_config(config, "model.backbone_name")
         num_frames = get_val_from_config(config, "data.num_frames")
         self.video_backbone = get_backbone(
@@ -24,6 +28,7 @@ class Classifier(pl.LightningModule):
         self.head_type = get_val_from_config(config, "model.head", "linear")
         self.num_frames = num_frames
         self.num_classes = num_classes
+        self.confusion_matrix = MultilabelConfusionMatrix(num_labels=num_classes) if self.multilabel else MulticlassConfusionMatrix(num_classes=num_classes)
         self.num_frozen_epochs = get_val_from_config(
             config, "trainer.num_frozen_epochs", 1
         )
@@ -32,12 +37,20 @@ class Classifier(pl.LightningModule):
             config, "trainer.backbone_lr_multiplier", 0.01
         )
         self.lr = get_val_from_config(config, "trainer.lr", 1e-4)
-        self.train_acc = torchmetrics.classification.Accuracy(
-            task="multiclass", num_classes=num_classes
-        )
-        self.val_acc = torchmetrics.classification.Accuracy(
-            task="multiclass", num_classes=num_classes
-        )
+        if self.multilabel:
+            self.train_acc = torchmetrics.classification.Accuracy(
+                task="multilabel", num_labels=num_classes
+            )
+            self.val_acc = torchmetrics.classification.Accuracy(
+                task="multilabel", num_labels=num_classes
+            )
+        else:
+            self.train_acc = torchmetrics.classification.Accuracy(
+                task="multiclass", num_classes=num_classes
+            )
+            self.val_acc = torchmetrics.classification.Accuracy(
+                task="multiclass", num_classes=num_classes
+            )
         self.head_weight_decay = get_val_from_config(
             config, "model.head_weight_decay", 0.0
         )
@@ -47,7 +60,11 @@ class Classifier(pl.LightningModule):
         self.backbone_is_frozen = False
         self.head_dropout = get_val_from_config(config, "model.head_dropout", 0.0)
         self.total_num_steps = total_num_steps
-        self.loss = nn.CrossEntropyLoss()
+
+        if self.multilabel:
+            self.loss = nn.BCEWithLogitsLoss() # TODO: Ensure labels are being loaded in correctly
+        else:
+            self.loss = nn.CrossEntropyLoss()
 
         # Build the classifier head
         if self.head_type == "linear":
@@ -86,6 +103,8 @@ class Classifier(pl.LightningModule):
         video = batch["video"]
         video_features = self.video_backbone.get_video_level_embeds(video)
         logits = self.head(video_features)
+        if self.multilabel:
+            logits = torch.sigmoid(logits)
         return logits
 
     def freeze_backbone(self):
@@ -130,6 +149,8 @@ class Classifier(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         batch_size = batch["video"].shape[0]
         logits = self(batch)
+        preds = torch.argmax(logits, dim=1) if not self.multilabel else (logits > 0.5).int()
+        self.confusion_matrix.update(preds, batch["label"].int())
         labels = batch["label"]
         loss = self.loss(logits, labels)
         val_acc = self.val_acc(logits, labels)
@@ -150,6 +171,12 @@ class Classifier(pl.LightningModule):
             sync_dist=True,
         )
         return loss
+
+    def on_validation_epoch_end(self):
+        confusion_matrix = np.array2string(self.confusion_matrix.compute().cpu().numpy())
+        print("Rows are the actual classes, columns are predicted classes.")
+        print(confusion_matrix)
+        self.confusion_matrix.reset()
 
     def configure_optimizers(self):
         backbone_params = [

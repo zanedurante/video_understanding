@@ -113,22 +113,28 @@ def get_transforms(split, **kwargs):
 
 
 class VideoDataset(Dataset):
-    def __init__(self, dataset_name, dataset_split, num_frames=4, **kwargs):
+    def __init__(self, dataset_name, dataset_split, num_frames=4, multilabel=False, labels=None, video_path_col="video_path", **kwargs):
         self.dataset_name = dataset_name
         self.dataset_split = dataset_split
         self.dataset_dir_path = get_dataset_dir(dataset_name)
         self.data = get_dataset_csv(dataset_name, dataset_split)
         self.num_frames = num_frames
         self.transforms = get_transforms(dataset_split, **kwargs)
+        self.label_columns = labels # If label_columns have special names
+        self.multilabel = multilabel
+        self.video_path_col = video_path_col
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
         row = self.data.iloc[idx]
-        rel_video_path = row["video_path"]
+        rel_video_path = row[self.video_path_col]
         full_video_path = os.path.join(self.dataset_dir_path, rel_video_path)
-        label = row.get("label", 0)  # default to class 0 if label is not present
+        if not self.multilabel:
+            label = row.get("label", 0)  # default to class 0 if label is not present
+        else:
+            label = row[self.label_columns]
         caption = row.get(
             "caption", ""
         )  # default to empty string if caption is not present
@@ -147,14 +153,21 @@ class VideoDataset(Dataset):
         )
 
         video_tensor = self.transforms(video_tensor)
-        label = torch.tensor(label).long()
+        if self.multilabel:
+            label = torch.tensor(label).float()
+        else:
+            label = torch.tensor(label).long()
 
         if not loaded_correctly:
             print("WARNING: Video {} failed to load correctly.".format(full_video_path))
             caption = "A black screen."
             question = "What is occurring in this video?"
             answer = "A black screen."
-            label = torch.tensor(0).long()  # have 0 be the label for black screen
+            if self.multilabel:
+                # make labels all 0s for len(self.label_columns) times
+                label = torch.zeros(len(self.label_columns)).float()
+            else:
+                label = torch.tensor(0).long()  # have 0 be the label for black screen
 
         sample = {
             "video": video_tensor,

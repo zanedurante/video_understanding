@@ -1,7 +1,8 @@
 import torch
 from video.video_encoders.clip.encoders import load_clip_backbone
-from video.video_encoders.video_mae.encoders import VideoMAEv2Base
+#from video.video_encoders.video_mae.encoders import VideoMAEv2Base
 from video.video_encoders.avl.video_model import load_vit_b_video, create_vit_b_video
+from video.video_encoders.dinov2.video_model import load_dinov2_backbone
 
 """
 Utils for loading video encoders.
@@ -18,6 +19,8 @@ def get_backbone(backbone_name, **kwargs):
         return load_clip_backbone(model_name, **kwargs)
     elif backbone_name == "VideoMAEv2Base":
         return VideoMAEv2Base(**kwargs)
+    elif model_type == "dinov2":
+        return load_dinov2_backbone(model_name, **kwargs)
     elif backbone_name == "avl_pretrain":
         return load_vit_b_video(
             "/home/durante/code/video_understanding/checkpoints/avl_model.pth", **kwargs

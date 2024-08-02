@@ -1,24 +1,28 @@
 # Extremely stable training
 data:
   datasets: 
-    - diving48 
+    - icu 
   num_frames: 32
+  multilabel: True
+  labels: [P, C, F]
+  video_path_col: clip
+  
 
 model:
   type: classifier # which module to use
-  backbone_name: dinov2_ViT-L/14 #clip_ViT-B/16
+  backbone_name: clip_ViT-B/16
   head: linear
   head_dropout: 0.0
   head_weight_decay: 0.0
   backbone_weight_decay: 0.0
 
 trainer:
-  lr: 1e-4
+  lr: 5e-5
   max_epochs: 20
   num_frozen_epochs: 0
-  batch_size: 1
+  batch_size: 2
   backbone_lr_multiplier: 1e-1
-  accumulate_grad_batches: 8
+  accumulate_grad_batches: 4
   num_workers: cpus/5
 
 

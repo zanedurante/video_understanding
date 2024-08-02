@@ -1,5 +1,5 @@
 program: train.py
-method: random  # or grid, random, bayes
+method: grid  # or grid, random, bayes
 metric:
   name: val_loss
   goal: minimize
@@ -10,6 +10,6 @@ parameters:
     values: [True]
   config: 
     values: [configs/classification/diving48.yaml] # This is the config file to use
-  backbone_lr_multiplier:
-    values: [1e-1, 1e-2, 1e-3, 1e-4]
-  # Add other parameters you want to tune
+  backbone_name:
+    values: ["dinov2_ViT-S/14", "dinov2_ViT-B/14", "clip_ViT-B/16"]
+

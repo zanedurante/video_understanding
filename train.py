@@ -20,6 +20,7 @@ from glob import glob
 from omegaconf import OmegaConf
 from video.utils.config_manager import get_config, get_num_workers
 from video.utils.module_loader import get_model_module, get_data_module_from_config
+from video.utils.confusion_matrix_callback import ConfusionMatrixCallback  
 from pytorch_lightning.utilities import rank_zero_only
 
 
@@ -84,15 +85,23 @@ def main(args):
 
     pl.seed_everything(config.trainer.seed, workers=True)
 
+    data_module = get_data_module_from_config(config)
+
+    callbacks = []
     checkpoint_callback = ModelCheckpoint(
-        dirpath="/mnt/datasets_mnt/pytorch_lightning_ckpts/",
+        dirpath="pytorch_lightning_ckpts/",
         filename="{epoch}-{val_loss:.2f}",
-        save_top_k=3,
+        save_top_k=1,
         verbose=True,
         monitor="val_loss",
         mode="min",
     )
 
+
+    # callbacks.append(checkpoint_callback)
+    callbacks.append(LearningRateMonitor(logging_interval="step"))
+    callbacks.append(EarlyStopping(monitor="val_loss", patience=3, mode="min"))
+    
     if fast_run:
         print("Setting float32 matmul precision to high for fast run")
         torch.set_float32_matmul_precision("high")
@@ -131,18 +140,13 @@ def main(args):
         precision=config.trainer.precision,
         max_epochs=config.trainer.max_epochs,
         logger=logger,
-        callbacks=[
-            LearningRateMonitor(logging_interval="step"),
-            EarlyStopping(monitor="val_loss", patience=3, mode="min"),
-            checkpoint_callback,
-        ],
+        enable_checkpointing=False, # TODO: Make configurable. Too many checkpoints right now
+        callbacks=callbacks,
         log_every_n_steps=config.logger.log_every_n_steps,
         deterministic=is_deterministic,
         accumulate_grad_batches=config.trainer.accumulate_grad_batches,
         check_val_every_n_epoch=config.trainer.check_val_every_n_epoch,
     )
-
-    data_module = get_data_module_from_config(config)
 
     # total steps = steps per epoch * num epochs
     total_num_steps = (
@@ -158,6 +162,7 @@ def main(args):
         module = model_module(
             config,
             num_classes=data_module.get_stats()["num_classes"],
+            multilabel=data_module.multilabel,
             total_num_steps=total_num_steps,
         )
     else:
