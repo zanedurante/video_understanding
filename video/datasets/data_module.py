@@ -79,7 +79,15 @@ DATASETS_TO_STATS = {
     "icu": {
         "num_classes": 3,
         "num_train_videos": 24876,
-    }
+    },
+    "icu_movement": {
+        "num_classes": 2, # removed independent movement for now
+        "num_train_videos": 15944,
+    },
+    "icu_movement-debug": {
+        "num_classes": 2, # removed independent movement for now
+        "num_train_videos": 6,
+    },
 }
 
 

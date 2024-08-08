@@ -131,10 +131,12 @@ class VideoDataset(Dataset):
         row = self.data.iloc[idx]
         rel_video_path = row[self.video_path_col]
         full_video_path = os.path.join(self.dataset_dir_path, rel_video_path)
-        if not self.multilabel:
+        if self.label_columns is None:
             label = row.get("label", 0)  # default to class 0 if label is not present
         else:
-            label = row[self.label_columns]
+            label = row[self.label_columns].tolist()
+            if len(label) == 1: # if only one label, convert to scalar (not multilabel)
+                label = label[0] 
         caption = row.get(
             "caption", ""
         )  # default to empty string if caption is not present

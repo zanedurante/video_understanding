@@ -39,13 +39,13 @@ def get_data_module_from_config(config):
 
     multilabel = False
     labels = None
+    if hasattr(config.data, "labels"):
+        labels = config.data.labels
     if hasattr(config.data, "multilabel"):
-        if config.data.multilabel:
-            multilabel = True
-            try:
-                labels = config.data.labels
-            except:
-                raise ValueError("Multilabel dataset requires `labels` to be set in config as list.")
+        multilabel = config.data.multilabel
+
+    if multilabel and labels is None:
+        raise ValueError("Multilabel dataset specified but no labels provided. Provide label column names in config.data.labels.")
 
     print("Using {} normalization.".format(norm_type))
 
