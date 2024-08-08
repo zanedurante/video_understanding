@@ -26,7 +26,6 @@ class Classifier(pl.LightningModule):
             backbone_name, num_frames=num_frames
         ).float()  # TODO: Make configurable somehow
 
-        self.debug = 0
         self.head_type = get_val_from_config(config, "model.head", "linear")
         self.num_frames = num_frames
         self.num_classes = num_classes
@@ -134,8 +133,6 @@ class Classifier(pl.LightningModule):
         logits = self(batch)
         labels = batch["label"]
         loss = self.loss(logits, labels)
-        # sum labels for debugging
-        self.debug += labels.sum().item()
         train_acc = self.train_acc(logits, labels)
         self.log(
             "train_loss", loss, batch_size=batch_size, prog_bar=True, sync_dist=True
@@ -148,7 +145,6 @@ class Classifier(pl.LightningModule):
             on_epoch=True,
             sync_dist=True,
         )
-        self.log("debug", self.debug, on_step=True, sync_dist=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
