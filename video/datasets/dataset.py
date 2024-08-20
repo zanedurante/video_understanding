@@ -113,7 +113,7 @@ def get_transforms(split, **kwargs):
 
 
 class VideoDataset(Dataset):
-    def __init__(self, dataset_name, dataset_split, num_frames=4, multilabel=False, labels=None, video_path_col="video_path", **kwargs):
+    def __init__(self, dataset_name, dataset_split, num_frames=4, multilabel=False, labels=None, video_path_col="video_path", full_path=False, **kwargs):
         self.dataset_name = dataset_name
         self.dataset_split = dataset_split
         self.dataset_dir_path = get_dataset_dir(dataset_name)
@@ -123,6 +123,8 @@ class VideoDataset(Dataset):
         self.label_columns = labels # If label_columns have special names
         self.multilabel = multilabel
         self.video_path_col = video_path_col
+        self.full_path = full_path # Whether or not the csv contains the full path
+
 
     def __len__(self):
         return len(self.data)
@@ -130,7 +132,10 @@ class VideoDataset(Dataset):
     def __getitem__(self, idx):
         row = self.data.iloc[idx]
         rel_video_path = row[self.video_path_col]
-        full_video_path = os.path.join(self.dataset_dir_path, rel_video_path)
+        if self.full_path:
+            full_video_path = rel_video_path
+        else:
+            full_video_path = os.path.join(self.dataset_dir_path, rel_video_path)
         if self.label_columns is None:
             label = row.get("label", 0)  # default to class 0 if label is not present
         else:

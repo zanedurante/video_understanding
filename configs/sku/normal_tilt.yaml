@@ -1,0 +1,28 @@
+# This is not currently used, but it is how I will configure the codebase
+# TODO: Load with OmegaConf from default.yaml
+data:
+  datasets: 
+    - tilt
+  num_frames: 1 # Image dataset
+  video_col: image_path
+  labels: [class]
+
+model:
+  type: classifier # which module to use
+  backbone_name: dinov2_ViT-L/14
+  head: linear
+  head_dropout: 0.349262925944429
+  head_weight_decay: 0.0
+  backbone_weight_decay: 0.0
+
+trainer:
+  lr: 0.000656499621134558
+  batch_size: 8
+  max_epochs: 20
+  num_frozen_epochs: 3
+  backbone_lr_multiplier: 0.005540257077405575
+  precision: 32
+  num_workers: 8 # for debugging
+
+logger:
+  log_every_n_steps: 6

@@ -12,4 +12,6 @@ parameters:
     values: [configs/classification/diving48.yaml] # This is the config file to use
   backbone_name:
     values: ["dinov2_ViT-S/14", "dinov2_ViT-B/14", "clip_ViT-B/16"]
-
+  head:
+    values: ["linear", "mlp"]
+  

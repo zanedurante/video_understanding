@@ -1,0 +1,27 @@
+# This is not currently used, but it is how I will configure the codebase
+# TODO: Load with OmegaConf from default.yaml
+data:
+  datasets: 
+    - sku_open-closed
+  num_frames: 1 # Image dataset
+  video_col: image_path
+
+model:
+  type: classifier # which module to use
+  backbone_name: clip_ViT-L/14
+  head: linear
+  head_dropout: 0.0
+  head_weight_decay: 0.0
+  backbone_weight_decay: 0.0
+
+trainer:
+  lr: 1e-4
+  batch_size: 16
+  max_epochs: 10
+  num_frozen_epochs: 1
+  backbone_lr_multiplier: 0.1
+  precision: 32
+  num_workers: 4 # for debugging
+
+logger:
+  log_every_n_steps: 6

@@ -5,6 +5,7 @@ BASE_CONFIG_PATH = "configs/base.yaml"
 
 
 def get_config(config_path, args=None):
+
     config_subdir = os.path.dirname(config_path)
     base_config = OmegaConf.load(BASE_CONFIG_PATH)
     subdir_config = OmegaConf.load(BASE_CONFIG_PATH)
@@ -18,6 +19,7 @@ def get_config(config_path, args=None):
             )
             subdir_config = OmegaConf.load(os.path.join(config_subdir, "default.yaml"))
     config = OmegaConf.merge(base_config, subdir_config)
+
     config = OmegaConf.merge(config, OmegaConf.load(config_path))
     config.trainer.num_workers = get_num_workers(config.trainer.num_workers)
 
@@ -52,7 +54,7 @@ def merge_wandb_args(config, wandb_args):
                 config.model.head_dropout = value
         elif key == "head_weight_decay":
             if value is not None:
-                config.trainer.head_weight_decay = value
+                config.model.head_weight_decay = value
         elif key == "head_hidden_dim":
             if value is not None:
                 config.model.head_hidden_dim = value
@@ -61,7 +63,7 @@ def merge_wandb_args(config, wandb_args):
                 config.model.backbone_pretrained_ckpt = value
         elif key == "backbone_weight_decay":
             if value is not None:
-                config.trainer.backbone_weight_decay = value
+                config.model.backbone_weight_decay = value
         elif key == "backbone_lr_multiplier":
             if value is not None:
                 config.trainer.backbone_lr_multiplier = value
@@ -73,7 +75,7 @@ def merge_wandb_args(config, wandb_args):
                 config.trainer.max_epochs = value
         elif key == "text_encoder_weight_decay":
             if value is not None:
-                config.trainer.text_encoder_weight_decay = value
+                config.model.text_encoder_weight_decay = value
         elif key == "text_encoder_lr_multiplier":
             if value is not None:
                 config.trainer.text_encoder_lr_multiplier = value
@@ -82,13 +84,13 @@ def merge_wandb_args(config, wandb_args):
                 config.trainer.text_decoder_lr_multiplier = value
         elif key == "text_decoder_weight_decay":
             if value is not None:
-                config.trainer.text_decoder_weight_decay = value
+                config.model.text_decoder_weight_decay = value
         elif key == "prompt_lr_multiplier":
             if value is not None:
                 config.trainer.prompt_lr_multiplier = value
         elif key == "prompt_weight_decay":
             if value is not None:
-                config.trainer.prompt_weight_decay = value
+                config.model.prompt_weight_decay = value
         elif key == "text_first":
             if value is not None:
                 config.model.text_first = value

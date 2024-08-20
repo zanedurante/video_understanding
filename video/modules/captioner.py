@@ -99,13 +99,13 @@ class Captioner(pl.LightningModule):
             config, "trainer.head_weight_decay", 0.0
         )
         self.backbone_weight_decay = get_val_from_config(
-            config, "trainer.backbone_weight_decay", 0.0
+            config, "model.backbone_weight_decay", 0.0
         )
         self.text_decoder_weight_decay = get_val_from_config(
-            config, "trainer.text_decoder_weight_decay", 0.0
+            config, "model.text_decoder_weight_decay", 0.0
         )
         self.prompt_weight_decay = get_val_from_config(
-            config, "trainer.prompt_weight_decay", 0.0
+            config, "model.prompt_weight_decay", 0.0
         )
         self.drop_cls_token = get_val_from_config(config, "model.drop_cls_token", True)
         self.backbone_is_frozen = False
