@@ -88,8 +88,9 @@ def main(args):
     data_module = get_data_module_from_config(config)
 
     callbacks = []
+    use_checkpoint = False # TODO: Make configurable
     checkpoint_callback = ModelCheckpoint(
-        dirpath="pytorch_lightning_ckpts/",
+        dirpath="normal_tilt_ckpts/",
         filename="{epoch}-{val_loss:.2f}",
         save_top_k=1,
         verbose=True,
@@ -97,10 +98,10 @@ def main(args):
         mode="min",
     )
 
-
-    # callbacks.append(checkpoint_callback)
-    callbacks.append(LearningRateMonitor(logging_interval="step"))
-    callbacks.append(EarlyStopping(monitor="val_loss", patience=3, mode="min"))
+    if use_checkpoint:
+        callbacks.append(checkpoint_callback)
+    #callbacks.append(LearningRateMonitor(logging_interval="step"))
+    #callbacks.append(EarlyStopping(monitor="val_loss", patience=3, mode="min"))
     
     if fast_run:
         print("Setting float32 matmul precision to high for fast run")
@@ -140,7 +141,7 @@ def main(args):
         precision=config.trainer.precision,
         max_epochs=config.trainer.max_epochs,
         logger=logger,
-        enable_checkpointing=False, # TODO: Make configurable. Too many checkpoints right now
+        enable_checkpointing=use_checkpoint,
         callbacks=callbacks,
         log_every_n_steps=config.logger.log_every_n_steps,
         deterministic=is_deterministic,

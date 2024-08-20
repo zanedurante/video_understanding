@@ -4,9 +4,10 @@ import torch
 from PIL import Image
 from torchvision import transforms
 
+IMG_EXTENSIONS = ["jpg", "jpeg", "png", "ppm", "bmp", "pgm", "tif", "tiff", "webp"]
+
 
 decord.bridge.set_bridge("torch")
-
 
 def load_video(
     video_path,
@@ -19,13 +20,16 @@ def load_video(
 ):
     """
     Loads a video from a given path and returns a tensor of shape (T, C, H, W).
-
     """
+    file_ext = video_path.split(".")[-1]
     # special loading for gif files
-    if video_path.endswith(".gif"):  # currently not supported for num_skip_frames < 0
+    if file_ext == "gif":  # currently not supported for num_skip_frames < 0
         return _load_video_gif(
             video_path, start_frame, end_frame, num_skip_frames, split
         )
+    
+    if file_ext in IMG_EXTENSIONS:
+        return _load_image(video_path, num_frames, split)
 
     frame_indices = None
     try:
@@ -110,3 +114,10 @@ def _load_video_gif(
         # Repeat num_frames times in first dim
         imgs = imgs.repeat(num_frames, 1, 1, 1)
         return imgs, False
+
+def _load_image(image_path, num_frames, split):
+    img = Image.open(image_path).convert("RGB")
+    img = transforms.ToTensor()(img)
+    img = img.unsqueeze(0)
+    img = img.repeat(num_frames, 1, 1, 1)
+    return img, True

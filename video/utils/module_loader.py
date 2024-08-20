@@ -52,6 +52,10 @@ def get_data_module_from_config(config):
     use_clip_norm = True
     if norm_type != "clip":
         use_clip_norm = False
+    
+    video_col = "video_path"
+    if hasattr(config.data, "video_col"):
+        video_col = config.data.video_col
 
     module = VideoDataModule(
         dataset_name=dataset_name,
@@ -61,6 +65,7 @@ def get_data_module_from_config(config):
         use_clip_norm=use_clip_norm,
         multilabel=multilabel,
         labels=labels,
+        video_path_col=video_col,
 
     )
     return module

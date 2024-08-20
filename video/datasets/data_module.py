@@ -88,6 +88,19 @@ DATASETS_TO_STATS = {
         "num_classes": 2, # removed independent movement for now
         "num_train_videos": 6,
     },
+    "sku_can-bottle": {
+        "num_classes": 2,
+        "num_train_videos": 1224539,
+    },
+    "sku_open-closed": {
+        "num_classes": 2,
+        "num_train_videos": 1133,
+    },
+    "tilt": {
+        "num_classes": 2,
+        "num_train_videos": 1320,
+        "full_path": True,
+    },
 }
 
 
@@ -100,6 +113,9 @@ class VideoDataModule(pl.LightningDataModule):
             raise NotImplementedError(
                 "Dataset {} not implemented.".format(dataset_name)
             )
+        self.full_path = False
+        if "full_path" in DATASETS_TO_STATS[dataset_name]:
+            self.full_path = DATASETS_TO_STATS[dataset_name]["full_path"]
         if "_" not in dataset_name:
             self.dataset_name = dataset_name
             self.dataset_variant = None
@@ -107,6 +123,7 @@ class VideoDataModule(pl.LightningDataModule):
         else:
             self.dataset_name, self.dataset_variant = dataset_name.split("_")
             self.variant_suffix = "_" + self.dataset_variant
+
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.kwargs = kwargs
@@ -117,13 +134,14 @@ class VideoDataModule(pl.LightningDataModule):
         self.train_dataset = VideoDataset(
             self.dataset_name,
             dataset_split="train" + self.variant_suffix,
+            full_path=self.full_path,
             **self.kwargs
         )
         self.val_dataset = VideoDataset(
-            self.dataset_name, dataset_split="val" + self.variant_suffix, **self.kwargs
+            self.dataset_name, dataset_split="val" + self.variant_suffix, **self.kwargs, full_path=self.full_path
         )
         self.test_dataset = VideoDataset(
-            self.dataset_name, dataset_split="test" + self.variant_suffix, **self.kwargs
+            self.dataset_name, dataset_split="test" + self.variant_suffix, **self.kwargs, full_path=self.full_path
         )
         # print("IN SETUP:", len(self.train_dataset))
 
