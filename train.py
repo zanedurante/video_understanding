@@ -88,7 +88,7 @@ def main(args):
     data_module = get_data_module_from_config(config)
 
     callbacks = []
-    use_checkpoint = False # TODO: Make configurable
+    use_checkpoint = True # TODO: Make configurable
     checkpoint_callback = ModelCheckpoint(
         dirpath="normal_tilt_ckpts/",
         filename="{epoch}-{val_loss:.2f}",
@@ -100,7 +100,7 @@ def main(args):
 
     if use_checkpoint:
         callbacks.append(checkpoint_callback)
-    #callbacks.append(LearningRateMonitor(logging_interval="step"))
+    callbacks.append(LearningRateMonitor(logging_interval="step"))
     #callbacks.append(EarlyStopping(monitor="val_loss", patience=3, mode="min"))
     
     if fast_run:
@@ -147,6 +147,7 @@ def main(args):
         deterministic=is_deterministic,
         accumulate_grad_batches=config.trainer.accumulate_grad_batches,
         check_val_every_n_epoch=config.trainer.check_val_every_n_epoch,
+        val_check_interval=config.trainer.val_check_interval,
     )
 
     # total steps = steps per epoch * num epochs

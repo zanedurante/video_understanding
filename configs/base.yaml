@@ -7,6 +7,7 @@ trainer: # pytorch lightning flags
   accumulate_grad_batches: 1
   check_val_every_n_epoch: 1
   skip_test: True
+  val_check_interval: 1.0
 
 logger:
   visualization_dir: visualizations
