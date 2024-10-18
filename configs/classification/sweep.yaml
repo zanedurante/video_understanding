@@ -1,5 +1,5 @@
 program: train.py
-method: grid  # or grid, random, bayes
+method: random  # or grid, random, bayes
 metric:
   name: val_loss
   goal: minimize
@@ -9,9 +9,38 @@ parameters:
   use_sweep:
     values: [True]
   config: 
-    values: [configs/classification/diving48.yaml] # This is the config file to use
+    values: [configs/classification/icu_movement.yaml] # This is the config file to use
   backbone_name:
+<<<<<<< Updated upstream
     values: ["dinov2_ViT-S/14", "dinov2_ViT-B/14", "clip_ViT-B/16"]
   head:
     values: ["linear", "mlp"]
   
+=======
+    values: ["dinov2_ViT-L/14", "clip_ViT-L/14"]
+  num_frozen_epochs:
+    values: [0, 1, 2]
+  lr:
+    min: 1.0e-5
+    max: 1.0e-3
+  backbone_lr_multiplier:
+    min: 1.0e-5
+    max: 1.0
+  head_dropout:
+    min: 0.0
+    max: 0.5
+  head_weight_decay:
+    min: 0.0
+    max: 0.1
+  backbone_weight_decay:
+    min: 0.0
+    max: 0.1
+  head:
+    values: ["linear", "mlp"]
+  head_hidden_dim:
+    values: [64, 128, 256] # only used for MLP
+  
+  
+  
+
+>>>>>>> Stashed changes

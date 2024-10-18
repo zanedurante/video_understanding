@@ -90,12 +90,12 @@ def main(args):
     callbacks = []
     use_checkpoint = True # TODO: Make configurable
     checkpoint_callback = ModelCheckpoint(
-        dirpath="normal_tilt_ckpts/",
+        dirpath="/share/pi/schul/durante/icu_movement_ckpts",
         filename="{epoch}-{val_loss:.2f}",
         save_top_k=1,
         verbose=True,
-        monitor="val_loss",
-        mode="min",
+        monitor="val_acc",
+        mode="max",
     )
 
     if use_checkpoint:

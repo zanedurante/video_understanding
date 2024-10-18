@@ -65,3 +65,21 @@ for column in column_names:
 train_data.to_csv(data_dir + "/train_movement.csv", index=False)
 val_data.to_csv(data_dir + "/val_movement.csv", index=False)
 val_data.to_csv(data_dir + "/test_movement.csv", index=False) # For now, use val as test since initial run
+
+# Create new training data that undersamples the majority class to be balanced (majority class = 0)
+majority_class_idxs = train_data[train_data["AssistedMovement"] == 0].index
+minority_class_idxs = train_data[train_data["AssistedMovement"] == 1].index
+
+num_minority = len(minority_class_idxs)
+
+# Randomly sample majority class indices
+np.random.seed(0)
+majority_class_idxs = np.random.choice(majority_class_idxs, num_minority, replace=False)
+print("Total size reduced from", len(train_data), "to", 2 * num_minority)
+
+# Combine indices
+train_idxs = np.concatenate([majority_class_idxs, minority_class_idxs])
+new_train_data = train_data.loc[train_idxs]
+new_train_data.to_csv(data_dir + "/train_movement-balanced.csv", index=False)
+val_data.to_csv(data_dir + "/val_movement-balanced.csv", index=False)
+val_data.to_csv(data_dir + "/test_movement-balanced.csv", index=False) # For now, use val as test since initial run

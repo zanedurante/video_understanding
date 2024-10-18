@@ -88,6 +88,7 @@ DATASETS_TO_STATS = {
         "num_classes": 2, # removed independent movement for now
         "num_train_videos": 6,
     },
+<<<<<<< Updated upstream
     "sku_can-bottle": {
         "num_classes": 2,
         "num_train_videos": 1224539,
@@ -100,6 +101,11 @@ DATASETS_TO_STATS = {
         "num_classes": 2,
         "num_train_videos": 1320,
         "full_path": True,
+=======
+    "icu_movement-balanced": {
+        "num_classes": 2, # removed independent movement for now
+        "num_train_videos": 1472,
+>>>>>>> Stashed changes
     },
 }
 

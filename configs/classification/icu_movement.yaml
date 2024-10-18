@@ -1,0 +1,30 @@
+# Extremely stable training
+data:
+  datasets: 
+    - icu_movement-balanced
+  num_frames: 32
+  #multilabel: True
+  labels: [AssistedMovement] # IndependentMovement removed for now since too hard
+  video_path_col: clip
+  
+
+model:
+  type: classifier # which module to use
+  backbone_name: dinov2_ViT-L/14
+  head: linear
+  head_dropout: 0.0
+  head_weight_decay: 0.0
+  backbone_weight_decay: 0.0
+
+trainer:
+  lr: 1e-4
+  max_epochs: 8
+  num_frozen_epochs: 0
+  batch_size: 1
+  backbone_lr_multiplier: 1e-1
+  accumulate_grad_batches: 8
+  num_workers: cpus/2
+
+
+logger:
+  log_every_n_steps: 4
