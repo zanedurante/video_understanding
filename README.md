@@ -2,7 +2,8 @@
 A deep learning library built for video understanding tasks.  Primarily relies upon PyTorch Lightning and wandb.  Takes inspiration from fast.ai 
 
 ## Installation:
-Clone the repository, then do: `cd video_understanding` and `pip install -e .`.
+Follow the instruction steps in the [Setup Instructions](SETUP.md).
+
 
 ## Style guides:
 Use black to format the code: run `black .` in the main directory.  If you do not have `black` installed, install it with `pip install black`.
